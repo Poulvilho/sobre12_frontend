@@ -12,7 +12,9 @@ export default function TabTwoScreen() {
 
   const handleSubmit = ((values: user) => {
     sobre12Api.post<user>("/users/register", {
-      user: values
+      email: values.email,
+      password: values.password,
+
     })
     .then(response  => {
       console.log(response);
@@ -29,7 +31,7 @@ export default function TabTwoScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
+      <Text style={styles.title}>Tela de registro</Text>
       <View style={styles.row}> 
         <Text>Email: </Text>
         <TextInput
@@ -47,11 +49,11 @@ export default function TabTwoScreen() {
         />
       </View>
       <Button
-        title='Save'
+        title='Criar usuário'
         onPress={userFormik.submitForm}
       />
+      <></>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabTwoScreen.tsx" />
     </View>
   );
 }
