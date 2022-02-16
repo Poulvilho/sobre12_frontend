@@ -14,8 +14,11 @@ declare global {
 }
 
 export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
-  Modal: undefined;
+  Login: undefined;
+  Register: undefined;
+  Profile: undefined;
+  Home: undefined;
+  Trip: NavigatorScreenParams<TripTabParamList> | undefined;
   NotFound: undefined;
 };
 
@@ -24,12 +27,13 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> = Nati
   Screen
 >;
 
-export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+export type TripTabParamList = {
+  Trip: undefined;
+  TripPersonalConfig: undefined;
+  TripGeneralConfig: undefined;
 };
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<RootTabParamList, Screen>,
+export type RootTabScreenProps<Screen extends keyof TripTabParamList> = CompositeScreenProps<
+  BottomTabScreenProps<TripTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;
