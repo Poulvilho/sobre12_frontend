@@ -18,7 +18,8 @@ export type RootStackParamList = {
   Register: undefined;
   Profile: undefined;
   Home: undefined;
-  Trip: NavigatorScreenParams<TripTabParamList> | undefined;
+  TripForm: undefined;
+  TripNavigator: NavigatorScreenParams<TripTabParamList> | undefined;
   NotFound: undefined;
 };
 

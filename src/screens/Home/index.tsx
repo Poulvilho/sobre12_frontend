@@ -23,7 +23,11 @@ export default function Login() {
       <Text style={styles.title}>Lista de viagens</Text>
       <Button
         title='Viagem'
-        onPress={() => navigate('Trip')}
+        onPress={() => navigate('TripNavigator')}
+      />
+      <Button
+        title='Criar Viagem'
+        onPress={() => navigate('TripForm')}
       />
     </View>
   );

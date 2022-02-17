@@ -16,7 +16,8 @@ const linking: LinkingOptions<RootStackParamList> = {
       Login: 'login',
       Register: 'register',
       Profile: 'profile',
-      Trip: {
+      TripForm: 'tripForm',
+      TripNavigator: {
         screens: {
           Trip: 'trip',
           TripPersonalConfig: 'tripPersonalConfig',

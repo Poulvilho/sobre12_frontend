@@ -22,6 +22,7 @@ import Home from '../screens/Home';
 import Trip from '../screens/Trip';
 import TripPersonalConfig from '../screens/TripPersonalConfig';
 import TripGeneralConfig from '../screens/TripGeneralConfig';
+import TripForm from '../screens/TripForm';
 
 import { RootStackParamList, TripTabParamList, RootTabScreenProps } from './types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -49,7 +50,8 @@ function RootNavigator() {
       <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
       <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-      <Stack.Screen name="Trip" component={TripTabNavigator} options={{ title: 'Trip' }} />
+      <Stack.Screen name="TripNavigator" component={TripTabNavigator} options={{ title: 'Trip' }} />
+      <Stack.Screen name="TripForm" component={TripForm} options={{ title: 'TripForm' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
       </Stack.Group>

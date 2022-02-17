@@ -1,4 +1,4 @@
-import React, { Children, ReactChild } from 'react';
+import React, { ReactChild } from 'react';
 
 import { Text, View } from '../../components/Themed';
 
