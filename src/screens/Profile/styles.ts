@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 20,
@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
     width: '80%',
   },
   row: {
+    marginTop: 10,
     justifyContent: 'center',
     flexDirection: 'row',
   },

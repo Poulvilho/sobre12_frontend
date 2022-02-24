@@ -1,8 +1,9 @@
-import { getIn, useFormik } from 'formik';
 import React from 'react';
-import { Button, TextInput } from 'react-native';
+import { useFormik } from 'formik';
+import { Button } from 'react-native';
 
-import { Text, View } from '../../components/Themed';
+import { View } from '../../components/Themed';
+import CustomTextInput from '../../components/CustomTextInput';
 
 import sobre12Api from '../../services/api';
 import { user } from '../Register/api';
@@ -30,32 +31,36 @@ export default function Profile() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.row}> 
-        <Text>Name: </Text>
-        <TextInput
-          onChangeText={userFormik.handleChange('name')}
-          onBlur={userFormik.handleBlur('name')}
-          value={getIn(userFormik.values, 'name')}
+      <View style={styles.row}>
+        <CustomTextInput
+          title='Nome'
+          fieldName='name'
+          formikHelpers={userFormik}
+          width='80%'
+          mode='outlined'
         />
       </View>
       <View style={styles.row}> 
-        <Text>Email: </Text>
-        <TextInput
-          onChangeText={userFormik.handleChange('email')}
-          onBlur={userFormik.handleBlur('email')}
-          value={getIn(userFormik.values, 'email')}
+        <CustomTextInput
+          title='Email'
+          fieldName='email'
+          formikHelpers={userFormik}
+          width='80%'
+          mode='outlined'
         />
       </View>
-      <View style={styles.row}> 
-        <Text>Password: </Text>
-        <TextInput
-          onChangeText={userFormik.handleChange('password')}
-          onBlur={userFormik.handleBlur('password')}
-          value={userFormik.values.password}
+      <View style={styles.row}>
+        <CustomTextInput
+          title='Senha'
+          fieldName='password'
+          formikHelpers={userFormik}
+          width='80%'
+          mode='outlined'
+          secureTextEntry={true}
         />
       </View>
       <Button
-        title='Criar usuário'
+        title='Salvar'
         onPress={userFormik.submitForm}
       />
       <View style={styles.separator} lightColor="#eee"

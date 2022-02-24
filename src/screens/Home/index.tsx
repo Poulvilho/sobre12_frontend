@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import { Button } from 'react-native';
+import FloatCreateButton from '../../components/FloatCreateButton';
 
 import { Text, View } from '../../components/Themed';
 
@@ -11,24 +12,22 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Olá, </Text>
-      <Button
-        title='usuário'
-        onPress={() => navigate('Profile')}
-      />
-      <Button
-        title='Sair'
-        onPress={() => navigate('Login')}
-      />
-      <Text style={styles.title}>Lista de viagens</Text>
+      <View style={styles.title}>
+        <Button
+          title='usuário'
+          onPress={() => navigate('Profile')}
+        />
+        <Button
+          title='Sair'
+          onPress={() => navigate('Login')}
+        />
+      </View>
+      <Text style={{ fontSize: 20 }}>Lista de viagens</Text>
       <Button
         title='Viagem'
         onPress={() => navigate('TripNavigator')}
       />
-      <Button
-        title='Criar Viagem'
-        onPress={() => navigate('TripForm')}
-      />
+      <FloatCreateButton title='Criar viagem' form='TripForm' />
     </View>
   );
 }

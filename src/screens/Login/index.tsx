@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
 import { Button } from 'react-native';
-import { useFormik, getIn } from 'formik';
+import { useFormik } from 'formik';
 
 import { Text, View } from '../../components/Themed';
 import BoxContainer from '../../components/BoxContainer';
+import CustomTextInput from '../../components/CustomTextInput';
 
 import sobre12Api from '../../services/api';
 
@@ -46,21 +46,23 @@ export default function Login() {
     <View style={styles.container}>
       <BoxContainer title='Login'>
         <View style={styles.userBox}>
-          <View style={styles.row}> 
-            <Text>Email: </Text>
-            <TextInput
-              onChangeText={userFormik.handleChange('email')}
-              onBlur={userFormik.handleBlur('email')}
-              value={getIn(userFormik.values, 'email')}
+          <View style={styles.row}>
+            <CustomTextInput
+              title='Email'
+              fieldName='email'
+              formikHelpers={userFormik}
+              width='80%'
+              mode='outlined'
             />
           </View>
-          <View style={styles.row}> 
-            <Text>Password: </Text>
-            <TextInput
+          <View style={styles.row}>
+            <CustomTextInput
+              title='Senha'
+              fieldName='password'
+              formikHelpers={userFormik}
+              width='80%'
+              mode='outlined'
               secureTextEntry={true}
-              onChangeText={userFormik.handleChange('password')}
-              onBlur={userFormik.handleBlur('password')}
-              value={userFormik.values.password}
             />
           </View>
           <Button

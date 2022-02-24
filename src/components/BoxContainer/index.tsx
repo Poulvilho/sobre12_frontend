@@ -9,13 +9,16 @@ interface IBoxContainer {
   children: ReactChild;
 }
 
-export default function BoxContainer(props: IBoxContainer) {
+export default function BoxContainer({
+  title= '',
+  children = <></>,
+}: IBoxContainer) {
 
   return (
     <View style={styles.boxContainer}>
-      <Text style={styles.title}>{props.title}</Text>
+      <Text style={styles.title}>{title}</Text>
       <View style={styles.boxContent}>
-        {props.children}
+        {children}
       </View>
     </View>
   );

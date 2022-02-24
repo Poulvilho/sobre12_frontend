@@ -4,10 +4,13 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  }
+    paddingTop: 30,
+    width: '100%',
+    backgroundColor: 'yellow',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+  },
 });

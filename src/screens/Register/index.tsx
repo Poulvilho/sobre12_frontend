@@ -9,6 +9,7 @@ import { user } from './api';
 import sobre12Api from '../../services/api';
 import BoxContainer from '../../components/BoxContainer';
 import { styles } from './styles';
+import CustomTextInput from '../../components/CustomTextInput';
 
 export default function Register() {
   const { navigate } = useNavigation()
@@ -39,29 +40,32 @@ export default function Register() {
       />
       <BoxContainer title='Registro'>
         <View style={styles.userBox}>
-          <View style={styles.row}> 
-            <Text>Name: </Text>
-            <TextInput
-              onChangeText={userFormik.handleChange('name')}
-              onBlur={userFormik.handleBlur('name')}
-              value={getIn(userFormik.values, 'name')}
+          <View style={styles.row}>
+            <CustomTextInput
+              title='Nome'
+              fieldName='name'
+              formikHelpers={userFormik}
+              width='80%'
+              mode='outlined'
             />
           </View>
           <View style={styles.row}> 
-            <Text>Email: </Text>
-            <TextInput
-              onChangeText={userFormik.handleChange('email')}
-              onBlur={userFormik.handleBlur('email')}
-              value={getIn(userFormik.values, 'email')}
+            <CustomTextInput
+              title='Email'
+              fieldName='email'
+              formikHelpers={userFormik}
+              width='80%'
+              mode='outlined'
             />
           </View>
-          <View style={styles.row}> 
-            <Text>Password: </Text>
-            <TextInput
+          <View style={styles.row}>
+            <CustomTextInput
+              title='Senha'
+              fieldName='password'
+              formikHelpers={userFormik}
+              width='80%'
+              mode='outlined'
               secureTextEntry={true}
-              onChangeText={userFormik.handleChange('password')}
-              onBlur={userFormik.handleBlur('password')}
-              value={userFormik.values.password}
             />
           </View>
           <Button
