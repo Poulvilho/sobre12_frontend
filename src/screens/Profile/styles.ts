@@ -17,6 +17,6 @@ export const styles = StyleSheet.create({
   },
   row: {
     justifyContent: 'center',
-    flexDirection: 'row'
-  }
+    flexDirection: 'row',
+  },
 });

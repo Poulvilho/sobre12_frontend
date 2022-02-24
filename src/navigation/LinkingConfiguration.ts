@@ -22,7 +22,7 @@ const linking: LinkingOptions<RootStackParamList> = {
           Trip: 'trip',
           TripPersonalConfig: 'tripPersonalConfig',
           TripGeneralConfig: 'tripGeneralConfig',
-        }
+        },
       },
       Home: 'home',
       NotFound: '*',

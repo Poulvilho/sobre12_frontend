@@ -22,7 +22,6 @@ export const styles = StyleSheet.create({
     margin: '1%',
     backgroundColor: 'transparent',
     justifyContent: 'center',
-    flexDirection: 'row'
-  }
+    flexDirection: 'row',
+  },
 });
-  

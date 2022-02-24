@@ -4,11 +4,16 @@
  */
 
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 declare global {
+  // eslint-disable-next-line no-unused-vars
   namespace ReactNavigation {
+    // eslint-disable-next-line no-unused-vars
     interface RootParamList extends RootStackParamList {}
   }
 }
@@ -23,10 +28,11 @@ export type RootStackParamList = {
   NotFound: undefined;
 };
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
-  RootStackParamList,
-  Screen
->;
+export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
+  NativeStackScreenProps<
+    RootStackParamList,
+    Screen
+  >;
 
 export type TripTabParamList = {
   Trip: undefined;
@@ -34,7 +40,8 @@ export type TripTabParamList = {
   TripGeneralConfig: undefined;
 };
 
-export type RootTabScreenProps<Screen extends keyof TripTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<TripTabParamList, Screen>,
-  NativeStackScreenProps<RootStackParamList>
->;
+export type RootTabScreenProps<Screen extends keyof TripTabParamList> =
+  CompositeScreenProps<
+    BottomTabScreenProps<TripTabParamList, Screen>,
+    NativeStackScreenProps<RootStackParamList>
+  >;

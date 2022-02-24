@@ -1,11 +1,15 @@
 /**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
+ * If you are not familiar with React Navigation,
+ * refer to the "Fundamentals" guide: 
  * https://reactnavigation.org/docs/getting-started
- *
  */
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { 
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
@@ -24,10 +28,15 @@ import TripPersonalConfig from '../screens/TripPersonalConfig';
 import TripGeneralConfig from '../screens/TripGeneralConfig';
 import TripForm from '../screens/TripForm';
 
-import { RootStackParamList, TripTabParamList, RootTabScreenProps } from './types';
+import {
+  RootStackParamList,
+  TripTabParamList,
+} from './types';
 import LinkingConfiguration from './LinkingConfiguration';
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Navigation(
+  { colorScheme }: { colorScheme: ColorSchemeName },
+) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
@@ -38,7 +47,8 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 }
 
 /**
- * A root stack navigator is often used for displaying modals on top of all other content.
+ * A root stack navigator is often used for displaying modals on
+ * top of all other content.
  * https://reactnavigation.org/docs/modal
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -46,13 +56,20 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-      <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
-      <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
-      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-      <Stack.Screen name="TripNavigator" component={TripTabNavigator} options={{ title: 'Trip' }} />
-      <Stack.Screen name="TripForm" component={TripForm} options={{ title: 'TripForm' }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Screen name="Login" component={Login}
+        options={{ headerShown: false }}/>
+      <Stack.Screen name="Register" component={Register}
+        options={{ headerShown: false }}/>
+      <Stack.Screen name="Profile" component={Profile}
+        options={{ title: 'Profile' }} />
+      <Stack.Screen name="Home" component={Home}
+        options={{ headerShown: false }} />
+      <Stack.Screen name="TripNavigator" component={TripTabNavigator}
+        options={{ title: 'Trip' }} />
+      <Stack.Screen name="TripForm" component={TripForm}
+        options={{ title: 'TripForm' }} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen}
+        options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
       </Stack.Group>
     </Stack.Navigator>
@@ -60,7 +77,8 @@ function RootNavigator() {
 }
 
 /**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
+ * A bottom tab navigator displays tab buttons on the bottom of
+ * the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 const BottomTab = createBottomTabNavigator<TripTabParamList>();
@@ -77,7 +95,7 @@ function TripTabNavigator() {
       <BottomTab.Screen
         name="Trip"
         component={Trip}
-        options={({ navigation }: RootTabScreenProps<'Trip'>) => ({
+        options={() => ({
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         })}
@@ -103,7 +121,8 @@ function TripTabNavigator() {
 }
 
 /**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
+ * You can explore the built-in icon families and icons on the
+ * web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];

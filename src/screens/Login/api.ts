@@ -1,9 +1,8 @@
-
 export interface login {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface loginResponse extends login {
-    id: string;
+  id: string;
 }

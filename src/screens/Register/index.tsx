@@ -14,15 +14,12 @@ export default function Register() {
   const { navigate } = useNavigation()
 
   const handleSubmit = ((values: user) => {
-    sobre12Api.post<user>("/users/register", {
+    sobre12Api.post<user>('/users/register', {
       name: values.name,
       email: values.email,
       password: values.password,
 
-    })
-    .then(response  => {
-      console.log(response);
-    })
+    });
   });
 
   const userFormik = useFormik<user>({
@@ -31,48 +28,48 @@ export default function Register() {
       email: '',
       password: '',
     },
-    onSubmit: handleSubmit
+    onSubmit: handleSubmit,
   });
 
   return (
     <View style={styles.container}>
-    <Button
-      title='Já possuo login'
-      onPress={() => navigate('Login')}
-    />
-    <BoxContainer title='Registro'>
-      <View style={styles.userBox}>
-        <View style={styles.row}> 
-          <Text>Name: </Text>
-          <TextInput
-            onChangeText={userFormik.handleChange('name')}
-            onBlur={userFormik.handleBlur('name')}
-            value={getIn(userFormik.values, 'name')}
+      <Button
+        title='Já possuo login'
+        onPress={() => navigate('Login')}
+      />
+      <BoxContainer title='Registro'>
+        <View style={styles.userBox}>
+          <View style={styles.row}> 
+            <Text>Name: </Text>
+            <TextInput
+              onChangeText={userFormik.handleChange('name')}
+              onBlur={userFormik.handleBlur('name')}
+              value={getIn(userFormik.values, 'name')}
+            />
+          </View>
+          <View style={styles.row}> 
+            <Text>Email: </Text>
+            <TextInput
+              onChangeText={userFormik.handleChange('email')}
+              onBlur={userFormik.handleBlur('email')}
+              value={getIn(userFormik.values, 'email')}
+            />
+          </View>
+          <View style={styles.row}> 
+            <Text>Password: </Text>
+            <TextInput
+              secureTextEntry={true}
+              onChangeText={userFormik.handleChange('password')}
+              onBlur={userFormik.handleBlur('password')}
+              value={userFormik.values.password}
+            />
+          </View>
+          <Button
+            title='Criar usuário'
+            onPress={userFormik.submitForm}
           />
         </View>
-        <View style={styles.row}> 
-          <Text>Email: </Text>
-          <TextInput
-            onChangeText={userFormik.handleChange('email')}
-            onBlur={userFormik.handleBlur('email')}
-            value={getIn(userFormik.values, 'email')}
-          />
-        </View>
-        <View style={styles.row}> 
-          <Text>Password: </Text>
-          <TextInput
-            secureTextEntry={true}
-            onChangeText={userFormik.handleChange('password')}
-            onBlur={userFormik.handleBlur('password')}
-            value={userFormik.values.password}
-          />
-        </View>
-        <Button
-          title='Criar usuário'
-          onPress={userFormik.submitForm}
-        />
-      </View>
-    </BoxContainer>
-  </View>
+      </BoxContainer>
+    </View>
   );
 }

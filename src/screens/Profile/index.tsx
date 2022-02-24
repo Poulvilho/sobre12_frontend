@@ -12,14 +12,11 @@ import { styles } from './styles';
 export default function Profile() {
 
   const handleSubmit = ((values: user) => {
-    sobre12Api.put<number>(`/users`, {
+    sobre12Api.put<number>('/users', {
       name: values.name,
       email: values.email,
       password: values.password,
-    })
-    .then(response  => {
-      console.log(response);
-    })
+    });
   });
 
   const userFormik = useFormik<user>({
@@ -28,7 +25,7 @@ export default function Profile() {
       email: '',
       password: '',
     },
-    onSubmit: handleSubmit
+    onSubmit: handleSubmit,
   });
 
   return (
@@ -61,7 +58,9 @@ export default function Profile() {
         title='Criar usuário'
         onPress={userFormik.submitForm}
       />
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <View style={styles.separator} lightColor="#eee"
+        darkColor="rgba(255,255,255,0.1)"
+      />
     </View>
   );
 }

@@ -19,19 +19,19 @@ export default function Login() {
   const [id, setId] = useState<string>();
   
   const handleSubmit = ((values: login) => {
-    sobre12Api.post<loginResponse>("/users/login", {
+    sobre12Api.post<loginResponse>('/users/login', {
       email: values.email,
       password: values.password,
     })
-    .then(response  => {
-      setId(response.data.id);
-      setFailure(false);
-      navigate('Home');
-    })
-    .catch(error => {
-      setFailure(true);
-      setId('');
-    })
+      .then(response  => {
+        setId(response.data.id);
+        setFailure(false);
+        navigate('Home');
+      })
+      .catch(() => {
+        setFailure(true);
+        setId('');
+      })
   });
 
   const userFormik = useFormik<login>({
@@ -39,7 +39,7 @@ export default function Login() {
       email: '',
       password: '',
     },
-    onSubmit: handleSubmit
+    onSubmit: handleSubmit,
   });
 
   return (
@@ -63,29 +63,33 @@ export default function Login() {
               value={userFormik.values.password}
             />
           </View>
-        <Button
-          title='Entrar'
-          onPress={userFormik.submitForm}
-        />
-        <Button
-          title='Cadastre-se aqui'
-          onPress={() => navigate('Register')}
-        />
-        <Button
-          title='Loguei'
-          onPress={() => navigate('Home')}
-        />
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        {failure && (
-          <Text style={{ color:'red' }}>
+          <Button
+            title='Entrar'
+            onPress={userFormik.submitForm}
+          />
+          <Button
+            title='Cadastre-se aqui'
+            onPress={() => navigate('Register')}
+          />
+          <Button
+            title='Loguei'
+            onPress={() => navigate('Home')}
+          />
+          <View
+            style={styles.separator}
+            lightColor="#eee"
+            darkColor="rgba(255,255,255,0.1)"
+          />
+          {failure && (
+            <Text style={{ color:'red' }}>
             E-mail ou senha incorretos
-          </Text>
-        )}
-        {id && (
-          <Text style={{ color:'green' }}>
+            </Text>
+          )}
+          {id && (
+            <Text style={{ color:'green' }}>
             Bem-vindo, {id}
-          </Text>
-        )}
+            </Text>
+          )}
         </View>
       </BoxContainer>
     </View>
