@@ -1,5 +1,12 @@
-import { login } from '../Login/api';
+import sobre12Api from '../../services/api';
+import { ILogin } from '../Login/api';
 
-export interface user extends login {
+export interface IUser extends ILogin {
   name: string;
 }
+
+const RegisterRequest = ((user: IUser) => {
+  sobre12Api.post<IUser>('/user/register', user);
+});
+
+export { RegisterRequest }

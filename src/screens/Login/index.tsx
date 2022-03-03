@@ -7,34 +7,24 @@ import { Text, View } from '../../components/Themed';
 import BoxContainer from '../../components/BoxContainer';
 import CustomTextInput from '../../components/CustomTextInput';
 
-import sobre12Api from '../../services/api';
-
-import { login, loginResponse } from './api';
+import { ILogin, LoginRequest } from './api';
 import { styles } from './styles';
 
 export default function Login() {
   const { navigate } = useNavigation();
 
   const [failure, setFailure] = useState<boolean>(false);
-  const [id, setId] = useState<string>();
   
-  const handleSubmit = ((values: login) => {
-    sobre12Api.post<loginResponse>('/users/login', {
-      email: values.email,
-      password: values.password,
-    })
-      .then(response  => {
-        setId(response.data.id);
-        setFailure(false);
-        navigate('Home');
-      })
-      .catch(() => {
-        setFailure(true);
-        setId('');
-      })
+  const handleSubmit = ((values: ILogin) => {
+    try {
+      LoginRequest(values);
+      navigate('Home');
+    } catch (error) {
+      setFailure(true);
+    }
   });
 
-  const userFormik = useFormik<login>({
+  const userFormik = useFormik<ILogin>({
     initialValues: {
       email: '',
       password: '',
@@ -73,24 +63,13 @@ export default function Login() {
             title='Cadastre-se aqui'
             onPress={() => navigate('Register')}
           />
-          <Button
-            title='Loguei'
-            onPress={() => navigate('Home')}
-          />
           <View
             style={styles.separator}
             lightColor="#eee"
             darkColor="rgba(255,255,255,0.1)"
           />
           {failure && (
-            <Text style={{ color:'red' }}>
-            E-mail ou senha incorretos
-            </Text>
-          )}
-          {id && (
-            <Text style={{ color:'green' }}>
-            Bem-vindo, {id}
-            </Text>
+            <Text style={{ color:'red' }}>E-mail ou senha incorretos</Text>
           )}
         </View>
       </BoxContainer>

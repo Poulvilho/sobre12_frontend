@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const sobre12Api = axios.create({
   baseURL:
-    'http://localhost:3333/api',
+    'http://10.0.2.2:3333/api',
   headers: {
     Accept: 'application/json',
   },

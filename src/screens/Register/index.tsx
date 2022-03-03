@@ -1,29 +1,23 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { Button } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
-import { useFormik, getIn } from 'formik';
+import { useFormik } from 'formik';
 
-import { Text, View } from '../../components/Themed';
-import { user } from './api';
-import sobre12Api from '../../services/api';
+import { View } from '../../components/Themed';
 import BoxContainer from '../../components/BoxContainer';
-import { styles } from './styles';
 import CustomTextInput from '../../components/CustomTextInput';
+
+import { IUser, RegisterRequest } from './api';
+import { styles } from './styles';
 
 export default function Register() {
   const { navigate } = useNavigation()
 
-  const handleSubmit = ((values: user) => {
-    sobre12Api.post<user>('/users/register', {
-      name: values.name,
-      email: values.email,
-      password: values.password,
-
-    });
+  const handleSubmit = ((values: IUser) => {
+    RegisterRequest(values);
   });
 
-  const userFormik = useFormik<user>({
+  const userFormik = useFormik<IUser>({
     initialValues: {
       name: '',
       email: '',

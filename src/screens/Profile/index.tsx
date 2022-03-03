@@ -5,25 +5,22 @@ import { Button } from 'react-native';
 import { View } from '../../components/Themed';
 import CustomTextInput from '../../components/CustomTextInput';
 
-import sobre12Api from '../../services/api';
-import { user } from '../Register/api';
+import { IUser } from '../Register/api';
 
+import { UpdateProfile } from './api';
 import { styles } from './styles';
+import { authResult } from '../../hooks/auth';
 
 export default function Profile() {
 
-  const handleSubmit = ((values: user) => {
-    sobre12Api.put<number>('/users', {
-      name: values.name,
-      email: values.email,
-      password: values.password,
-    });
+  const handleSubmit = ((values: IUser) => {
+    UpdateProfile(values);
   });
 
-  const userFormik = useFormik<user>({
+  const userFormik = useFormik<IUser>({
     initialValues: {
-      name: '',
-      email: '',
+      name: authResult.name,
+      email: authResult.email,
       password: '',
     },
     onSubmit: handleSubmit,
@@ -62,9 +59,6 @@ export default function Profile() {
       <Button
         title='Salvar'
         onPress={userFormik.submitForm}
-      />
-      <View style={styles.separator} lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
       />
     </View>
   );
