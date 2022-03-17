@@ -9,24 +9,24 @@ import CustomDateTimePicker from '../../components/CustomDatePicker';
 import CustomTextInput from '../../components/CustomTextInput';
 import { Text, View } from '../../components/Themed';
 
-import { CreateTrip, ITrip } from './api';
+import { CreateTrip, ITripForm } from './api';
 import { styles } from './styles';
 
 export default function TripForm() {
   const { navigate } = useNavigation();
   
-  const handleSubmit = ((values: ITrip) => {
+  const handleSubmit = ((values: ITripForm) => {
     CreateTrip(values);
     navigate('Home')
   });
 
-  const tripFormik = useFormik<ITrip>({
+  const tripFormik = useFormik<ITripForm>({
     initialValues: {
       name: '',
       description: '',
       dtstart: new Date(),
       dtend: new Date(),
-      user: authResult,
+      user: authResult.id,
     },
     onSubmit: handleSubmit,
   });
