@@ -15,13 +15,10 @@ export default function Login() {
 
   const [failure, setFailure] = useState<boolean>(false);
   
-  const handleSubmit = ((values: ILogin) => {
-    try {
-      LoginRequest(values);
-      navigate('Home');
-    } catch (error) {
-      setFailure(true);
-    }
+  const handleSubmit = (async (values: ILogin) => {
+    await LoginRequest(values)
+      .then(() => navigate('Home'))
+      .catch(() => setFailure(true))
   });
 
   const userFormik = useFormik<ILogin>({

@@ -15,5 +15,5 @@ const UpdateProfile = (async (
   );
   return response;
 });
-  
+
 export { UpdateProfile };

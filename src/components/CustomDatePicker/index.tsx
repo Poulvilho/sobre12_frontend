@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, View, Text } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {format} from 'date-fns';
 
 type PickerModes = 'date' | 'datetime' | 'time' | undefined;
 
@@ -42,8 +43,21 @@ const CustomDateTimePicker = ({
       style={{ width, borderColor: error ? 'red' : 'black', borderRadius: 1 }}
     >
       {title && <Text style={{alignSelf: 'flex-start'}}>{title}</Text>}
-      <Button title={date.toUTCString()} onPress={showDatePicker} />
+      <Button
+        title={
+          format(
+            date,
+            mode === 'datetime'
+              ? 'dd/MM/yyyy HH:mm'
+              : mode === 'date'
+                ? 'dd/MM/yyyy'
+                : 'HH:mm',
+          )
+        }
+        onPress={showDatePicker}
+      />
       <DateTimePickerModal
+        date={date}
         isVisible={isDatePickerVisible}
         mode={mode}
         onConfirm={handleConfirm}

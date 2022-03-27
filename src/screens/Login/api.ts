@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import sobre12Api from '../../services/api';
 
 export interface ILogin {
@@ -10,8 +11,9 @@ export interface ILoginResponse extends ILogin {
   name: string;
 }
 
-const LoginRequest = ((user: ILogin) => {
-  sobre12Api.post<ILoginResponse>('/user/login', user);
+const LoginRequest = ((user: ILogin): Promise<AxiosResponse<any>> => {
+  const response = sobre12Api.post<ILoginResponse>('/user/login', user);
+  return response;
 });
 
 export { LoginRequest }

@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button } from 'react-native';
 
+import CustomButton from '../../components/CustomButton'
 import FloatCreateButton from '../../components/FloatCreateButton';
 import { Text, View } from '../../components/Themed';
 
@@ -28,12 +29,12 @@ export default function Login() {
 
   useEffect(() => {
     LoadTrips();
-  }, [authResult]);
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <Button
+        <CustomButton
           title={authResult.name}
           onPress={() => navigate('Profile')}
         />
@@ -47,7 +48,7 @@ export default function Login() {
         <Button title='Refresh' onPress={() => LoadTrips()} />
       </View>
       {trips.map((trip) => (
-        <Button
+        <CustomButton
           key={trip.id}
           title={trip.name}
           onPress={() => navigate('TripNavigator')}
