@@ -5,8 +5,7 @@ import { Button } from 'react-native';
 import CustomButton from '../../components/CustomButton'
 import FloatCreateButton from '../../components/FloatCreateButton';
 import { Text, View } from '../../components/Themed';
-
-import { authResult } from '../../hooks/auth';
+import { useUser } from '../../context/user';
 
 import { ITrip } from '../TripForm/api';
 
@@ -15,12 +14,13 @@ import { styles } from './styles';
 
 export default function Login() {
   const { navigate } = useNavigation();
+  const { user } = useUser();
 
   const [trips, setTrips] = useState<Array<ITrip>>(Array(0));
 
   const LoadTrips = useCallback(async () => {
     try {
-      const response = await GetTrips();
+      const response = await GetTrips(user.id);
       setTrips(response.data);
     } catch (err) {
       console.log(err);
@@ -35,7 +35,7 @@ export default function Login() {
     <View style={styles.container}>
       <View style={styles.title}>
         <CustomButton
-          title={authResult.name}
+          title={user.name}
           onPress={() => navigate('Profile')}
         />
         <Button

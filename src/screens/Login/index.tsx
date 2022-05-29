@@ -9,15 +9,20 @@ import CustomTextInput from '../../components/CustomTextInput';
 
 import { ILogin, LoginRequest } from './api';
 import { styles } from './styles';
+import { useUser } from '../../context/user';
 
 export default function Login() {
   const { navigate } = useNavigation();
+  const { setUser } = useUser()
 
   const [failure, setFailure] = useState<boolean>(false);
   
   const handleSubmit = (async (values: ILogin) => {
     await LoginRequest(values)
-      .then(() => navigate('Home'))
+      .then((response) => {
+        setUser(response.data);
+        navigate('Home');
+      })
       .catch(() => setFailure(true))
   });
 

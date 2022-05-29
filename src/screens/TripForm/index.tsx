@@ -3,17 +3,17 @@ import { useFormik } from 'formik';
 import React from 'react';
 import { Button } from 'react-native';
 
-import { authResult } from '../../hooks/auth';
-
 import CustomDateTimePicker from '../../components/CustomDatePicker';
 import CustomTextInput from '../../components/CustomTextInput';
 import { Text, View } from '../../components/Themed';
+import { useUser } from '../../context/user';
 
 import { CreateTrip, ITripForm } from './api';
 import { styles } from './styles';
 
 export default function TripForm() {
   const { navigate } = useNavigation();
+  const { user } = useUser()
   
   const handleSubmit = ((values: ITripForm) => {
     CreateTrip(values);
@@ -26,7 +26,7 @@ export default function TripForm() {
       description: '',
       dtstart: new Date(),
       dtend: new Date(),
-      user: authResult.id,
+      user: user.id,
     },
     onSubmit: handleSubmit,
   });

@@ -1,16 +1,16 @@
 import { AxiosResponse } from 'axios';
 
-import { authResult } from '../../hooks/auth';
+import { IUser } from '../../context/user';
 
 import sobre12Api from '../../services/api';
-import { ILoginResponse } from '../Login/api';
-import { IUser } from '../Register/api';
+import { IRegister } from '../Register/api';
 
 const UpdateProfile = (async (
-  user: IUser,
-): Promise<AxiosResponse<ILoginResponse>>  => {
-  const response = await sobre12Api.put<ILoginResponse>(
-    `/user/${authResult.id}`,
+  userId: string,
+  user: IRegister,
+): Promise<AxiosResponse<IUser>>  => {
+  const response = await sobre12Api.put<IUser>(
+    `/user/${userId}`,
     user,
   );
   return response;

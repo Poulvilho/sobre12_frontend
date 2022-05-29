@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { authResult } from '../../hooks/auth';
 import { contract } from '../../hooks/contract';
 
 import CustomDateTimePicker from '../../components/CustomDatePicker';
@@ -10,13 +9,16 @@ import { Text, View } from '../../components/Themed';
 import { Cost, GetCosts } from './api';
 
 import { styles } from './styles';
+import { useUser } from '../../context/user';
 
 export default function Trip() {
+  const { user } = useUser()
+
   const [date, setDate] = useState<Date>(new Date());
   const [budget, setBudget] = useState<Array<Cost>>();
 
   const LoadCosts = (async () => {
-    const response = await GetCosts(contract.id, authResult.id);
+    const response = await GetCosts(user.id, contract.id);
     setBudget(response.data);
   })
 

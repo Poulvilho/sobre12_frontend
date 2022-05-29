@@ -2,25 +2,26 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { Button } from 'react-native';
 
+import { useUser } from '../../context/user';
+
 import { View } from '../../components/Themed';
 import CustomTextInput from '../../components/CustomTextInput';
 
-import { IUser } from '../Register/api';
-
+import { IRegister } from '../Register/api';
 import { UpdateProfile } from './api';
 import { styles } from './styles';
-import { authResult } from '../../hooks/auth';
 
 export default function Profile() {
+  const { user } = useUser();
 
-  const handleSubmit = ((values: IUser) => {
-    UpdateProfile(values);
+  const handleSubmit = ((values: IRegister) => {
+    UpdateProfile(user.id, values);
   });
 
-  const userFormik = useFormik<IUser>({
+  const userFormik = useFormik<IRegister>({
     initialValues: {
-      name: authResult.name,
-      email: authResult.email,
+      name: user.name,
+      email: user.email,
       password: '',
     },
     onSubmit: handleSubmit,

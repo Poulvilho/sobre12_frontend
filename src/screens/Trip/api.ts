@@ -12,11 +12,11 @@ export interface Cost {
 }
 
 const GetCosts = (async (
-  tripId: string,
   userId: string,
+  tripId: string,
 ): Promise<AxiosResponse<Array<Cost>>> => {
   const response = await sobre12Api.get<Array<Cost>>(
-    `/cost/daily/${tripId}/${userId}`,
+    `/cost/daily/${userId}/${tripId}`,
   );
   return response;
 });

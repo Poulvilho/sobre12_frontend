@@ -7,17 +7,17 @@ import { View } from '../../components/Themed';
 import BoxContainer from '../../components/BoxContainer';
 import CustomTextInput from '../../components/CustomTextInput';
 
-import { IUser, RegisterRequest } from './api';
+import { IRegister, RegisterRequest } from './api';
 import { styles } from './styles';
 
 export default function Register() {
   const { navigate } = useNavigation()
 
-  const handleSubmit = ((values: IUser) => {
+  const handleSubmit = ((values: IRegister) => {
     RegisterRequest(values);
   });
 
-  const userFormik = useFormik<IUser>({
+  const userFormik = useFormik<IRegister>({
     initialValues: {
       name: '',
       email: '',
