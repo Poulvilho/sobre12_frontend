@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { contract } from '../../hooks/contract';
-
 import CustomDateTimePicker from '../../components/CustomDatePicker';
 import FloatCreateButton from '../../components/FloatCreateButton';
 import { Text, View } from '../../components/Themed';
@@ -10,9 +8,11 @@ import { Cost, GetCosts } from './api';
 
 import { styles } from './styles';
 import { useUser } from '../../context/user';
+import { useContract } from '../../context/contract';
 
 export default function Trip() {
   const { user } = useUser()
+  const { contract } = useContract();
 
   const [date, setDate] = useState<Date>(new Date());
   const [budget, setBudget] = useState<Array<Cost>>();
