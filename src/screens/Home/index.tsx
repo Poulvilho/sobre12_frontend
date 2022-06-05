@@ -5,7 +5,7 @@ import { Button } from 'react-native';
 import CustomButton from '../../components/CustomButton'
 import FloatCreateButton from '../../components/FloatCreateButton';
 import { Text, View } from '../../components/Themed';
-import { useUser } from '../../context/user';
+import { useUser } from '../../contexts/user';
 
 import { ITrip } from '../TripForm/api';
 

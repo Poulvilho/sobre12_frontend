@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 
-import { IUser } from '../../context/user';
+import { IUser } from '../../contexts/user';
 
 import sobre12Api from '../../services/api';
 import { IRegister } from '../Register/api';

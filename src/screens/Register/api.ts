@@ -1,4 +1,4 @@
-import { IUser } from '../../context/user';
+import { IUser } from '../../contexts/user';
 import sobre12Api from '../../services/api';
 import { ILogin } from '../Login/api';
 

@@ -9,7 +9,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 
 import { ILogin, LoginRequest } from './api';
 import { styles } from './styles';
-import { useUser } from '../../context/user';
+import { useUser } from '../../contexts/user';
 
 export default function Login() {
   const { navigate } = useNavigation();

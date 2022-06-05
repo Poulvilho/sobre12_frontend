@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { Button } from 'react-native';
 
-import { useUser } from '../../context/user';
+import { useUser } from '../../contexts/user';
 
 import { View } from '../../components/Themed';
 import CustomTextInput from '../../components/CustomTextInput';

@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import React from 'react';
 import { Button } from 'react-native';
 
-import { useUser } from '../../context/user';
+import { useUser } from '../../contexts/user';
 
 import CustomDateTimePicker from '../../components/CustomDatePicker';
 import CustomTextInput from '../../components/CustomTextInput';

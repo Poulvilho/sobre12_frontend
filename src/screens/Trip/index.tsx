@@ -7,8 +7,8 @@ import { Text, View } from '../../components/Themed';
 import { Cost, GetCosts } from './api';
 
 import { styles } from './styles';
-import { useUser } from '../../context/user';
-import { useContract } from '../../context/contract';
+import { useUser } from '../../contexts/user';
+import { useContract } from '../../contexts/contract';
 
 export default function Trip() {
   const { user } = useUser()
