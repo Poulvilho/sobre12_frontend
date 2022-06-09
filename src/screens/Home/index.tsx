@@ -5,6 +5,7 @@ import { Button } from 'react-native';
 import CustomButton from '../../components/CustomButton'
 import FloatCreateButton from '../../components/FloatCreateButton';
 import { Text, View } from '../../components/Themed';
+import { IContract, useContract } from '../../contexts/contract';
 import { useUser } from '../../contexts/user';
 
 import { ITrip } from '../TripForm/api';
@@ -15,8 +16,14 @@ import { styles } from './styles';
 export default function Login() {
   const { navigate } = useNavigation();
   const { user } = useUser();
+  const { setContract } = useContract();
 
   const [trips, setTrips] = useState<Array<ITrip>>(Array(0));
+
+  const handleChooseTrip = ((trip: IContract) => {
+    setContract(trip);
+    navigate('TripNavigator');
+  });
 
   const LoadTrips = useCallback(async () => {
     try {
@@ -51,7 +58,7 @@ export default function Login() {
         <CustomButton
           key={trip.id}
           title={trip.name}
-          onPress={() => navigate('TripNavigator')}
+          onPress={() => handleChooseTrip(trip)}
         />
       ))}
       <FloatCreateButton title='Criar viagem' form='TripForm' />

@@ -9,12 +9,17 @@ import CustomTextInput from '../../components/CustomTextInput';
 
 import { IRegister, RegisterRequest } from './api';
 import { styles } from './styles';
+import { useUser } from '../../contexts/user';
 
 export default function Register() {
-  const { navigate } = useNavigation()
+  const { navigate } = useNavigation();
+  const { setUser } = useUser();
 
-  const handleSubmit = ((values: IRegister) => {
-    RegisterRequest(values);
+  const handleSubmit = (async (values: IRegister) => {
+    await RegisterRequest(values).then((response) => {
+      setUser(response.data);
+      navigate('Home');
+    });
   });
 
   const userFormik = useFormik<IRegister>({

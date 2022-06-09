@@ -16,9 +16,10 @@ export default function TripForm() {
   const { navigate } = useNavigation();
   const { user } = useUser()
   
-  const handleSubmit = ((values: ITripForm) => {
-    CreateTrip(values);
-    navigate('Home')
+  const handleSubmit = (async (values: ITripForm) => {
+    await CreateTrip(values).then(() => {
+      navigate('Home');
+    });
   });
 
   const tripFormik = useFormik<ITripForm>({

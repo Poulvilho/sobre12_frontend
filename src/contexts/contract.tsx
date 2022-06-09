@@ -3,6 +3,9 @@ import React, {createContext, useContext, useMemo, useState} from 'react';
 export interface IContract {
   id: string,
   name: string,
+  description: string,
+  dtstart: Date,
+  dtend: Date,
 }
 
 export interface IContractContext {
@@ -11,7 +14,7 @@ export interface IContractContext {
 }
 
 const ContractContext = createContext<IContractContext>({
-  contract: {id: '', name: ''},
+  contract: null,
   setContract: () => {},
 });
 
@@ -20,7 +23,7 @@ interface IContractProvider {
 }
 
 const ContractProvider = ({children}: IContractProvider) => {
-  const [contract, setContract] = useState<IContract>({id: '', name: ''});
+  const [contract, setContract] = useState<IContract>(null);
   const providerValue = useMemo(
     () => ({
       contract,
