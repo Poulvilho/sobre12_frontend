@@ -26,6 +26,8 @@ const linking: LinkingOptions<RootStackParamList> = {
       },
       Home: 'home',
       NotFound: '*',
+      Budget: 'budget',
+      BudgetForm: 'budgetForm',
     },
   },
 };

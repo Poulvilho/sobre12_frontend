@@ -26,6 +26,8 @@ export type RootStackParamList = {
   TripForm: undefined;
   TripNavigator: NavigatorScreenParams<TripTabParamList> | undefined;
   NotFound: undefined;
+  Budget: undefined;
+  BudgetForm: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

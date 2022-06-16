@@ -27,12 +27,14 @@ import Trip from '../screens/Trip';
 import TripPersonalConfig from '../screens/TripPersonalConfig';
 import TripGeneralConfig from '../screens/TripGeneralConfig';
 import TripForm from '../screens/TripForm';
+import Budget from '../screens/Budget';
 
 import {
   RootStackParamList,
   TripTabParamList,
 } from './types';
 import LinkingConfiguration from './LinkingConfiguration';
+import BudgetForm from '../screens/BudgetForm';
 
 export default function Navigation(
   { colorScheme }: { colorScheme: ColorSchemeName },
@@ -68,6 +70,10 @@ function RootNavigator() {
         options={{ title: 'Trip' }} />
       <Stack.Screen name="TripForm" component={TripForm}
         options={{ title: 'TripForm' }} />
+      <Stack.Screen name="Budget" component={Budget}
+        options={{ title: 'Budget' }} />
+      <Stack.Screen name="BudgetForm" component={BudgetForm}
+        options={{ title: 'BudgetForm' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen}
         options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>

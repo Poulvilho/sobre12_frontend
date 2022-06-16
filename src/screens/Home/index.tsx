@@ -2,11 +2,12 @@ import { useNavigation } from '@react-navigation/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, FlatList } from 'react-native';
 
+import { IContract, useContract } from '../../contexts/contract';
+import { useUser } from '../../contexts/user';
+
 import CustomButton from '../../components/CustomButton'
 import FloatCreateButton from '../../components/FloatCreateButton';
 import { Text, View } from '../../components/Themed';
-import { IContract, useContract } from '../../contexts/contract';
-import { useUser } from '../../contexts/user';
 
 import { ITrip } from '../TripForm/api';
 
@@ -56,13 +57,13 @@ export default function Login() {
       </View>
       <FlatList
         data={trips}
-        renderItem={({item}) => {
-          return (<CustomButton
+        renderItem={({item}) => (
+          <CustomButton
             key={item.id}
             title={item.name}
             onPress={() => handleChooseTrip(item)}
-          />)
-        }}
+          />
+        )}
         keyExtractor={({id}: IContract) => id }
       />
       <FloatCreateButton title='Criar viagem' form='TripForm' />

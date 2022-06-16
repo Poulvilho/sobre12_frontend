@@ -4,13 +4,14 @@ import { Button } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import { useUser } from '../../contexts/user';
+
 import { Text, View } from '../../components/Themed';
 import BoxContainer from '../../components/BoxContainer';
 import CustomTextInput from '../../components/CustomTextInput';
 
 import { IRegister, RegisterRequest } from './api';
 import { styles } from './styles';
-import { useUser } from '../../contexts/user';
 
 export default function Register() {
   const { navigate } = useNavigation();
