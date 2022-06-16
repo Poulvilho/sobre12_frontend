@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button } from 'react-native';
+import { Button, FlatList } from 'react-native';
 
 import CustomButton from '../../components/CustomButton'
 import FloatCreateButton from '../../components/FloatCreateButton';
@@ -54,13 +54,17 @@ export default function Login() {
         <Text style={{ fontSize: 20 }}>Lista de viagens</Text>
         <Button title='Refresh' onPress={() => LoadTrips()} />
       </View>
-      {trips.map((trip) => (
-        <CustomButton
-          key={trip.id}
-          title={trip.name}
-          onPress={() => handleChooseTrip(trip)}
-        />
-      ))}
+      <FlatList
+        data={trips}
+        renderItem={({item}) => {
+          return (<CustomButton
+            key={item.id}
+            title={item.name}
+            onPress={() => handleChooseTrip(item)}
+          />)
+        }}
+        keyExtractor={({id}: IContract) => id }
+      />
       <FloatCreateButton title='Criar viagem' form='TripForm' />
     </View>
   );

@@ -1,10 +1,10 @@
-import * as React from 'react';
+import  React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { Button } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { View } from '../../components/Themed';
+import { Text, View } from '../../components/Themed';
 import BoxContainer from '../../components/BoxContainer';
 import CustomTextInput from '../../components/CustomTextInput';
 
@@ -16,11 +16,16 @@ export default function Register() {
   const { navigate } = useNavigation();
   const { setUser } = useUser();
 
+  const [failure, setFailure] = useState<boolean>(false);
+
   const handleSubmit = (async (values: IRegister) => {
-    await RegisterRequest(values).then((response) => {
-      setUser(response.data);
-      navigate('Home');
-    });
+    setFailure(false);
+    await RegisterRequest(values)
+      .then((response) => {
+        setUser(response.data);
+        navigate('Home');
+      })
+      .catch(() => setFailure(true));
   });
 
   const userFormik = useFormik<IRegister>({
@@ -78,6 +83,12 @@ export default function Register() {
             title='Criar usuário'
             onPress={userFormik.submitForm}
           />
+          <View
+            style={styles.separator}
+          />
+          {failure && (
+            <Text style={{ color:'red' }}>Email já cadastrado!</Text>
+          )}
         </View>
       </BoxContainer>
     </View>

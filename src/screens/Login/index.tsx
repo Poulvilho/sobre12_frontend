@@ -20,6 +20,7 @@ export default function Login() {
   const [failure, setFailure] = useState<boolean>(false);
 
   const handleSubmit = (async (values: ILogin) => {
+    setFailure(false);
     await LoginRequest(values)
       .then((response) => {
         setUser(response.data);

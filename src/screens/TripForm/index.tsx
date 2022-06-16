@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
 import React from 'react';
 import { Button } from 'react-native';
+import * as Yup from 'yup';
 
 import { useUser } from '../../contexts/user';
 
@@ -15,7 +16,7 @@ import { styles } from './styles';
 export default function TripForm() {
   const { navigate } = useNavigation();
   const { user } = useUser()
-  
+
   const handleSubmit = (async (values: ITripForm) => {
     await CreateTrip(values).then(() => {
       navigate('Home');
@@ -30,6 +31,10 @@ export default function TripForm() {
       dtend: new Date(),
       user: user.id,
     },
+    validationSchema: Yup.object({
+      name: Yup.string().required('Insira um nome!'),
+      description: Yup.string().required('Insira uma descrição!'),
+    }),
     onSubmit: handleSubmit,
   });
 
