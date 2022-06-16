@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { Button } from 'react-native';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 import { View } from '../../components/Themed';
 import BoxContainer from '../../components/BoxContainer';
@@ -28,6 +29,12 @@ export default function Register() {
       email: '',
       password: '',
     },
+    validationSchema: Yup.object({
+      name: Yup.string().required('Insira um nome!'),
+      email: Yup.string().required('Insira um email!')
+        .email('Insira um email no formato correto'),
+      password: Yup.string().required('Insira uma senha!'),
+    }),
     onSubmit: handleSubmit,
   });
 

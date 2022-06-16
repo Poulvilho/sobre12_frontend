@@ -34,8 +34,8 @@ const CustomDateTimePicker = ({
   };
 
   const handleConfirm = (date: Date) => {
-    setDate(date);
     hideDatePicker();
+    setDate(date);
   };
 
   return (

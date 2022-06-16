@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { Button } from 'react-native';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+import { useUser } from '../../contexts/user';
 
 import { Text, View } from '../../components/Themed';
 import BoxContainer from '../../components/BoxContainer';
@@ -9,21 +12,20 @@ import CustomTextInput from '../../components/CustomTextInput';
 
 import { ILogin, LoginRequest } from './api';
 import { styles } from './styles';
-import { useUser } from '../../contexts/user';
 
 export default function Login() {
   const { navigate } = useNavigation();
-  const { setUser } = useUser()
+  const { setUser } = useUser();
 
   const [failure, setFailure] = useState<boolean>(false);
-  
+
   const handleSubmit = (async (values: ILogin) => {
     await LoginRequest(values)
       .then((response) => {
         setUser(response.data);
         navigate('Home');
       })
-      .catch(() => setFailure(true))
+      .catch(() => setFailure(true));
   });
 
   const userFormik = useFormik<ILogin>({
@@ -31,6 +33,11 @@ export default function Login() {
       email: '',
       password: '',
     },
+    validationSchema: Yup.object({
+      email: Yup.string().required('Insira um email!')
+        .email('Insira um email no formato correto'),
+      password: Yup.string().required('Insira uma senha!'),
+    }),
     onSubmit: handleSubmit,
   });
 
@@ -67,8 +74,6 @@ export default function Login() {
           />
           <View
             style={styles.separator}
-            lightColor="#eee"
-            darkColor="rgba(255,255,255,0.1)"
           />
           {failure && (
             <Text style={{ color:'red' }}>E-mail ou senha incorretos</Text>

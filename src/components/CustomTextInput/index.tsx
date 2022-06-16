@@ -3,6 +3,8 @@ import { FormikProps, getIn } from 'formik';
 import { Text, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
+import { styles } from './styles';
+
 interface ICustomTextInput<T> {
   formikHelpers: FormikProps<T>;
   fieldName: string;
@@ -42,6 +44,13 @@ const CustomTextInput = <T,>({
         editable={!disabled}
         {...rest}
       />
+      {getIn(formikHelpers.touched, fieldName) &&
+       getIn(formikHelpers.errors, fieldName) && (
+        <Text style={styles.errorText}>
+          {getIn(formikHelpers.touched, fieldName) &&
+            getIn(formikHelpers.errors, fieldName)}
+        </Text>
+      )}
     </View>
   );
 };
