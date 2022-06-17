@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import sobre12Api from '../../services/api';
 
 export interface IBudgetForm {
-  name: string;
+  description: string;
   value: number;
   dtbudget: Date;
   trip: string;

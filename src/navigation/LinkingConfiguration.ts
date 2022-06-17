@@ -28,6 +28,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       NotFound: '*',
       Budget: 'budget',
       BudgetForm: 'budgetForm',
+      CostForm: 'costForm',
     },
   },
 };

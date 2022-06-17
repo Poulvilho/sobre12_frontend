@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core';
+import { useIsFocused, useNavigation } from '@react-navigation/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, FlatList } from 'react-native';
 
@@ -27,17 +27,16 @@ export default function Login() {
   });
 
   const LoadTrips = useCallback(async () => {
-    try {
-      const response = await GetTrips(user.id);
+    await GetTrips(user.id).then((response) => {
       setTrips(response.data);
-    } catch (err) {
+    }).catch ((err) => {
       console.log(err);
-    }
+    });
   }, []);
 
   useEffect(() => {
     LoadTrips();
-  }, []);
+  }, [useIsFocused()]);
 
   return (
     <View style={styles.container}>

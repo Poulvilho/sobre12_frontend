@@ -28,6 +28,7 @@ export type RootStackParamList = {
   NotFound: undefined;
   Budget: undefined;
   BudgetForm: undefined;
+  CostForm: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

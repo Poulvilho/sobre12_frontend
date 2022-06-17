@@ -3,31 +3,35 @@ import { useFormik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 
-import CustomButton from '../../components/CustomButton';
+import { useUser } from '../../contexts/user';
+
 import CustomDateTimePicker from '../../components/CustomDatePicker';
 import CustomTextInput from '../../components/CustomTextInput';
 import { Text, View } from '../../components/Themed';
 import { useContract } from '../../contexts/contract';
 
-import { CreateBudget, IBudgetForm } from './api';
+import { CreateCost, ICostForm } from './api';
 import { styles } from './styles';
+import CustomButton from '../../components/CustomButton';
 
-export default function BudgetForm() {
+export default function CostForm() {
   const { navigate } = useNavigation();
   const { contract } = useContract();
+  const { user } = useUser();
 
-  const handleSubmit = (async (values: IBudgetForm) => {
-    await CreateBudget(values).then(() => {
-      navigate('Budget');
+  const handleSubmit = (async (values: ICostForm) => {
+    await CreateCost(values).then(() => {
+      navigate('TripNavigator');
     });
   });
 
-  const budgetFormik = useFormik<IBudgetForm>({
+  const costFormik = useFormik<ICostForm>({
     initialValues: {
       description: '',
       value: 0.0,
-      dtbudget: new Date(),
+      dtcost: new Date(),
       trip: contract.id,
+      user: user.id,
     },
     validationSchema: Yup.object({
       description: Yup.string().required('Insira um nome!'),
@@ -38,32 +42,32 @@ export default function BudgetForm() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Adicionar Orçamento</Text>
+      <Text style={styles.title}>Adicionar custo</Text>
       <CustomTextInput
         title='Descrição'
         fieldName='description'
-        formikHelpers={budgetFormik}
+        formikHelpers={costFormik}
         width='80%'
         mode='outlined'
       />
       <CustomTextInput
         title='Valor'
         fieldName='value'
-        formikHelpers={budgetFormik}
+        formikHelpers={costFormik}
         width='80%'
         mode='outlined'
         keyboardType='numeric'
       />
       <CustomDateTimePicker
-        date={budgetFormik.values.dtbudget}
-        setDate={(newDate) => budgetFormik.setFieldValue('dtbudget', newDate)}
+        date={costFormik.values.dtcost}
+        setDate={(newDate) => costFormik.setFieldValue('dtcost', newDate)}
         mode={'date'}
-        error={Boolean(budgetFormik.errors.dtbudget)}
+        error={Boolean(costFormik.errors.dtcost)}
         width='80%'
       />
       <CustomButton
         title='Salvar'
-        onPress={budgetFormik.submitForm}
+        onPress={costFormik.submitForm}
       />
     </View>
   );
