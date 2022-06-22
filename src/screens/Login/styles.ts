@@ -24,4 +24,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   },
+  ButtonContainer: {
+    backgroundColor: 'transparent',
+    justifyContent: 'space-between',
+    height: 120,
+  },
 });

@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
     padding: '5%',
     width: '80%',
     backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 20,
     borderWidth: 1,
   },
@@ -20,4 +20,3 @@ export const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
 });
-  
