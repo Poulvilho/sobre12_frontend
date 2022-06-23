@@ -12,6 +12,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 
 import { ILogin, LoginRequest } from './api';
 import { styles } from './styles';
+import CustomButton from '../../components/CustomButton';
 
 export default function Login() {
   const { navigate } = useNavigation();
@@ -65,14 +66,17 @@ export default function Login() {
               secureTextEntry={true}
             />
           </View>
-          <Button
-            title='Entrar'
-            onPress={userFormik.submitForm}
-          />
-          <Button
-            title='Cadastre-se aqui'
-            onPress={() => navigate('Register')}
-          />
+          <View style={styles.ButtonContainer}>
+            <CustomButton
+              title='Entrar'
+              onPress={userFormik.submitForm}
+            />
+            <CustomButton
+              isSecondary
+              title='Cadastre-se aqui'
+              onPress={() => navigate('Register')}
+            />
+          </View>
           <View
             style={styles.separator}
           />
