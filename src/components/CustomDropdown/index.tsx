@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-import { FlatList, Modal, Text, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  ListRenderItemInfo,
+  Modal,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+
 import { styles } from './styles';
 
-interface IListItem {
-  key: string;
+export interface ILOV {
+  key: number;
   value: string;
 }
 
 export interface ICustomDropdownProps {
-  selected: Date;
-  setSelected: React.Dispatch<React.SetStateAction<Date>>;
-  list: Array<IListItem>;
+  selected: number;
+  setSelected: React.Dispatch<React.SetStateAction<number>>;
+  list: Array<ILOV>;
   title?: string | undefined;
   error?: boolean;
   width?: string;
@@ -31,10 +39,13 @@ const CustomDropdown = ({
     setVisible(!visible);
   };
 
-  const renderItem = (({ item }) => (
-    <Text style={styles.dropdown}>
+  const renderItem = (({ item }: ListRenderItemInfo<ILOV>) => (
+    <TouchableOpacity
+      style={styles.dropdown}
+      onPress={() => setSelected(item.key)}
+    >
       {item.value}
-    </Text>
+    </TouchableOpacity>
   ));
 
   const renderDropdown = () => {
@@ -48,7 +59,7 @@ const CustomDropdown = ({
               <FlatList
                 data={list}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.key}
+                keyExtractor={(item) => item.key.toString()}
               />
             </View>
           </TouchableOpacity>
@@ -58,7 +69,9 @@ const CustomDropdown = ({
   };
 
   return (
-    <View style={{width}}>
+    <View
+      style={{ width, borderColor: error ? 'red' : 'black', borderRadius: 1 }}
+    >
       {title && <Text style={{alignSelf: 'flex-start'}}>{title}</Text>}
       <TouchableOpacity
         style={styles.button}

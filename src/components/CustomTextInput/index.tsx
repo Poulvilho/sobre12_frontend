@@ -22,7 +22,7 @@ const CustomTextInput = <T,>({
   disabled = false,
   ...rest
 }: ICustomTextInput<T>) => {
-  
+
   return (
     <View style={{width}}>
       {title && <Text style={{alignSelf: 'flex-start'}}>{title}</Text>}
@@ -54,6 +54,5 @@ const CustomTextInput = <T,>({
     </View>
   );
 };
-  
+
 export default CustomTextInput;
-  
