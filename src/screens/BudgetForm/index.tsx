@@ -1,6 +1,6 @@
+import React from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
-import React from 'react';
 import * as Yup from 'yup';
 
 import { useContract } from '../../contexts/contract';
@@ -44,7 +44,7 @@ export default function BudgetForm() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Adicionar Orçamento</Text>
+      <Text style={styles.title}>Adicionar orçamento</Text>
       <CustomTextInput
         title='Descrição'
         fieldName='description'

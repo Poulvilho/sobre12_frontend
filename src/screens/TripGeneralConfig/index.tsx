@@ -24,7 +24,7 @@ export default function TripGeneralConfig() {
       />
       <CustomButton
         title={'Gerenciar categorias'}
-        onPress={() => {}}
+        onPress={() => {navigate('Subcategory')}}
       />
     </View>
   );

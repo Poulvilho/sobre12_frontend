@@ -30,6 +30,7 @@ import TripForm from '../screens/TripForm';
 import Budget from '../screens/Budget';
 import BudgetForm from '../screens/BudgetForm';
 import CostForm from '../screens/CostForm';
+import Subcategory from '../screens/Subcategory';
 
 import {
   RootStackParamList,
@@ -64,19 +65,21 @@ function RootNavigator() {
       <Stack.Screen name="Register" component={Register}
         options={{ headerShown: false }}/>
       <Stack.Screen name="Profile" component={Profile}
-        options={{ title: 'Profile' }} />
+        options={{ title: 'Perfil' }} />
       <Stack.Screen name="Home" component={Home}
         options={{ headerShown: false }} />
       <Stack.Screen name="TripNavigator" component={TripTabNavigator}
-        options={{ title: 'Trip' }} />
+        options={{ title: 'Viagem' }} />
       <Stack.Screen name="TripForm" component={TripForm}
-        options={{ title: 'TripForm' }} />
+        options={{ title: 'Nova viagem' }} />
       <Stack.Screen name="Budget" component={Budget}
-        options={{ title: 'Budget' }} />
+        options={{ title: 'Orçamento' }} />
       <Stack.Screen name="BudgetForm" component={BudgetForm}
-        options={{ title: 'BudgetForm' }} />
+        options={{ title: 'Novo orçamento' }} />
       <Stack.Screen name="CostForm" component={CostForm}
-        options={{ title: 'CostForm' }} />
+        options={{ title: 'Novo custo' }} />
+      <Stack.Screen name="Subcategory" component={Subcategory}
+        options={{ title: 'Subcategorias' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen}
         options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>

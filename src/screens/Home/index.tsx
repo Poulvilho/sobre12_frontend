@@ -16,10 +16,15 @@ import { styles } from './styles';
 
 export default function Login() {
   const { navigate } = useNavigation();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const { setContract } = useContract();
 
   const [trips, setTrips] = useState<Array<ITrip>>(Array(0));
+
+  const handleLogout = (() => {
+    setUser(null);
+    navigate('Login')
+  });
 
   const handleChooseTrip = ((trip: IContract) => {
     setContract(trip);
@@ -47,7 +52,7 @@ export default function Login() {
         />
         <Button
           title='Sair'
-          onPress={() => navigate('Login')}
+          onPress={handleLogout}
         />
       </View>
       <View style={styles.row}>
