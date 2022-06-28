@@ -13,6 +13,7 @@ import { ITrip } from '../TripForm/api';
 
 import { GetTrips } from './api';
 import { styles } from './styles';
+import TripSelector from '../../components/TripSelector';
 
 export default function Login() {
   const { navigate } = useNavigation();
@@ -57,14 +58,16 @@ export default function Login() {
       </View>
       <View style={styles.row}>
         <Text style={{ fontSize: 20 }}>Lista de viagens</Text>
-        <Button title='Refresh' onPress={() => LoadTrips()} />
       </View>
       <FlatList
         data={trips}
         renderItem={({item}) => (
-          <CustomButton
+          <TripSelector
             key={item.id}
-            title={item.name}
+            name={item.name}
+            description={item.description}
+            dtstart={item.dtstart}
+            dtend={item.dtend}
             onPress={() => handleChooseTrip(item)}
           />
         )}
