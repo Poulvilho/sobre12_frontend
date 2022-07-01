@@ -37,7 +37,7 @@ export default function Subcategory() {
   const subcategoryFormik = useFormik<ISubcategoryForm>({
     initialValues: {
       description: '',
-      category: 0,
+      category: '0',
       trip: contract.id,
     },
     validationSchema: Yup.object({
@@ -73,12 +73,10 @@ export default function Subcategory() {
         mode='outlined'
       />
       <CustomDropdown
-        selected={subcategoryFormik.values.category}
-        setSelected={
-          (newValue) => subcategoryFormik.setFieldValue('category', newValue)
-        }
+        title='Categoria'
+        formikHelpers={subcategoryFormik}
+        fieldName='category'
         list={Categories}
-        error={Boolean(subcategoryFormik.errors.category)}
         width='80%'
       />
       <CustomButton

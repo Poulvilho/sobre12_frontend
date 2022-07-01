@@ -1,85 +1,59 @@
-import React, { useState } from 'react';
-import {
-  FlatList,
-  ListRenderItemInfo,
-  Modal,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React from 'react';
+import { Text, View } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { FormikProps, getIn } from 'formik';
 
 import { styles } from './styles';
 
 export interface ILOV {
-  key: number;
+  label: string;
   value: string;
 }
 
-export interface ICustomDropdownProps {
-  selected: number;
-  setSelected: React.Dispatch<React.SetStateAction<number>>;
+interface ICustomDropdown<T> {
+  formikHelpers: FormikProps<T>;
+  fieldName: string;
   list: Array<ILOV>;
-  title?: string | undefined;
-  error?: boolean;
+  title?: string;
   width?: string;
-  [propName: string]: unknown;
 }
 
-const CustomDropdown = ({
-  selected,
-  setSelected,
-  list = [],
+const CustomDropdown = <T,>({
+  formikHelpers,
+  fieldName,
   title = undefined,
-  error = false,
-  width = '80%',
-}: ICustomDropdownProps) => {
-  const [visible, setVisible] = useState(false);
-
-  const toggleDropdown = () => {
-    setVisible(!visible);
-  };
-
-  const renderItem = (({ item }: ListRenderItemInfo<ILOV>) => (
-    <TouchableOpacity
-      style={styles.dropdown}
-      onPress={() => setSelected(item.key)}
-    >
-      {item.value}
-    </TouchableOpacity>
-  ));
-
-  const renderDropdown = () => {
-    if (visible) {
-      return (
-        <Modal visible={visible} transparent animationType="none">
-          <TouchableOpacity
-            onPress={() => setVisible(false)}
-          >
-            <View style={styles.dropdown}>
-              <FlatList
-                data={list}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.key.toString()}
-              />
-            </View>
-          </TouchableOpacity>
-        </Modal>
-      );
-    }
-  };
-
+  list = [],
+  width = '100%',
+}: ICustomDropdown<T>) => {
   return (
-    <View
-      style={{ width, borderColor: error ? 'red' : 'black', borderRadius: 1 }}
-    >
-      {title && <Text style={{alignSelf: 'flex-start'}}>{title}</Text>}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={toggleDropdown}
+    <View style={{width}}>
+      {title && <Text style={styles.titleText}>{title}</Text>}
+      <Picker
+        selectedValue={getIn(formikHelpers.values, fieldName)}
+        onValueChange={formikHelpers.handleChange(fieldName)}
+        style={{
+          width: '100%',
+          borderWidth: 1,
+          borderColor:
+            getIn(formikHelpers.touched, fieldName) &&
+            getIn(formikHelpers.errors, fieldName)
+              ? 'red'
+              : 'black',
+          borderRadius: 1,
+          paddingHorizontal: 10,
+        }}
       >
-        {renderDropdown()}
-        {<Text style={{alignSelf: 'flex-start'}}>{selected}</Text>}
-      </TouchableOpacity>
+        {list.map((item) => {
+          <Picker.Item label={item.label} value={item.value} />
+        })}
+      </Picker>
+      {getIn(formikHelpers.touched, fieldName) &&
+       getIn(formikHelpers.errors, fieldName) && (
+        <Text style={styles.errorText}>
+          {getIn(formikHelpers.touched, fieldName) &&
+            getIn(formikHelpers.errors, fieldName)}
+        </Text>
+      )}
     </View>
   );
 };

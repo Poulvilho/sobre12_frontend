@@ -30,7 +30,7 @@ export default function BudgetForm() {
     initialValues: {
       description: '',
       value: 0.0,
-      category: 0,
+      category: '0',
       dtbudget: new Date(),
       trip: contract.id,
     },
@@ -61,12 +61,10 @@ export default function BudgetForm() {
         keyboardType='numeric'
       />
       <CustomDropdown
-        selected={budgetFormik.values.category}
-        setSelected={
-          (newValue) => budgetFormik.setFieldValue('category', newValue)
-        }
+        title='Categoria'
+        formikHelpers={budgetFormik}
+        fieldName='category'
         list={Categories}
-        error={Boolean(budgetFormik.errors.category)}
         width='80%'
       />
       <CustomDateTimePicker

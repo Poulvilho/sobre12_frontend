@@ -3,7 +3,7 @@ import sobre12Api from '../../services/api';
 
 export interface ISubcategoryForm {
   description: string;
-  category: number;
+  category: string;
   trip: string;
 }
 

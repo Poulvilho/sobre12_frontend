@@ -4,7 +4,7 @@ import sobre12Api from '../../services/api';
 export interface IBudgetForm {
   description: string;
   value: number;
-  category: number;
+  category: string;
   dtbudget: Date;
   trip: string;
 }
