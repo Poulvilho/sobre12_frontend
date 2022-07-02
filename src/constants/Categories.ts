@@ -1,8 +1,8 @@
 import { ILOV } from '../components/CustomDropdown';
 
 export default Array<ILOV> (
-  { key: 1, value: 'Transporte' },
-  { key: 2, value: 'Alimentação' },
-  { key: 3, value: 'Hospedagem' },
-  { key: 4, value: 'Lazer' },
+  { value: '1', label: 'Transporte' },
+  { value: '2', label: 'Alimentação' },
+  { value: '3', label: 'Hospedagem' },
+  { value: '4', label: 'Lazer' },
 );
