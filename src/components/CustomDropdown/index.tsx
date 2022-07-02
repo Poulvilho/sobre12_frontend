@@ -44,7 +44,9 @@ const CustomDropdown = ({
       style={styles.dropdown}
       onPress={() => setSelected(item.key)}
     >
-      {item.value}
+      <Text>
+        {item.value}
+      </Text>
     </TouchableOpacity>
   ));
 
