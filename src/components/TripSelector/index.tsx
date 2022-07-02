@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import FormatUtils from '../../utils/FormatUtils';
 import { styles } from './styles';
 
 interface ITripSelector {
@@ -15,6 +16,7 @@ const TripSelector = (({
   name = '',
   dtstart = new Date(),
   dtend = new Date(),
+  description = '',
   onPress = (() => {}),
 } : ITripSelector) => {
   return (
@@ -32,7 +34,13 @@ const TripSelector = (({
           >
             {name}
           </Text>
-          <Text> {dtstart+' a '+dtend}</Text>
+          <Text>
+            {description}
+          </Text>
+          <Text> 
+            {FormatUtils.dateBR(dtstart)
+            +' a '
+            + FormatUtils.dateBR(dtend)}</Text>
 
         </View>
 
