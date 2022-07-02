@@ -2,8 +2,9 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#E5E5E5',
-    width: '95%',
+    width: '100%',
     height: 100,
     borderRadius: 10,
     justifyContent: 'center',
@@ -27,6 +28,6 @@ export const styles = StyleSheet.create({
     backgroundColor: '#42A4E8',
   },
   data:{
-    
+    marginTop: 10,
   },
 })

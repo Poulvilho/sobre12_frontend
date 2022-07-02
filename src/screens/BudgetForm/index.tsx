@@ -37,7 +37,7 @@ export default function BudgetForm() {
     validationSchema: Yup.object({
       description: Yup.string().required('Insira um nome!'),
       value: Yup.number().required('Insira um valor!'),
-      category: Yup.number().required().min(1).max(4),
+      category: Yup.number().required('Escolha uma categoria').min(1).max(4),
     }),
     onSubmit: handleSubmit,
   });
@@ -60,7 +60,16 @@ export default function BudgetForm() {
         mode='outlined'
         keyboardType='numeric'
       />
-      <CustomDropdown
+      <CustomTextInput
+        title='Categoria'
+        fieldName='category'
+        formikHelpers={budgetFormik}
+        width='80%'
+        mode='outlined'
+        keyboardType='numeric'
+      />
+
+      {/* <CustomDropdown
         selected={budgetFormik.values.category}
         setSelected={
           (newValue) => budgetFormik.setFieldValue('category', newValue)
@@ -68,7 +77,7 @@ export default function BudgetForm() {
         list={Categories}
         error={Boolean(budgetFormik.errors.category)}
         width='80%'
-      />
+      /> */}
       <CustomDateTimePicker
         date={budgetFormik.values.dtbudget}
         setDate={(newDate) => budgetFormik.setFieldValue('dtbudget', newDate)}
