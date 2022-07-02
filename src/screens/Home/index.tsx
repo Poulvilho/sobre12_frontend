@@ -73,7 +73,9 @@ export default function Login() {
         )}
         keyExtractor={({id}: IContract) => id }
       />
-      <FloatCreateButton title='Criar viagem' form='TripForm' />
+      <CustomButton 
+        title='Criar nova viagem' 
+        onPress={() => navigate('TripForm')} />
     </View>
   );
 }
