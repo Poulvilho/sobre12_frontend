@@ -1,24 +1,33 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { useContract } from '../../contexts/contract';
 
-import Categories from '../../constants/Categories';
+import { categories } from '../../constants/Categories';
 
 import CustomButton from '../../components/CustomButton';
 import CustomDateTimePicker from '../../components/CustomDatePicker';
-import CustomDropdown from '../../components/CustomDropdown';
+import CustomDropdown, { CustomItem } from '../../components/CustomDropdown';
 import CustomTextInput from '../../components/CustomTextInput';
 import { Text, View } from '../../components/Themed';
 
 import { CreateBudget, IBudgetForm } from './api';
 import { styles } from './styles';
+import { GetSubcategory, ISubcategory } from '../Subcategory/api';
 
 export default function BudgetForm() {
   const { navigate } = useNavigation();
   const { contract } = useContract();
+  
+  const [subcategories, setSubcategories] = useState<Array<ISubcategory>>();
+
+  const LoadSubcategories = useCallback(async () => {
+    await GetSubcategory(contract.id).then((response) => {
+      setSubcategories(response.data);
+    });
+  }, [contract.id]);
 
   const handleSubmit = (async (values: IBudgetForm) => {
     await CreateBudget(values).then(() => {
@@ -42,6 +51,10 @@ export default function BudgetForm() {
     onSubmit: handleSubmit,
   });
 
+  useEffect(() => {
+    LoadSubcategories();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Adicionar orçamento</Text>
@@ -64,9 +77,15 @@ export default function BudgetForm() {
         title='Categoria'
         formikHelpers={budgetFormik}
         fieldName='category'
-        list={Categories}
         width='80%'
-      />
+      >
+        {categories.map((item) => (
+          <CustomItem key={item.value} label={item.label} value={item.value} />
+        ))}
+        {subcategories?.map((item) => (
+          <CustomItem key={item.id} label={item.description} value={item.id} />
+        ))}
+      </CustomDropdown>
       <CustomDateTimePicker
         date={budgetFormik.values.dtbudget}
         setDate={(newDate) => budgetFormik.setFieldValue('dtbudget', newDate)}

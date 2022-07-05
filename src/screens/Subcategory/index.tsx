@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { useContract } from '../../contexts/contract';
 
-import Categories from '../../constants/Categories';
+import { categories } from '../../constants/Categories';
 
 import CustomButton from '../../components/CustomButton';
-import CustomDropdown from '../../components/CustomDropdown';
+import CustomDropdown, { CustomItem } from '../../components/CustomDropdown';
 import CustomTextInput from '../../components/CustomTextInput';
 import { Text, View } from '../../components/Themed';
 
@@ -24,11 +24,11 @@ export default function Subcategory() {
   const { contract } = useContract();
   const [subcategories, setSubcategories] = useState<Array<ISubcategory>>();
 
-  const LoadSubcategories = async () => {
+  const LoadSubcategories = useCallback(async () => {
     await GetSubcategory(contract.id).then((response) => {
       setSubcategories(response.data);
     });
-  }
+  }, [contract.id]);
 
   const handleSubmit = (async (values: ISubcategoryForm) => {
     await CreateSubcategory(values);
@@ -76,9 +76,12 @@ export default function Subcategory() {
         title='Categoria'
         formikHelpers={subcategoryFormik}
         fieldName='category'
-        list={Categories}
         width='80%'
-      />
+      >
+        {categories.map((item) => (
+          <CustomItem key={item.value} label={item.label} value={item.value} />
+        ))}
+      </CustomDropdown>
       <CustomButton
         title='Salvar'
         onPress={subcategoryFormik.submitForm}

@@ -10,10 +10,16 @@ export interface ILOV {
   value: string;
 }
 
+export const CustomItem = (props: ILOV) => {
+  const {label, value, ...other} = props;
+
+  return <Picker.Item label={label} value={value} {...other} />;
+};
+
 interface ICustomDropdown<T> {
   formikHelpers: FormikProps<T>;
   fieldName: string;
-  list: Array<ILOV>;
+  children: React.ReactNode;
   title?: string;
   width?: string;
 }
@@ -22,31 +28,29 @@ const CustomDropdown = <T,>({
   formikHelpers,
   fieldName,
   title = undefined,
-  list = [],
+  children,
   width = '100%',
 }: ICustomDropdown<T>) => {
   return (
     <View style={{width}}>
       {title && <Text style={styles.titleText}>{title}</Text>}
-      <Picker
-        selectedValue={getIn(formikHelpers.values, fieldName)}
-        onValueChange={formikHelpers.handleChange(fieldName)}
+      <View
         style={{
-          width: '100%',
-          borderWidth: 1,
           borderColor:
-            getIn(formikHelpers.touched, fieldName) &&
-            getIn(formikHelpers.errors, fieldName)
-              ? 'red'
-              : 'black',
+            getIn(formikHelpers.touched, fieldName)
+            && getIn(formikHelpers.errors, fieldName)
+              ? 'red' : 'black',
           borderRadius: 1,
-          paddingHorizontal: 10,
+          borderWidth: 1,
         }}
       >
-        {list.map((item) => {
-          <Picker.Item label={item.label} value={item.value} />
-        })}
-      </Picker>
+        <Picker
+          selectedValue={getIn(formikHelpers.values, fieldName)}
+          onValueChange={formikHelpers.handleChange(fieldName)}
+        >
+          {children}
+        </Picker>
+      </View>
       {getIn(formikHelpers.touched, fieldName) &&
        getIn(formikHelpers.errors, fieldName) && (
         <Text style={styles.errorText}>

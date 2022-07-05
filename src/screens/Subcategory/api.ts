@@ -14,7 +14,7 @@ export interface ISubcategory extends ISubcategoryForm {
 const GetSubcategory = ((
   trip: string,
 ): Promise<AxiosResponse<Array<ISubcategory>>> => {
-  const response = sobre12Api.get<Array<ISubcategory>>(
+  const response = sobre12Api.post<Array<ISubcategory>>(
     `/subcategory/index/${trip}`,
   );
   return response;
