@@ -15,19 +15,24 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     color: '#000000',
-    textAlign: 'center',
   },
   content: {
     flexDirection: 'row',
     alignContent: 'center',
   },
+  value: {
+    flexDirection: 'row',
+    alignContent: 'space-between',
+  },
   image:{
-    margin: 10,
-    width: 80,
-    height: 80,
+    width: 60,
+    height: '100%',
     backgroundColor: '#42A4E8',
+    borderRadius: 60,
+    alignContent: 'center',
+    alignItems: 'center',
   },
   data:{
-    marginTop: 10,
+    marginLeft: 10,
   },
 })

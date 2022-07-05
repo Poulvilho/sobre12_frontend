@@ -1,24 +1,32 @@
+import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import FormatUtils from '../../utils/FormatUtils';
 import { styles } from './styles';
 
-interface ITripSelector {
-    name: string;
+interface ICostShow {
+    id: string;
     description: string;
-    dtstart: Date;
-    dtend: Date;
+    value: number;
+    dtcost: Date;
+    trip: string;
+    user: string;
     onPress: () => void;
 }
 
-const TripSelector = (({
-  name = '',
-  dtstart = new Date(),
-  dtend = new Date(),
+
+
+
+const Cost = (({
+  id = '',
   description = '',
+  value = 0,
+  dtcost = new Date(),
+  trip = '',
+  user = '',
   onPress = (() => {}),
-} : ITripSelector) => {
+} : ICostShow) => {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -26,21 +34,25 @@ const TripSelector = (({
     >
       <View style={styles.content}>
         <View style={styles.image}>
+          <FontAwesome 
+            size={30} 
+            name='money'
+            color={'black'} />
 
         </View>
         <View style={styles.data}>
           <Text
             style={styles.PrimaryText}  
           >
-            {name}
-          </Text>
-          <Text>
             {description}
           </Text>
           <Text> 
-            {FormatUtils.dateBR(dtstart)
-            +' a '
-            + FormatUtils.dateBR(dtend)}</Text>
+            {/* {FormatUtils.dateBR(dtcost)} */}
+            {dtcost.toLocaleDateString()}
+          </Text>
+          <Text style={styles.value}>
+            '                                                              '{FormatUtils.currencyBRL(value)}
+          </Text>
 
         </View>
 
@@ -49,4 +61,4 @@ const TripSelector = (({
   );
 });
   
-export default TripSelector;
+export default Cost;

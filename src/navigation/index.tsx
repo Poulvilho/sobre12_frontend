@@ -3,7 +3,8 @@
  * refer to the "Fundamentals" guide: 
  * https://reactnavigation.org/docs/getting-started
  */
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome,Ionicons } from '@expo/vector-icons';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { 
   NavigationContainer,
@@ -59,7 +60,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#42A4E8' },
+        headerTintColor: '#353535',
+        headerTitleAlign: 'center',
+      }}>
       <Stack.Screen name="Login" component={Login}
         options={{ headerShown: false }}/>
       <Stack.Screen name="Register" component={Register}
@@ -105,7 +111,7 @@ function TripTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="Trip"
+        name="Despesas"
         component={Trip}
         options={() => ({
           headerShown: false,
@@ -113,19 +119,19 @@ function TripTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TripPersonalConfig"
+        name="Dados pessoais"
         component={TripPersonalConfig}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="money" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TripGeneralConfig"
+        name="Configurações da viagem"
         component={TripGeneralConfig}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="plane" color={color} />,
         }}
       />
     </BottomTab.Navigator>

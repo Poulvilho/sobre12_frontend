@@ -46,7 +46,7 @@ export default function BudgetForm() {
     validationSchema: Yup.object({
       description: Yup.string().required('Insira um nome!'),
       value: Yup.number().required('Insira um valor!'),
-      category: Yup.number().required().min(1).max(4),
+      category: Yup.number().required('Escolha uma categoria').min(1).max(4),
     }),
     onSubmit: handleSubmit,
   });

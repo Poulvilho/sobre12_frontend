@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   row: {
-    flexDirection: 'row',
+    margin: 10,
   },
   title: {
     paddingTop: 30,
