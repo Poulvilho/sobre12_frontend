@@ -4,6 +4,7 @@ import sobre12Api from '../../services/api';
 export interface ICostForm {
   description: string;
   value: number;
+  category: string;
   dtcost: Date;
   trip: string;
   user: string;

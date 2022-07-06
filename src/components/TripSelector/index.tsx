@@ -37,11 +37,11 @@ const TripSelector = (({
           <Text>
             {description}
           </Text>
-          <Text> 
+          <Text>
             {FormatUtils.dateBR(dtstart)
             +' a '
-            + FormatUtils.dateBR(dtend)}</Text>
-
+            + FormatUtils.dateBR(dtend)}
+          </Text>
         </View>
 
       </View>  

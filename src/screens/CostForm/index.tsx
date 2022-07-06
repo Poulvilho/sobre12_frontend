@@ -3,16 +3,19 @@ import { useFormik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 
+import { categories } from '../../constants/Categories';
+
 import { useUser } from '../../contexts/user';
+import { useContract } from '../../contexts/contract';
 
 import CustomDateTimePicker from '../../components/CustomDatePicker';
 import CustomTextInput from '../../components/CustomTextInput';
 import { Text, View } from '../../components/Themed';
-import { useContract } from '../../contexts/contract';
+import CustomButton from '../../components/CustomButton';
+import CustomDropdown, { CustomItem } from '../../components/CustomDropdown';
 
 import { CreateCost, ICostForm } from './api';
 import { styles } from './styles';
-import CustomButton from '../../components/CustomButton';
 
 export default function CostForm() {
   const { navigate } = useNavigation();
@@ -29,6 +32,7 @@ export default function CostForm() {
     initialValues: {
       description: '',
       value: 0.0,
+      category: '0',
       dtcost: new Date(),
       trip: contract.id,
       user: user.id,
@@ -36,6 +40,7 @@ export default function CostForm() {
     validationSchema: Yup.object({
       description: Yup.string().required('Insira um nome!'),
       value: Yup.number().required('Insira um valor!'),
+      category: Yup.string().required('Insira um nome!'),
     }),
     onSubmit: handleSubmit,
   });
@@ -58,6 +63,16 @@ export default function CostForm() {
         mode='outlined'
         keyboardType='numeric'
       />
+      <CustomDropdown
+        title='Categoria'
+        formikHelpers={costFormik}
+        fieldName='category'
+        width='80%'
+      >
+        {categories.map((item) => (
+          <CustomItem key={item.value} label={item.label} value={item.value} />
+        ))}
+      </CustomDropdown>
       <CustomDateTimePicker
         date={costFormik.values.dtcost}
         setDate={(newDate) => costFormik.setFieldValue('dtcost', newDate)}

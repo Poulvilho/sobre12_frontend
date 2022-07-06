@@ -17,12 +17,14 @@ export const styles = StyleSheet.create({
     color: '#000000',
   },
   content: {
+    width: '80%',
     flexDirection: 'row',
     alignContent: 'center',
+    justifyContent: 'space-between',
   },
   value: {
     flexDirection: 'row',
-    alignContent: 'space-between',
+    alignSelf: 'flex-end',
   },
   image:{
     width: 60,
@@ -33,6 +35,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   data:{
+    width: '80%',
     marginLeft: 10,
   },
 })
