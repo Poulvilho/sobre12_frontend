@@ -16,4 +16,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     flexDirection: 'row',
   },
+  trip: {
+    width: '90%',
+  },
 });

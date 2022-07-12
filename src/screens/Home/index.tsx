@@ -40,6 +40,22 @@ export default function Login() {
     });
   }, []);
 
+  // const tripmock = [{
+  //   'id': '1',
+  //   'name': 'Viagem top',
+  //   'description': 'Aquela viagem top',
+  //   'dtstart': new Date(),
+  //   'dtend': new Date(),
+  // },
+  // {
+  //   'id': '2',
+  //   'name': 'Uma viagem com um nome maior pegando as duas linhas',
+  //   'description': 'Aquela viagem top com uma descrição grandinha'+ 
+  //   'importante ver o tamanho também',
+  //   'dtstart': new Date(),
+  //   'dtend': new Date(),
+  // }];
+
   useEffect(() => {
     LoadTrips();
   }, [useIsFocused()]);
@@ -60,6 +76,7 @@ export default function Login() {
         <Text style={{ fontSize: 20 }}>Lista de viagens</Text>
       </View>
       <FlatList
+        style={styles.trip}
         data={trips}
         renderItem={({item}) => (
           <TripSelector
