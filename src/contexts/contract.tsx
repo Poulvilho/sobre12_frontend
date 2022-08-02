@@ -9,8 +9,8 @@ export interface IContract {
 }
 
 export interface IContractContext {
-  contract: IContract;
-  setContract: React.Dispatch<React.SetStateAction<IContract>>;
+  contract: IContract | null;
+  setContract: React.Dispatch<React.SetStateAction<IContract | null>>;
 }
 
 const ContractContext = createContext<IContractContext>({
@@ -23,7 +23,7 @@ interface IContractProvider {
 }
 
 const ContractProvider = ({children}: IContractProvider) => {
-  const [contract, setContract] = useState<IContract>(null);
+  const [contract, setContract] = useState<IContract | null>(null);
   const providerValue = useMemo(
     () => ({
       contract,

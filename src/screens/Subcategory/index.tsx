@@ -25,10 +25,10 @@ export default function Subcategory() {
   const [subcategories, setSubcategories] = useState<Array<ISubcategory>>();
 
   const LoadSubcategories = useCallback(async () => {
-    await GetSubcategory(contract.id).then((response) => {
+    await GetSubcategory(contract!.id).then((response) => {
       setSubcategories(response.data);
     });
-  }, [contract.id]);
+  }, [contract]);
 
   const handleSubmit = (async (values: ISubcategoryForm) => {
     await CreateSubcategory(values);
@@ -38,7 +38,7 @@ export default function Subcategory() {
     initialValues: {
       description: '',
       category: '0',
-      trip: contract.id,
+      trip: contract!.id,
     },
     validationSchema: Yup.object({
       description: Yup.string().required('Insira um nome!'),
@@ -49,7 +49,7 @@ export default function Subcategory() {
 
   useEffect(() => {
     LoadSubcategories();
-  }, [handleSubmit]);
+  }, [LoadSubcategories]);
 
   return (
     <View style={styles.container}>

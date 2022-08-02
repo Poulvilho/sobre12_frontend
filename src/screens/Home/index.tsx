@@ -33,7 +33,7 @@ export default function Login() {
   });
 
   const LoadTrips = useCallback(async () => {
-    await GetTrips(user.id).then((response) => {
+    await GetTrips(user!.id).then((response) => {
       setTrips(response.data);
     }).catch ((err) => {
       console.log(err);
@@ -48,7 +48,7 @@ export default function Login() {
     <View style={styles.container}>
       <View style={styles.title}>
         <CustomButton
-          title={user.name}
+          title={user!.name}
           onPress={() => navigate('Profile')}
         />
         <Button
@@ -73,9 +73,9 @@ export default function Login() {
         )}
         keyExtractor={({id}: IContract) => id }
       />
-      <CustomButton 
+      <FloatCreateButton 
         title='Criar nova viagem' 
-        onPress={() => navigate('TripForm')} />
+        form={'TripForm'} />
     </View>
   );
 }

@@ -20,8 +20,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       TripNavigator: {
         screens: {
           Trip: 'trip',
-          TripPersonalConfig: 'tripPersonalConfig',
-          TripGeneralConfig: 'tripGeneralConfig',
+          TripConfig: 'tripGeneralConfig',
         },
       },
       Home: 'home',
@@ -30,6 +29,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       BudgetForm: 'budgetForm',
       CostForm: 'costForm',
       Subcategory: 'subcategory',
+      Guest: 'guest',
     },
   },
 };

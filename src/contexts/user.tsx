@@ -7,12 +7,12 @@ export interface IUser {
 }
 
 export interface IUserContext {
-  user: IUser;
-  setUser: React.Dispatch<React.SetStateAction<IUser>>;
+  user: IUser | null;
+  setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
 }
 
 const UserContext = createContext<IUserContext>({
-  user: {id: '', name: '', email: ''},
+  user: null,
   setUser: () => {},
 });
 
@@ -21,7 +21,7 @@ interface IUserProvider {
 }
 
 const UserProvider = ({children}: IUserProvider) => {
-  const [user, setUser] = useState<IUser>({id: '', name: '', email: ''});
+  const [user, setUser] = useState<IUser | null>(null);
   const providerValue = useMemo(
     () => ({
       user,

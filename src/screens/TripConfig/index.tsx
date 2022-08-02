@@ -7,24 +7,32 @@ import { useContract } from '../../contexts/contract';
 
 import { styles } from './styles';
 
-export default function TripGeneralConfig() {
+export default function TripConfig() {
   const { navigate } = useNavigation();
   const { contract } = useContract();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{contract.name}</Text>
+      <Text style={styles.title}>{contract!.name}</Text>
       <CustomButton
-        title={'Orçamentos'}
-        onPress={() => {navigate('Budget')}}
+        title={'Participantes'}
+        onPress={() => { navigate('Guest') }}
       />
       <CustomButton
-        title={'Relatórios Gerais'}
+        title={'Orçamentos'}
+        onPress={() => { navigate('Budget') }}
+      />
+      <CustomButton
+        title={'Relatórios'}
+        onPress={() => {}}
+      />
+      <CustomButton
+        title={'Dívidas'}
         onPress={() => {}}
       />
       <CustomButton
         title={'Gerenciar categorias'}
-        onPress={() => {navigate('Subcategory')}}
+        onPress={() => { navigate('Subcategory') }}
       />
     </View>
   );

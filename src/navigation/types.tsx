@@ -30,6 +30,7 @@ export type RootStackParamList = {
   BudgetForm: undefined;
   CostForm: undefined;
   Subcategory: undefined;
+  Guest: undefined
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -40,8 +41,7 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
 
 export type TripTabParamList = {
   Trip: undefined;
-  TripPersonalConfig: undefined;
-  TripGeneralConfig: undefined;
+  TripConfig: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof TripTabParamList> =

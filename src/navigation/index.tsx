@@ -3,7 +3,7 @@
  * refer to the "Fundamentals" guide: 
  * https://reactnavigation.org/docs/getting-started
  */
-import { FontAwesome,Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { 
@@ -25,8 +25,7 @@ import Register from '../screens/Register';
 import Profile from '../screens/Profile';
 import Home from '../screens/Home';
 import Trip from '../screens/Trip';
-import TripPersonalConfig from '../screens/TripPersonalConfig';
-import TripGeneralConfig from '../screens/TripGeneralConfig';
+import TripConfig from '../screens/TripConfig';
 import TripForm from '../screens/TripForm';
 import Budget from '../screens/Budget';
 import BudgetForm from '../screens/BudgetForm';
@@ -38,6 +37,7 @@ import {
   TripTabParamList,
 } from './types';
 import LinkingConfiguration from './LinkingConfiguration';
+import Guest from '../screens/Guest';
 
 export default function Navigation(
   { colorScheme }: { colorScheme: ColorSchemeName },
@@ -86,6 +86,8 @@ function RootNavigator() {
         options={{ title: 'Novo custo' }} />
       <Stack.Screen name="Subcategory" component={Subcategory}
         options={{ title: 'Subcategorias' }} />
+      <Stack.Screen name="Guest" component={Guest}
+        options={{ title: 'Participantes' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen}
         options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
@@ -111,7 +113,7 @@ function TripTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="Despesas"
+        name="Trip"
         component={Trip}
         options={() => ({
           headerShown: false,
@@ -119,16 +121,8 @@ function TripTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="Dados pessoais"
-        component={TripPersonalConfig}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="money" color={color} />,
-        }}
-      />
-      <BottomTab.Screen
-        name="Configurações da viagem"
-        component={TripGeneralConfig}
+        name="TripConfig"
+        component={TripConfig}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="plane" color={color} />,
