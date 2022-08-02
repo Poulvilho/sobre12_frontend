@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, View, TouchableOpacity } from 'react-native';
 import FormatUtils from '../../utils/FormatUtils';
 import { styles } from './styles';
 
@@ -32,16 +31,24 @@ const TripSelector = (({
           <Text
             style={styles.PrimaryText}  
           >
-            {name}
+            {/* Adicionar ... em nomes grandes */}
+            {
+              name
+            }
           </Text>
-          <Text>
-            {description}
-          </Text>
-          <Text>
-            {FormatUtils.dateBR(dtstart)
+          {/* <Text>
+            {
+              (description.length>61)
+              ? description.substring(0,58) + '...'
+              : description
+            }
+          </Text> */}
+          <Text
+            style={styles.date}> 
+            {FormatUtils.dateBR(dtstart.toISOString())
             +' a '
-            + FormatUtils.dateBR(dtend)}
-          </Text>
+            + FormatUtils.dateBR(dtend.toISOString())}</Text>
+
         </View>
 
       </View>  
