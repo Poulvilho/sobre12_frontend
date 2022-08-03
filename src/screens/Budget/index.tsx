@@ -19,7 +19,7 @@ export default function Budget() {
   const [budget, setBudget] = useState<Array<IBudget>>();
 
   const LoadBudgets = (async () => {
-    await GetBudgets(contract.id).then((response) => {
+    await GetBudgets(contract!.id).then((response) => {
       setBudget(response.data);
     });
   })

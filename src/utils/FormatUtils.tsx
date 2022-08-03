@@ -13,7 +13,7 @@ export default class FormatUtils {
     return formattedValue;
   }
 
-  static dateBR(date: string):string {
+  static dateBR(date: string): string {
     const dateString = date.toString();
     // yyyy-mm-dd -> dd/mm/yyyy
     return (

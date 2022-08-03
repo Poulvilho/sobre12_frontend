@@ -1,6 +1,8 @@
 import { AxiosResponse } from 'axios';
 import sobre12Api from '../../services/api';
 
+import { IContract } from '../../contexts/contract';
+
 export interface ITripForm {
   name: string;
   description: string;
@@ -9,12 +11,8 @@ export interface ITripForm {
   user: string;
 }
 
-export interface ITrip extends ITripForm {
-  id: string;
-}
-
-const CreateTrip = ((trip: ITripForm): Promise<AxiosResponse<ITrip>> => {
-  const response = sobre12Api.post<ITrip>('/trip/create', trip);
+const CreateTrip = ((trip: ITripForm): Promise<AxiosResponse<IContract>> => {
+  const response = sobre12Api.post<IContract>('/trip/create', trip);
   return response;
 });
 

@@ -28,7 +28,7 @@ export default function TripConfig() {
       />
       <CustomButton
         title={'Dívidas'}
-        onPress={() => {}}
+        onPress={() => { navigate('Debt') }}
       />
       <CustomButton
         title={'Gerenciar categorias'}

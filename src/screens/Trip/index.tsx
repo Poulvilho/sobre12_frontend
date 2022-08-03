@@ -43,7 +43,7 @@ export default function Trip() {
   //   ]
 
   const LoadCosts = (async () => {
-    await GetCosts(contract.id, user.id).then((response) => {
+    await GetCosts(contract!.id, user!.id).then((response) => {
       setCost(response.data);
     });
   });

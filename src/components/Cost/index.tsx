@@ -42,7 +42,7 @@ const Cost = (({
           </Text>
           <View style={styles.content} >
             <Text> 
-              {FormatUtils.dateBR(dtcost)}
+              {FormatUtils.dateBR(dtcost.toString())}
               {/* {dtcost.toLocaleDateString()} */}
             </Text>
             <Text style={styles.value}>

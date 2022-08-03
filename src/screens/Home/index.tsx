@@ -9,8 +9,6 @@ import CustomButton from '../../components/CustomButton'
 import FloatCreateButton from '../../components/FloatCreateButton';
 import { Text, View } from '../../components/Themed';
 
-import { ITrip } from '../TripForm/api';
-
 import { GetTrips } from './api';
 import { styles } from './styles';
 import TripSelector from '../../components/TripSelector';
@@ -20,7 +18,7 @@ export default function Login() {
   const { user, setUser } = useUser();
   const { setContract } = useContract();
 
-  const [trips, setTrips] = useState<Array<ITrip>>(Array(0));
+  const [trips, setTrips] = useState<Array<IContract>>(Array(0));
 
   const handleLogout = (() => {
     setUser(null);
@@ -39,22 +37,6 @@ export default function Login() {
       console.log(err);
     });
   }, []);
-
-  // const tripmock = [{
-  //   'id': '1',
-  //   'name': 'Viagem top',
-  //   'description': 'Aquela viagem top',
-  //   'dtstart': new Date(),
-  //   'dtend': new Date(),
-  // },
-  // {
-  //   'id': '2',
-  //   'name': 'Uma viagem com um nome maior pegando as duas linhas',
-  //   'description': 'Aquela viagem top com uma descrição grandinha'+ 
-  //   'importante ver o tamanho também',
-  //   'dtstart': new Date(),
-  //   'dtend': new Date(),
-  // }];
 
   useEffect(() => {
     LoadTrips();
@@ -82,7 +64,6 @@ export default function Login() {
           <TripSelector
             key={item.id}
             name={item.name}
-            description={item.description}
             dtstart={item.dtstart}
             dtend={item.dtend}
             onPress={() => handleChooseTrip(item)}

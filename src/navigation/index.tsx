@@ -31,13 +31,14 @@ import Budget from '../screens/Budget';
 import BudgetForm from '../screens/BudgetForm';
 import CostForm from '../screens/CostForm';
 import Subcategory from '../screens/Subcategory';
+import Guest from '../screens/Guest';
+import Debt from '../screens/Debt';
 
 import {
   RootStackParamList,
   TripTabParamList,
 } from './types';
 import LinkingConfiguration from './LinkingConfiguration';
-import Guest from '../screens/Guest';
 
 export default function Navigation(
   { colorScheme }: { colorScheme: ColorSchemeName },
@@ -88,6 +89,8 @@ function RootNavigator() {
         options={{ title: 'Subcategorias' }} />
       <Stack.Screen name="Guest" component={Guest}
         options={{ title: 'Participantes' }} />
+      <Stack.Screen name="Debt" component={Debt}
+        options={{ title: 'Dívidas' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen}
         options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>

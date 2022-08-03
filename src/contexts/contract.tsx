@@ -6,6 +6,7 @@ export interface IContract {
   description: string,
   dtstart: Date,
   dtend: Date,
+  user: string,
 }
 
 export interface IContractContext {

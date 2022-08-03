@@ -5,7 +5,6 @@ import { styles } from './styles';
 
 interface ITripSelector {
     name: string;
-    description: string;
     dtstart: Date;
     dtend: Date;
     onPress: () => void;
@@ -15,7 +14,6 @@ const TripSelector = (({
   name = '',
   dtstart = new Date(),
   dtend = new Date(),
-  description = '',
   onPress = (() => {}),
 } : ITripSelector) => {
   return (
@@ -45,12 +43,11 @@ const TripSelector = (({
           </Text> */}
           <Text
             style={styles.date}> 
-            {FormatUtils.dateBR(dtstart.toISOString())
+            {FormatUtils.dateBR(dtstart.toString())
             +' a '
-            + FormatUtils.dateBR(dtend.toISOString())}</Text>
-
+            + FormatUtils.dateBR(dtend.toString())}
+          </Text>
         </View>
-
       </View>  
     </TouchableOpacity>
   );

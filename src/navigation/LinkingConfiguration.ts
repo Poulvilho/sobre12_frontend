@@ -30,6 +30,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       CostForm: 'costForm',
       Subcategory: 'subcategory',
       Guest: 'guest',
+      Debt: 'debt',
     },
   },
 };

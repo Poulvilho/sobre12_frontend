@@ -1,9 +1,12 @@
 import { AxiosResponse } from 'axios';
 import sobre12Api from '../../services/api';
-import { ITrip } from '../TripForm/api';
 
-const GetTrips = ((userId: string): Promise<AxiosResponse<Array<ITrip>>>  => {
-  const response = sobre12Api.post<Array<ITrip>>(
+import { IContract } from '../../contexts/contract';
+
+const GetTrips = ((
+  userId: string,
+): Promise<AxiosResponse<Array<IContract>>>  => {
+  const response = sobre12Api.post<Array<IContract>>(
     `/trip/index/${userId}`,
   );
   return response;

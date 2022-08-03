@@ -30,7 +30,8 @@ export type RootStackParamList = {
   BudgetForm: undefined;
   CostForm: undefined;
   Subcategory: undefined;
-  Guest: undefined
+  Guest: undefined;
+  Debt: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
