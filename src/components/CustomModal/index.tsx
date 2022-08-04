@@ -18,7 +18,7 @@ const CustomModal = ({
       visible={modalVisible}
     >
       <View style={styles.centeredView}>
-        <View style={styles.modalView}>{children}</View>
+        {children}
       </View>
     </Modal>
   );
