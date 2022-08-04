@@ -14,8 +14,11 @@ import { Text, View } from '../../components/Themed';
 import CustomButton from '../../components/CustomButton';
 import CustomDropdown, { CustomItem } from '../../components/CustomDropdown';
 
+import AddParticipantButton from '../AddParticipantButton';
+
 import { CreateCost, ICostForm } from './api';
 import { styles } from './styles';
+import { FlatList } from 'react-native';
 
 export default function CostForm() {
   const { navigate } = useNavigation();
@@ -31,11 +34,12 @@ export default function CostForm() {
   const costFormik = useFormik<ICostForm>({
     initialValues: {
       description: '',
-      value: 0.0,
+      value: '0.0',
       category: '0',
       dtcost: new Date(),
-      trip: contract.id,
-      user: user.id,
+      participants: [],
+      trip: contract!.id,
+      user: user!.id,
     },
     validationSchema: Yup.object({
       description: Yup.string().required('Insira um nome!'),
@@ -80,6 +84,20 @@ export default function CostForm() {
         error={Boolean(costFormik.errors.dtcost)}
         width='80%'
       />
+      {costFormik.values.participants.length > 0 && (
+        <FlatList
+          data={costFormik.values.participants}
+          renderItem={item => (
+            <CustomButton
+              key={item.item}
+              title={item.item}
+              onPress={() => {}}
+            />
+          )}
+          keyExtractor={(item) => item}
+        />
+      )}
+      <AddParticipantButton />
       <CustomButton
         title='Salvar'
         onPress={costFormik.submitForm}
