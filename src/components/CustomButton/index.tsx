@@ -17,7 +17,7 @@ const CustomButton = (({
   isSecondary= false,
 } : ICustomButtom) => {
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={[
         isSecondary
           ? styles.SecondaryButton

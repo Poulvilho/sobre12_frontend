@@ -29,7 +29,7 @@ export default function TripForm() {
       description: '',
       dtstart: new Date(),
       dtend: new Date(),
-      user: user.id,
+      user: user!.id,
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Insira um nome!'),
