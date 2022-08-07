@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const sobre12Api = axios.create({
   baseURL:
-    'http://10.0.2.2:3333/api',
+    'http://sobre12-backend.herokuapp.com/api',
   headers: {
     Accept: 'application/json',
   },
