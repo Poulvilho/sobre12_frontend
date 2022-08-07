@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import * as Yup from 'yup';
 
 import { categories } from '../../constants/Categories';
@@ -8,28 +8,32 @@ import { categories } from '../../constants/Categories';
 import { useUser } from '../../contexts/user';
 import { useContract } from '../../contexts/contract';
 
-import CustomDateTimePicker from '../../components/CustomDatePicker';
-import CustomTextInput from '../../components/CustomTextInput';
 import { Text, View } from '../../components/Themed';
 import CustomButton from '../../components/CustomButton';
+import CustomDateTimePicker from '../../components/CustomDatePicker';
 import CustomDropdown, { CustomItem } from '../../components/CustomDropdown';
+import CustomTextInput from '../../components/CustomTextInput';
 
-import AddParticipantButton from '../AddParticipantButton';
+import AddParticipant from '../AddParticipantButton';
 
+import { IGuestUser } from '../Guest/api';
 import { CreateCost, ICostForm } from './api';
 import { styles } from './styles';
-import { FlatList } from 'react-native';
 
 export default function CostForm() {
   const { navigate } = useNavigation();
   const { contract } = useContract();
   const { user } = useUser();
 
-  const handleSubmit = (async (values: ICostForm) => {
+  const [participants, setParticipants] = useState<Array<IGuestUser>>([])
+
+  const handleSubmit = useCallback(async (values: ICostForm) => {
+    values.participants = participants.map(participant => participant.id);
+
     await CreateCost(values).then(() => {
       navigate('TripNavigator');
     });
-  });
+  }, [participants]);
 
   const costFormik = useFormik<ICostForm>({
     initialValues: {
@@ -84,20 +88,15 @@ export default function CostForm() {
         error={Boolean(costFormik.errors.dtcost)}
         width='80%'
       />
-      {costFormik.values.participants.length > 0 && (
-        <FlatList
-          data={costFormik.values.participants}
-          renderItem={item => (
-            <CustomButton
-              key={item.item}
-              title={item.item}
-              onPress={() => {}}
-            />
-          )}
-          keyExtractor={(item) => item}
-        />
+      {participants.length > 0 && (
+        participants.map((participant) => (
+          <Text key={participant.id}>{participant.name}</Text>
+        ))
       )}
-      <AddParticipantButton />
+      <AddParticipant
+        participants={participants}
+        setParticipants={setParticipants}
+      />
       <CustomButton
         title='Salvar'
         onPress={costFormik.submitForm}

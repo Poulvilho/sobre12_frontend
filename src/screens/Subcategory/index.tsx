@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { useContract } from '../../contexts/contract';
+import { useUser } from '../../contexts/user';
 
 import { categories } from '../../constants/Categories';
 
@@ -21,7 +22,9 @@ import {
 import { styles } from './styles';
 
 export default function Subcategory() {
+  const { user } = useUser();
   const { contract } = useContract();
+
   const [subcategories, setSubcategories] = useState<Array<ISubcategory>>();
 
   const LoadSubcategories = useCallback(async () => {
@@ -64,28 +67,36 @@ export default function Subcategory() {
         )}
         keyExtractor={({id}: ISubcategory) => id }
       />
-      <Text style={styles.title}>Adicionar subcategoria</Text>
-      <CustomTextInput
-        title='Descrição'
-        fieldName='description'
-        formikHelpers={subcategoryFormik}
-        width='80%'
-        mode='outlined'
-      />
-      <CustomDropdown
-        title='Categoria'
-        formikHelpers={subcategoryFormik}
-        fieldName='category'
-        width='80%'
-      >
-        {categories.map((item) => (
-          <CustomItem key={item.value} label={item.label} value={item.value} />
-        ))}
-      </CustomDropdown>
-      <CustomButton
-        title='Salvar'
-        onPress={subcategoryFormik.submitForm}
-      />
+      {user!.id === contract!.user && (
+        <>
+          <Text style={styles.title}>Adicionar subcategoria</Text>
+          <CustomTextInput
+            title='Descrição'
+            fieldName='description'
+            formikHelpers={subcategoryFormik}
+            width='80%'
+            mode='outlined'
+          />
+          <CustomDropdown
+            title='Categoria'
+            formikHelpers={subcategoryFormik}
+            fieldName='category'
+            width='80%'
+          >
+            {categories.map((item) => (
+              <CustomItem
+                key={item.value}
+                label={item.label}
+                value={item.value}
+              />
+            ))}
+          </CustomDropdown>
+          <CustomButton
+            title='Salvar'
+            onPress={subcategoryFormik.submitForm}
+          />
+        </>
+      )}
     </View>
   );
 }

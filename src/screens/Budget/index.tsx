@@ -3,6 +3,7 @@ import { FlatList } from 'react-native';
 import { useIsFocused } from '@react-navigation/core';
 
 import { useContract } from '../../contexts/contract';
+import { useUser } from '../../contexts/user';
 
 import CustomButton from '../../components/CustomButton';
 import FloatCreateButton from '../../components/FloatCreateButton';
@@ -14,6 +15,7 @@ import { GetBudgets } from './api';
 import { styles } from './styles';
 
 export default function Budget() {
+  const { user } = useUser();
   const { contract } = useContract();
 
   const [budget, setBudget] = useState<Array<IBudget>>();
@@ -41,7 +43,9 @@ export default function Budget() {
         )}
         keyExtractor={({id}: IBudget) => id }
       />
-      <FloatCreateButton title='Adicionar orçamento' form='BudgetForm' />
+      {user!.id === contract!.user && (
+        <FloatCreateButton title='Adicionar orçamento' form='BudgetForm' />
+      )}
     </View>
   );
 }

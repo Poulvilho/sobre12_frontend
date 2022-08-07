@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { useContract } from '../../contexts/contract';
+import { useUser } from '../../contexts/user';
 
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
@@ -18,7 +19,9 @@ import {
 import { styles } from './styles';
 
 export default function Guest() {
+  const { user } = useUser();
   const { contract } = useContract();
+
   const [guests, setGuests] = useState<Array<IGuest>>();
 
   const LoadGuests = useCallback(async () => {
@@ -60,18 +63,22 @@ export default function Guest() {
         )}
         keyExtractor={({User}: IGuest) => User.id }
       />
-      <Text style={styles.title}>Adicionar participante</Text>
-      <CustomTextInput
-        title='Email'
-        fieldName='email'
-        formikHelpers={guestFormik}
-        width='80%'
-        mode='outlined'
-      />
-      <CustomButton
-        title='Salvar'
-        onPress={guestFormik.submitForm}
-      />
+      {user!.id === contract!.user && (
+        <>
+          <Text style={styles.title}>Adicionar participante</Text>
+          <CustomTextInput
+            title='Email'
+            fieldName='email'
+            formikHelpers={guestFormik}
+            width='80%'
+            mode='outlined'
+          />
+          <CustomButton
+            title='Salvar'
+            onPress={guestFormik.submitForm}
+          />
+        </>
+      )}
     </View>
   );
 }

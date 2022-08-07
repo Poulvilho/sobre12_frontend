@@ -6,11 +6,13 @@ export interface IGuestForm {
   email: string;
 }
 
+export interface IGuestUser {
+  id: string;
+  name: string;
+}
+
 export interface IGuest {
-  User: {
-      id: string;
-      name: string;
-  }
+  User: IGuestUser
 }
 
 const GetGuests = ((
