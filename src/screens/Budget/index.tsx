@@ -24,7 +24,7 @@ export default function Budget() {
     await GetBudgets(contract!.id).then((response) => {
       setBudget(response.data);
     });
-  })
+  });
 
   useEffect(() => {
     LoadBudgets();

@@ -34,12 +34,15 @@ export default function Register() {
       name: '',
       email: '',
       password: '',
+      passwordConfirm: '',
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Insira um nome!'),
       email: Yup.string().required('Insira um email!')
         .email('Insira um email no formato correto'),
       password: Yup.string().required('Insira uma senha!'),
+      passwordConfirm: Yup.string().required('Insira novamente sua senha!')
+        .equals([Yup.ref('password')], 'Senhas diferentes'),
     }),
     onSubmit: handleSubmit,
   });
@@ -60,7 +63,7 @@ export default function Register() {
               width='80%'
               mode='outlined'
             />
-          </View>
+          </View> 
           <View style={styles.row}> 
             <CustomTextInput
               title='Email'
@@ -74,6 +77,16 @@ export default function Register() {
             <CustomTextInput
               title='Senha'
               fieldName='password'
+              formikHelpers={userFormik}
+              width='80%'
+              mode='outlined'
+              secureTextEntry={true}
+            />
+          </View>
+          <View style={styles.row}>
+            <CustomTextInput
+              title='Senha'
+              fieldName='passwordConfirm'
               formikHelpers={userFormik}
               width='80%'
               mode='outlined'

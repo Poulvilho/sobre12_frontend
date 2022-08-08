@@ -5,6 +5,7 @@ import { ILogin } from '../Login/api';
 
 export interface IRegister extends ILogin {
   name: string;
+  passwordConfirm: string;
 }
 
 const RegisterRequest = ((user: IRegister): Promise<AxiosResponse<IUser>> => {

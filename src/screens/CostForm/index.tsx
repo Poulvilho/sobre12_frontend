@@ -38,7 +38,7 @@ export default function CostForm() {
   const costFormik = useFormik<ICostForm>({
     initialValues: {
       description: '',
-      value: '0.0',
+      value: 0.0,
       category: '0',
       dtcost: new Date(),
       participants: [],
