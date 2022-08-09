@@ -36,6 +36,26 @@ export default function Login() {
     }).catch ((err) => {
       console.log(err);
     });
+    // let tripMock = [
+    //   {
+    //     id: '1',
+    //     name: 'Viagem Top',
+    //     description: 'Rumo a Curitiba',
+    //     dtstart: new Date(),
+    //     dtend: new Date(),
+    //     user: '1',
+    //   },
+    //   {
+    //     id: '2',
+    //     name: 'Viagenzinha um pouco maior',
+    //     description: 'Com uma descrição generica mas ok',
+    //     dtstart: new Date(),
+    //     dtend: new Date(),
+    //     user: '1',
+    //   },
+    // ];
+    // setTrips(tripMock);
+
   }, []);
 
   useEffect(() => {
@@ -49,10 +69,12 @@ export default function Login() {
           title={user!.name}
           onPress={() => navigate('Profile')}
         />
-        <Button
-          title='Sair'
-          onPress={handleLogout}
-        />
+        <View style={styles.exit}>
+          <Button
+            title='Sair'
+            onPress={handleLogout}
+          />
+        </View>
       </View>
       <View style={styles.row}>
         <Text style={{ fontSize: 20 }}>Lista de viagens</Text>

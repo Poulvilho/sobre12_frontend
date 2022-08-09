@@ -5,8 +5,8 @@ import { FlatList } from 'react-native';
 import { useContract } from '../../contexts/contract';
 import { useUser } from '../../contexts/user';
 
-import Cost from '../../components/Cost';
-import CustomButton from '../../components/CustomButton';
+import CostItem from '../../components/CostItem';
+// import CustomButton from '../../components/CustomButton';
 import CustomDateTimePicker from '../../components/CustomDatePicker';
 import FloatCreateButton from '../../components/FloatCreateButton';
 import { Text, View } from '../../components/Themed';
@@ -17,6 +17,7 @@ import { IBudget } from '../BudgetForm/api';
 
 import { GetCosts } from './api';
 import { styles } from './styles';
+import BudgetComponent from '../../components/BudgetComponent';
 
 export default function Trip() {
   const { contract } = useContract();
@@ -31,12 +32,55 @@ export default function Trip() {
     await GetCosts(contract!.id, user!.id).then((response) => {
       setCost(response.data);
     });
-  });
+
+    // const CostMock = [
+    //   {
+    //     description: 'Almoço de domingo',
+    //     value: 200,
+    //     category: '1',
+    //     dtCost: new Date(),
+    //     trip: 'string',
+    //     user: 'string',
+    //     participants: ['1'],
+    //     id: '1',
+    //   },
+    //   {
+    //     description: 'Gasosa da semana',
+    //     value: 500,
+    //     category: '5',
+    //     dtCost: new Date(),
+    //     trip: '1',
+    //     user: '1',
+    //     participants: ['1'],
+    //     id: '2',
+    //   },
+    // ];
+    // setCost(CostMock);
+  })
 
   const LoadBudgets = (async () => {
     await GetBudgets(contract!.id).then((response) => {
       setBudget(response.data);
     });
+    // const budgetMock = [
+    //   {
+    //     id:'1',
+    //     description: 'Alimentação',
+    //     value: 500,
+    //     category: '1',
+    //     dtbudget: new Date(),
+    //     trip: '1',
+    //   },
+    //   {
+    //     id:'2',
+    //     description: 'Transporte',
+    //     value: 700,
+    //     category: '5',
+    //     dtbudget: new Date(),
+    //     trip: '1',
+    //   },
+    // ];
+    // setBudget(budgetMock)
   });
 
   useEffect(() => {
@@ -58,11 +102,12 @@ export default function Trip() {
       </View>
       <Text>Orçamentos</Text>
       <FlatList
+        style={styles.list}
         data={budget}
         renderItem={({item}) => (
-          <CustomButton
+          <BudgetComponent
             key={item.id}
-            title={item.description + ': ' + item.value}
+            budget={item}
             onPress={() => {}}
           />
         )}
@@ -70,15 +115,12 @@ export default function Trip() {
       />
       <Text>Custos</Text>
       <FlatList
-        style={{ width:'80%'}}
+        style={styles.list}
         data={cost}
         renderItem={({item}) => (
-          <Cost
+          <CostItem
             key={item.id}
-            id = {item.id}
-            description={item.description}
-            value = {item.value}
-            dtcost = {item.dtcost}
+            cost={item}
             onPress={() => {}}
           />
         )}

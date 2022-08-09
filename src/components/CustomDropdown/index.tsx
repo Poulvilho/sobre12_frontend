@@ -8,6 +8,7 @@ import { styles } from './styles';
 export interface ILOV {
   label: string;
   value: string;
+  icon?: string;
 }
 
 export const CustomItem = (props: ILOV) => {

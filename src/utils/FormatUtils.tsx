@@ -1,3 +1,5 @@
+import { categories } from "../constants/Categories";
+
 export default class FormatUtils {
   static currencyBRL(value: number): string {
     let formattedValue;
@@ -23,5 +25,20 @@ export default class FormatUtils {
       '/' +
       dateString.substring(0, 4)
     );
+  }
+  static getIcon(pCategory: string): string|undefined {
+    let index = 0;
+    let categoryIndex = 5;
+    for(let category of categories){
+      if(category.value == pCategory.toString()){
+        categoryIndex = index
+      }
+      index++;
+    }
+    // let categoryIndex = categories.findIndex(
+    //   (category) => { 
+    //     category.value == budget.category.toString()},
+    // )
+    return categories[categoryIndex].icon
   }
 }
