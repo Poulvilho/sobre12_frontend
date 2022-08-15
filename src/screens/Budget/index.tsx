@@ -5,7 +5,6 @@ import { useIsFocused } from '@react-navigation/core';
 import { useContract } from '../../contexts/contract';
 import { useUser } from '../../contexts/user';
 
-import CustomButton from '../../components/CustomButton';
 import FloatCreateButton from '../../components/FloatCreateButton';
 import { View } from '../../components/Themed';
 
@@ -13,6 +12,7 @@ import { IBudget } from '../BudgetForm/api';
 
 import { GetBudgets } from './api';
 import { styles } from './styles';
+import BudgetComponent from '../../components/BudgetComponent';
 
 export default function Budget() {
   const { user } = useUser();
@@ -24,6 +24,25 @@ export default function Budget() {
     await GetBudgets(contract!.id).then((response) => {
       setBudget(response.data);
     });
+    // const budgetMock = [
+    //   {
+    //     id:'1',
+    //     description: 'Alimentação',
+    //     value: 500,
+    //     category: '1',
+    //     dtbudget: new Date(),
+    //     trip: '1',
+    //   },
+    //   {
+    //     id:'2',
+    //     description: 'Transporte',
+    //     value: 700,
+    //     category: '5',
+    //     dtbudget: new Date(),
+    //     trip: '1',
+    //   },
+    // ];
+    // setBudget(budgetMock)
   });
 
   useEffect(() => {
@@ -33,11 +52,12 @@ export default function Budget() {
   return (
     <View style={styles.container}>
       <FlatList
+        style={styles.list}
         data={budget}
         renderItem={({item}) => (
-          <CustomButton
+          <BudgetComponent
             key={item.id}
-            title={item.description}
+            budget={item}
             onPress={() => {}}
           />
         )}
