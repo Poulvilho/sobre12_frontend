@@ -28,6 +28,28 @@ export default function Guest() {
     await GetGuests(contract!.id).then((response) => {
       setGuests(response.data);
     });
+    // let guestMock = [
+    //   {
+    //     User: {
+    //       id: '1',
+    //       name: 'Joãozinho',
+    //     },
+    //   },
+    //   {
+    //     User: {
+    //       id: '2',
+    //       name: 'Pedro da Silva Sauro',
+    //     },
+    //   },
+    //   {
+    //     User: {
+    //       id: '3',
+    //       name: 'Robert de Niro Cleison',
+    //     },
+    //   },
+    // ];
+    // setGuests(guestMock);
+
   }, [contract]);
 
   const handleSubmit = (async (values: IGuestForm) => {

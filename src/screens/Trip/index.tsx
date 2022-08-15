@@ -97,8 +97,8 @@ export default function Trip() {
           mode={'date'}
           width='25%'
         />
-        <Text style={styles.title}>100</Text>
-        <Text style={styles.title}>1000</Text>
+        {/* <Text style={styles.title}>100</Text>
+        <Text style={styles.title}>1000</Text> */}
       </View>
       <Text>Orçamentos</Text>
       <FlatList

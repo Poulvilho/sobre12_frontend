@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/core';
 
-import CustomButton from '../../components/CustomButton';
 import { Text, View } from '../../components/Themed';
 import { useContract } from '../../contexts/contract';
 
 import { styles } from './styles';
+import TripConfigItem from '../../components/TripConfigItem';
 
 export default function TripConfig() {
   const { navigate } = useNavigation();
@@ -14,23 +14,28 @@ export default function TripConfig() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{contract!.name}</Text>
-      <CustomButton
+      <TripConfigItem
+        icon={'user-friends'}
         title={'Participantes'}
         onPress={() => { navigate('Guest') }}
       />
-      <CustomButton
+      <TripConfigItem
+        icon={'list'}
         title={'Orçamentos'}
         onPress={() => { navigate('Budget') }}
       />
-      <CustomButton
+      <TripConfigItem
+        icon={'chart-line'}
         title={'Relatórios'}
         onPress={() => {}}
       />
-      <CustomButton
+      <TripConfigItem
+        icon={'people-arrows'}
         title={'Dívidas'}
         onPress={() => { navigate('Debt') }}
       />
-      <CustomButton
+      <TripConfigItem
+        icon={'shapes'}
         title={'Gerenciar categorias'}
         onPress={() => { navigate('Subcategory') }}
       />
