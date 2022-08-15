@@ -63,7 +63,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: '#42A4E8' },
+        headerStyle: { backgroundColor: Colors.light.primaryColor },
         headerTintColor: '#353535',
         headerTitleAlign: 'center',
       }}>
@@ -80,7 +80,7 @@ function RootNavigator() {
       <Stack.Screen name="TripForm" component={TripForm}
         options={{ title: 'Nova viagem' }} />
       <Stack.Screen name="Budget" component={Budget}
-        options={{ title: 'Orçamento' }} />
+        options={{ title: 'Orçamentos' }} />
       <Stack.Screen name="BudgetForm" component={BudgetForm}
         options={{ title: 'Novo orçamento' }} />
       <Stack.Screen name="CostForm" component={CostForm}
