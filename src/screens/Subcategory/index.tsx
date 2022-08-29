@@ -40,7 +40,7 @@ export default function Subcategory() {
   const subcategoryFormik = useFormik<ISubcategoryForm>({
     initialValues: {
       description: '',
-      category: '0',
+      category: '6',
       trip: contract!.id,
     },
     validationSchema: Yup.object({

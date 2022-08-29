@@ -6,17 +6,16 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  header: {
-    width: '100%',
+  datePicker:{
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 16,
+    // fontWeight: 'bold',
   },
   list: {
     width: '90%',
+    marginTop: 16,
   },
 });

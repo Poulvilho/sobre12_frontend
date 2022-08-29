@@ -8,6 +8,11 @@ export const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    marginLeft: 28,
+    marginBottom: 100,
   },
   title: {
     fontSize: 20,

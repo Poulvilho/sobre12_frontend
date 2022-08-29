@@ -9,6 +9,8 @@ import CostItem from '../../components/CostItem';
 // import CustomButton from '../../components/CustomButton';
 import CustomDateTimePicker from '../../components/CustomDatePicker';
 import FloatCreateButton from '../../components/FloatCreateButton';
+import BudgetComponent from '../../components/BudgetComponent';
+import TopTabComponent from '../../components/TopTabComponent';
 import { Text, View } from '../../components/Themed';
 
 import { ICost } from '../CostForm/api';
@@ -17,19 +19,37 @@ import { IBudget } from '../BudgetForm/api';
 
 import { GetCosts } from './api';
 import { styles } from './styles';
-import BudgetComponent from '../../components/BudgetComponent';
+
 
 export default function Trip() {
   const { contract } = useContract();
   const { user } = useUser();
 
-  const [date, setDate] = useState<Date>(new Date());
+  const [initDate, setInitDate] = useState<Date>(new Date());
+  const [untilDate, setUntilDate] = useState<Date>(new Date(contract!.dtend));
   
-  const [cost, setCost] = useState<Array<ICost>>();
-  const [budget, setBudget] = useState<Array<IBudget>>();
+  const [cost, setCost] = useState<Array<ICost>>(null!);
+  const [filteredCost, setFilteredCost] = useState<Array<ICost>>();
+  const [budget, setBudget] = useState<Array<IBudget>>(null!);
+  const [filteredBudget, setFilteredBudget] = 
+  useState<Array<IBudget>>();
+  const [showBudget, setshowBudget] = useState(true);
 
   const LoadCosts = (async () => {
     await GetCosts(contract!.id, user!.id).then((response) => {
+      response.data.sort((a,b)=>{
+        let dateA = new Date(a.dtcost);
+        let dateB = new Date(b.dtcost);
+        if(dateA > dateB){
+          return -1;
+        }
+        else if(dateA < dateB){
+          return 1;
+        }
+        else{
+          return 0
+        }
+      })
       setCost(response.data);
     });
 
@@ -38,7 +58,7 @@ export default function Trip() {
     //     description: 'Almoço de domingo',
     //     value: 200,
     //     category: '1',
-    //     dtCost: new Date(),
+    //     dtcost: new Date(),
     //     trip: 'string',
     //     user: 'string',
     //     participants: ['1'],
@@ -48,7 +68,7 @@ export default function Trip() {
     //     description: 'Gasosa da semana',
     //     value: 500,
     //     category: '5',
-    //     dtCost: new Date(),
+    //     dtcost: new Date(),
     //     trip: '1',
     //     user: '1',
     //     participants: ['1'],
@@ -56,11 +76,39 @@ export default function Trip() {
     //   },
     // ];
     // setCost(CostMock);
+    // cost?.sort((a,b)=>{
+    //   let dateA = new Date(a.dtcost);
+    //   let dateB = new Date(b.dtcost);
+    //   if(dateA > dateB){
+    //     return -1;
+    //   }
+    //   else if(dateA < dateB){
+    //     return 1;
+    //   }
+    //   else{
+    //     return 0
+    //   }
+    // })
+    setFilteredCost(cost)
   })
 
   const LoadBudgets = (async () => {
     await GetBudgets(contract!.id).then((response) => {
+      response.data.sort((a,b)=>{
+        let dateA = new Date(a.dtbudget);
+        let dateB = new Date(b.dtbudget);
+        if(dateA > dateB){
+          return -1;
+        }
+        else if(dateA < dateB){
+          return 1;
+        }
+        else{
+          return 0
+        }
+      })
       setBudget(response.data);
+      setFilteredBudget(response.data)
     });
     // const budgetMock = [
     //   {
@@ -81,52 +129,130 @@ export default function Trip() {
     //   },
     // ];
     // setBudget(budgetMock)
+    // budget?.sort((a,b)=>{
+    //   let dateA = new Date(a.dtbudget);
+    //   let dateB = new Date(b.dtbudget);
+    //   if(dateA > dateB){
+    //     return -1;
+    //   }
+    //   else if(dateA < dateB){
+    //     return 1;
+    //   }
+    //   else{
+    //     return 0
+    //   }
+    // })
+    // setFilteredBudget(budget);
   });
 
+  function showBudgetList(){
+    if(!showBudget)
+      setshowBudget(true);
+  }
+  
+  function showCostList(){
+    if(showBudget){
+      setshowBudget(false);
+    }
+  }
+
+  function getBudgetCosts(category:string){
+    let value = 0;
+    for(let costItem of cost){
+      if(costItem.category === category){
+        value+=costItem.value
+      }
+    }
+    return value;
+  }
+  
   useEffect(() => {
     LoadBudgets();
     LoadCosts();
   }, [useIsFocused()]);
 
+  useEffect(() => {
+    const formatedInitDate = new Date(
+      initDate.getFullYear(),initDate.getMonth(),initDate.getDate(),0,0,0,
+    );
+    const formatedUntilDate = new Date(
+      untilDate.getFullYear(),untilDate.getMonth(),untilDate.getDate(),23,59,59,
+    );
+    setFilteredCost(cost?.filter((cost)=>{
+      let costDate = new Date(cost.dtcost)
+      return costDate >= formatedInitDate && 
+             costDate <= formatedUntilDate
+    }));
+    setFilteredBudget(budget?.filter((budget)=>{
+      let budgetDate = new Date(budget.dtbudget)
+      return budgetDate >= formatedInitDate &&
+             budgetDate <= formatedUntilDate
+    }));
+
+  }, [initDate,untilDate,budget]);
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <TopTabComponent
+        firstOption='Orçamentos'
+        firstFunction={showBudgetList}
+        secondOption='Custos'
+        secondFunction={showCostList}
+      />
+      <View style={styles.datePicker}>
+        <Text style={styles.title}>De:</Text>
         <CustomDateTimePicker
-          date={date}
-          setDate={setDate}
+          date={initDate}
+          setDate={setInitDate}
           mode={'date'}
-          width='25%'
+          width='30%'
+          maximumDate={untilDate}
         />
-        {/* <Text style={styles.title}>100</Text>
-        <Text style={styles.title}>1000</Text> */}
+        <Text style={styles.title}> à </Text>
+        <CustomDateTimePicker
+          date={untilDate}
+          setDate={setUntilDate}
+          mode={'date'}
+          width='30%'
+        />
       </View>
-      <Text>Orçamentos</Text>
-      <FlatList
-        style={styles.list}
-        data={budget}
-        renderItem={({item}) => (
-          <BudgetComponent
-            key={item.id}
-            budget={item}
-            onPress={() => {}}
-          />
-        )}
-        keyExtractor={({id}: IBudget) => id }
-      />
-      <Text>Custos</Text>
-      <FlatList
-        style={styles.list}
-        data={cost}
-        renderItem={({item}) => (
-          <CostItem
-            key={item.id}
-            cost={item}
-            onPress={() => {}}
-          />
-        )}
-        keyExtractor={({id}: ICost) => id }
-      />
-      <FloatCreateButton title='Adicionar custo' form='CostForm' />
+      { showBudget && filteredBudget &&
+        <FlatList
+          style={styles.list}
+          data={filteredBudget}
+          renderItem={({item}) => (
+            <BudgetComponent
+              key={item.id}
+              budget={item}
+              spent={item.category
+                ? 100//getBudgetCosts(item.category)
+                : 0}
+              onPress={() => {}}
+            />
+          )}
+          keyExtractor={({id}: IBudget) => id }
+        />
+      }
+      { !showBudget &&
+        <FlatList
+          style={styles.list}
+          data={filteredCost}
+          renderItem={({item}) => (
+            <CostItem
+              key={item.id}
+              cost={item}
+              onPress={() => {}}
+            />
+          )}
+          keyExtractor={({id}: ICost) => id }
+        />
+      }
+      { showBudget && 
+        <FloatCreateButton title='Adicionar orçamento' form='BudgetForm' />
+      }
+      { !showBudget && 
+        <FloatCreateButton title='Adicionar custo' form='CostForm' />
+      }
     </View>
   );
 }

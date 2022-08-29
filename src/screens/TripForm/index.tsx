@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
 import React from 'react';
-import { Button } from 'react-native';
 import * as Yup from 'yup';
 
 import { useUser } from '../../contexts/user';
@@ -12,10 +11,18 @@ import { Text, View } from '../../components/Themed';
 
 import { CreateTrip, ITripForm } from './api';
 import { styles } from './styles';
+import CustomButton from '../../components/CustomButton';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../navigation/types';
 
-export default function TripForm() {
+type Props = NativeStackScreenProps<RootStackParamList, 'TripForm'>;
+
+
+export default function TripForm({route}: Props) {
   const { navigate } = useNavigation();
   const { user } = useUser()
+  const {trip} = route.params || {};
+
 
   const handleSubmit = (async (values: ITripForm) => {
     await CreateTrip(values).then(() => {
@@ -25,10 +32,10 @@ export default function TripForm() {
 
   const tripFormik = useFormik<ITripForm>({
     initialValues: {
-      name: '',
-      description: '',
-      dtstart: new Date(),
-      dtend: new Date(),
+      name: trip?.name || '',
+      description: trip?.description || '',
+      dtstart: trip? new Date(trip.dtstart):new Date(),
+      dtend: trip? new Date(trip.dtend):new Date(),
       user: user!.id,
     },
     validationSchema: Yup.object({
@@ -56,6 +63,7 @@ export default function TripForm() {
         mode='outlined'
       />
       <View style={styles.row}>
+        <Text>De  </Text>
         <CustomDateTimePicker
           date={tripFormik.values.dtstart}
           setDate={(newDate) => tripFormik.setFieldValue('dtstart', newDate)}
@@ -63,6 +71,7 @@ export default function TripForm() {
           error={Boolean(tripFormik.errors.dtstart)}
           width='40%'
         />
+        <Text>à     </Text>
         <CustomDateTimePicker
           date={tripFormik.values.dtend}
           setDate={(newDate) => tripFormik.setFieldValue('dtend', newDate)}
@@ -71,8 +80,8 @@ export default function TripForm() {
           width='40%'
         />
       </View>
-      <Button
-        title='Salvar'
+      <CustomButton
+        title='Criar viagem'
         onPress={tripFormik.submitForm}
       />
     </View>

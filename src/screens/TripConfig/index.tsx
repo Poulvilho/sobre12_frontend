@@ -14,6 +14,7 @@ export default function TripConfig() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{contract!.name}</Text>
+      <Text style={styles.subtitle}>{contract!.description}</Text>
       <TripConfigItem
         icon={'user-friends'}
         title={'Participantes'}
@@ -25,7 +26,7 @@ export default function TripConfig() {
         onPress={() => { navigate('Budget') }}
       />
       <TripConfigItem
-        icon={'chart-line'}
+        icon={'chart-bar'}
         title={'Relatórios'}
         onPress={() => {}}
       />
@@ -38,6 +39,11 @@ export default function TripConfig() {
         icon={'shapes'}
         title={'Gerenciar categorias'}
         onPress={() => { navigate('Subcategory') }}
+      />
+      <TripConfigItem
+        icon={'cog'}
+        title={'Editar dados da viagem'}
+        onPress={() => { navigate('TripForm',{trip:contract!}) }}
       />
     </View>
   );
