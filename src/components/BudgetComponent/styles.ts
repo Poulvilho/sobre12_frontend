@@ -18,6 +18,9 @@ export const styles = StyleSheet.create({
     color: Colors.light.text,
     textAlign: 'auto',
   },
+  budgetText:{
+    color: Colors.light.secondaryButton,
+  },
   content: {
     flexDirection: 'row',
   },
@@ -37,6 +40,9 @@ export const styles = StyleSheet.create({
     marginRight: 30,
     alignItems: 'flex-end',
   },
+  budgetSolo:{
+    marginLeft: 90,
+  },
   spent:{
     flexDirection: 'column',
     marginTop: 5,
@@ -44,5 +50,37 @@ export const styles = StyleSheet.create({
   },
   date:{
     alignItems:'flex-end',
+  },
+  infoContainer:{
+    flexDirection: 'row',
+    justifyContent:'space-between',
+    backgroundColor: Colors.light.secondaryColor,
+    width: '92%',
+    height: 40,
+    borderTopColor: Colors.light.primaryColor,
+    borderTopWidth: 2,
+    borderBottomEndRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginLeft: 14,
+    elevation: 5,
+  },
+  info:{
+    margin: 5,
+    marginTop: 10,
+    flexDirection: 'row',
+    width: '46%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // borderWidth: 1,
+    elevation: 4,
+    backgroundColor: Colors.light.primaryColor,
+    borderRadius: 5,
+  },
+  infoIcon: {
+    color: Colors.light.secondaryButton,
+    marginRight: 5,
+  },
+  text:{
+    color: Colors.light.secondaryButton,
   },
 })
