@@ -3,7 +3,7 @@
  * refer to the "Fundamentals" guide: 
  * https://reactnavigation.org/docs/getting-started
  */
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { 
@@ -14,11 +14,11 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
-
+  
 import Colors from '../constants/Colors';
-
+  
 import useColorScheme from '../hooks/useColorScheme';
-
+  
 import NotFoundScreen from '../screens/NotFoundScreen';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
@@ -28,18 +28,19 @@ import Trip from '../screens/Trip';
 import TripConfig from '../screens/TripConfig';
 import TripForm from '../screens/TripForm';
 import Budget from '../screens/Budget';
+import BudgetCosts from '../screens/BudgetCosts';
 import BudgetForm from '../screens/BudgetForm';
 import CostForm from '../screens/CostForm';
 import Subcategory from '../screens/Subcategory';
 import Guest from '../screens/Guest';
 import Debt from '../screens/Debt';
-
+  
 import {
   RootStackParamList,
   TripTabParamList,
 } from './types';
 import LinkingConfiguration from './LinkingConfiguration';
-
+  
 export default function Navigation(
   { colorScheme }: { colorScheme: ColorSchemeName },
 ) {
@@ -51,20 +52,20 @@ export default function Navigation(
     </NavigationContainer>
   );
 }
-
+  
 /**
- * A root stack navigator is often used for displaying modals on
- * top of all other content.
- * https://reactnavigation.org/docs/modal
- */
+   * root stack navigator is often used for displaying modals on
+   * top of all other content.
+   * https://reactnavigation.org/docs/modal
+   */
 const Stack = createNativeStackNavigator<RootStackParamList>();
-
+  
 function RootNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: Colors.light.primaryColor },
-        headerTintColor: '#353535',
+        headerTintColor: Colors.light.secondaryButton,
         headerTitleAlign: 'center',
       }}>
       <Stack.Screen name="Login" component={Login}
@@ -81,6 +82,8 @@ function RootNavigator() {
         options={{ title: 'Nova viagem' }} />
       <Stack.Screen name="Budget" component={Budget}
         options={{ title: 'Orçamentos' }} />
+      <Stack.Screen name="BudgetCosts" component={BudgetCosts}
+        options={{ title: 'Custos do orçamento' }} />
       <Stack.Screen name="BudgetForm" component={BudgetForm}
         options={{ title: 'Novo orçamento' }} />
       <Stack.Screen name="CostForm" component={CostForm}
@@ -98,17 +101,17 @@ function RootNavigator() {
     </Stack.Navigator>
   );
 }
-
+  
 /**
- * A bottom tab navigator displays tab buttons on the bottom of
- * the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
+   * A bottom tab navigator displays tab buttons on the bottom of
+   * the display to switch screens.
+   * https://reactnavigation.org/docs/bottom-tab-navigator
+   */
 const BottomTab = createBottomTabNavigator<TripTabParamList>();
-
+  
 function TripTabNavigator() {
   const colorScheme = useColorScheme();
-
+  
   return (
     <BottomTab.Navigator
       initialRouteName="Trip"
@@ -116,11 +119,13 @@ function TripTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="Trip"
+        name='Trip'
         component={Trip}
         options={() => ({
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => 
+            <FontAwesome5 name="money-bill-wave" size={24} color={color} />,
+          tabBarLabel: 'Custos',
         })}
       />
       <BottomTab.Screen
@@ -129,19 +134,20 @@ function TripTabNavigator() {
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="plane" color={color} />,
+          tabBarLabel: 'Configurações da viagem',
         }}
       />
     </BottomTab.Navigator>
   );
 }
-
+  
 /**
- * You can explore the built-in icon families and icons on the
- * web at https://icons.expo.fyi/
- */
+   * You can explore the built-in icon families and icons on the
+   * web at https://icons.expo.fyi/
+   */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
+    name: React.ComponentProps<typeof FontAwesome>['name'];
+    color: string;
+  }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
