@@ -1,5 +1,7 @@
+import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
+import Colors from '../../constants/Colors';
 import FormatUtils from '../../utils/FormatUtils';
 import { styles } from './styles';
 
@@ -23,7 +25,11 @@ const TripSelector = (({
     >
       <View style={styles.content}>
         <View style={styles.image}>
-
+          <FontAwesome5 
+            name="plane" 
+            size={32} 
+            color={Colors.light.secondaryButton} 
+          />
         </View>
         <View style={styles.data}>
           <Text

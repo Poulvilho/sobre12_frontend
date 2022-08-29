@@ -12,20 +12,18 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   PrimaryText:{
-    fontSize: 18,
+    fontSize: 16,
     // fontWeight: '700',
     color: Colors.light.text,
   },
   content: {
     flexDirection: 'row',
-    marginTop: 'auto',
-    marginBottom: 'auto',
   },
   image:{
     width: 30,
     height: 30,
     borderRadius: 30,
-    marginLeft: 15,
+    margin: 10,
     backgroundColor: Colors.light.primaryColor,
     alignSelf:'center',
     justifyContent:'center',
@@ -34,11 +32,20 @@ export const styles = StyleSheet.create({
     marginRight:'auto',
     marginLeft:'auto',
   },
+  iconImage:{
+    color: Colors.light.secondaryButton,
+  },
   data:{
-    // flexDirection: 'column',
-    
+    flexDirection: 'column',
+    marginTop: 5,
     width: '80%',
     alignItems: 'center',
-    // alignContent: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+  },
+  info:{
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent:'space-between',
   },
 })

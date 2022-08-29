@@ -31,6 +31,8 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#42A4E8',
     alignSelf:'center',
+    alignItems:'center',
+    justifyContent:'center',
   },
   data:{
     marginTop: 10,
@@ -38,5 +40,5 @@ export const styles = StyleSheet.create({
   },
   date:{
     alignItems:'flex-end',
-  }
+  },
 })
