@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginTop: '10%',
+    backgroundColor: Colors.light.background,
   },
   row: {
     margin: 10,
@@ -14,11 +15,22 @@ export const styles = StyleSheet.create({
   title: {
     width: '100%',
     backgroundColor: Colors.light.primaryColor,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     flexDirection: 'row',
+    alignItems: 'center',
+  },
+  user:{
+    marginLeft: 130,
+  },
+  icon:{
+    color: Colors.light.text,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
   exit:{
-    // color: Colors.light.secondaryButton,
+    backgroundColor: Colors.light.secondaryColor,
+    borderRadius: 100,
+    marginRight: 10,
   },
   trip: {
     width: '90%',

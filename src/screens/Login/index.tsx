@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
-import { Button } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -28,6 +27,16 @@ export default function Login() {
         navigate('Home');
       })
       .catch(() => setFailure(true));
+    // const usermock = {
+    //   'id': '12c06dd6-187a-4a50-927f-5d08b367ee89',
+    //   'name': 'João Pedro Mota Jardim',
+    //   'email': 'jpmota.unb@gmail.com',
+    //   'validated': true,
+    //   'createdAt': '2022-08-07T17:33:15.526Z',
+    //   'updatedAt': '2022-08-07T17:33:15.526Z',
+    // }
+    // setUser(usermock);
+    // navigate('Home');
   });
 
   const userFormik = useFormik<ILogin>({

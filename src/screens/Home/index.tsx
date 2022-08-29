@@ -1,6 +1,6 @@
 import { useIsFocused, useNavigation } from '@react-navigation/core';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, FlatList } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 
 import { IContract, useContract } from '../../contexts/contract';
 import { useUser } from '../../contexts/user';
@@ -12,6 +12,7 @@ import { Text, View } from '../../components/Themed';
 import { GetTrips } from './api';
 import { styles } from './styles';
 import TripSelector from '../../components/TripSelector';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function Login() {
   const { navigate } = useNavigation();
@@ -66,15 +67,20 @@ export default function Login() {
     <View style={styles.container}>
       <View style={styles.title}>
         <CustomButton
+          style={styles.user}
           title={user!.name}
           onPress={() => navigate('Profile')}
         />
-        <View style={styles.exit}>
-          <Button
-            title='Sair'
-            onPress={handleLogout}
+        <TouchableOpacity 
+          style={styles.exit}
+          onPress={handleLogout}
+        >
+          <FontAwesome5 
+            name={'sign-out-alt'}
+            size={15} 
+            style={styles.icon} 
           />
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={styles.row}>
         <Text style={{ fontSize: 20 }}>Lista de viagens</Text>

@@ -17,6 +17,7 @@ import {
   IGuest,
 } from './api';
 import { styles } from './styles';
+import GuestItem from '../../components/GuestItem';
 
 export default function Guest() {
   const { user } = useUser();
@@ -77,9 +78,10 @@ export default function Guest() {
       <FlatList
         data={guests}
         renderItem={({item}) => (
-          <CustomButton
+          <GuestItem
             key={item.User.id}
-            title={item.User.name}
+            name={item.User.name}
+            icon={'user'}
             onPress={() => {}}
           />
         )}
