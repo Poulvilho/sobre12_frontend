@@ -34,12 +34,9 @@ const CostItem = (({
             <FontAwesome5 
               // Por que a categoria do custo começa em zero 
               // e da viagem em 1?
-              name={FormatUtils.getIcon(cost.category+1)}
+              name={FormatUtils.getIcon(cost.category)}
               size={15} 
-              style={{ 
-                color: 'black',
-              }
-              } 
+              style={styles.icon} 
             />
           </View>
         </View>

@@ -20,6 +20,9 @@ export const styles = StyleSheet.create({
   content: {
     flexDirection: 'row',
   },
+  icon:{
+    color: Colors.light.secondaryColor,
+  },
   image:{
     width: 30,
     height: 30,

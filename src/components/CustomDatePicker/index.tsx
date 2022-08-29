@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Button, View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {format} from 'date-fns';
+import { styles } from './styles';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 type PickerModes = 'date' | 'datetime' | 'time' | undefined;
 
@@ -12,6 +14,7 @@ export interface ICustomDateTimePickerProps {
   title?: string | undefined;
   error?: boolean;
   width?: string;
+  maximumDate?: Date;
   [propName: string]: unknown;
 }
 
@@ -22,6 +25,7 @@ const CustomDateTimePicker = ({
   title = undefined,
   error = false,
   width = '80%',
+  maximumDate,
 }: ICustomDateTimePickerProps) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -43,26 +47,45 @@ const CustomDateTimePicker = ({
       style={{ width, borderColor: error ? 'red' : 'black', borderRadius: 1 }}
     >
       {title && <Text style={{alignSelf: 'flex-start'}}>{title}</Text>}
-      <Button
-        title={
-          format(
+      <TouchableOpacity
+        onPress={showDatePicker}
+        style={styles.button}
+      >
+        <Text
+          style={styles.text}>
+          {format(
             date,
             mode === 'datetime'
               ? 'dd/MM/yyyy HH:mm'
               : mode === 'date'
                 ? 'dd/MM/yyyy'
                 : 'HH:mm',
-          )
-        }
-        onPress={showDatePicker}
-      />
-      <DateTimePickerModal
-        date={date}
-        isVisible={isDatePickerVisible}
-        mode={mode}
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-      />
+          )}
+        </Text>
+        <FontAwesome5 
+          name={'calendar-alt'}
+          size={15} 
+          style={styles.icon} 
+        />
+      </TouchableOpacity>
+      {maximumDate
+        ? <DateTimePickerModal
+          date={date}
+          isVisible={isDatePickerVisible}
+          mode={mode}
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+          maximumDate = {maximumDate}
+        />
+        : <DateTimePickerModal
+          date={date}
+          isVisible={isDatePickerVisible}
+          mode={mode}
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
+      }
+      
     </View>
   );
 };
