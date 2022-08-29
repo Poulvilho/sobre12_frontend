@@ -39,7 +39,7 @@ export default function CostForm() {
     initialValues: {
       description: '',
       value: 0.0,
-      category: '0',
+      category: '6',
       dtcost: new Date(),
       participants: [],
       trip: contract!.id,

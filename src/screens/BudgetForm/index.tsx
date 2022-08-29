@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -17,10 +19,15 @@ import { GetSubcategory, ISubcategory } from '../Subcategory/api';
 
 import { CreateBudget, IBudgetForm } from './api';
 import { styles } from './styles';
+import { RootStackParamList } from '../../navigation/types';
 
-export default function BudgetForm() {
+
+type Props = NativeStackScreenProps<RootStackParamList, 'BudgetForm'>;
+
+export default function BudgetForm({route}: Props) {
   const { navigate } = useNavigation();
   const { contract } = useContract();
+  const {budget} = route.params || {};
   
   const [subcategories, setSubcategories] = useState<Array<ISubcategory>>();
 
@@ -31,18 +38,24 @@ export default function BudgetForm() {
   }, [contract.id]);
 
   const handleSubmit = (async (values: IBudgetForm) => {
-    await CreateBudget(values).then(() => {
-      navigate('Budget');
-    });
+    if(!budget)
+      await CreateBudget(values).then(() => {
+        navigate('Budget');
+      });
+    else{
+      // await UpdateBudget(values).then(() => {
+      //   navigate('Budget');
+      // });
+    }
   });
 
   const budgetFormik = useFormik<IBudgetForm>({
     initialValues: {
-      description: '',
-      value: 0.0,
-      category: '0',
-      dtbudget: new Date(),
-      trip: contract.id,
+      description: budget?.description || '',
+      value: budget?.value || 0.0,
+      category: budget?.category || '6',
+      dtbudget: budget? new Date(budget.dtbudget):new Date(),
+      trip: contract!.id,
     },
     validationSchema: Yup.object({
       description: Yup.string().required('Insira um nome!'),
@@ -58,7 +71,9 @@ export default function BudgetForm() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Adicionar orçamento</Text>
+      <Text style={styles.title}>
+        {budget? 'Editar orçamento':'Adicionar orçamento'}
+      </Text>
       <CustomTextInput
         title='Descrição'
         fieldName='description'
@@ -95,7 +110,7 @@ export default function BudgetForm() {
         width='80%'
       />
       <CustomButton
-        title='Salvar'
+        title={budget? 'Salvar alterações':'Criar orçamento'}
         onPress={budgetFormik.submitForm}
       />
     </View>

@@ -1,10 +1,15 @@
 import { AxiosResponse } from 'axios'
+import { IUser } from '../../contexts/user';
 import sobre12Api from '../../services/api'
+import { ICost } from '../CostForm/api';
 
 export interface IDebt {
   cost: string;
   value: number;
   settled: boolean;
+  user: string;
+  User: IUser;
+  Cost: ICost;
 }
 
 const GetMyDebts = (async (
