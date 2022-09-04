@@ -35,6 +35,7 @@ export type RootStackParamList = {
    Subcategory: undefined;
    Guest: undefined;
    Debt: undefined;
+   Spectator: undefined;
  };
  
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

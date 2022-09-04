@@ -8,59 +8,39 @@ import { useUser } from '../../contexts/user';
 
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
+import GuestItem from '../../components/GuestItem';
 import { Text, View } from '../../components/Themed';
 
 import {
-  CreateGuest,
-  GetGuests,
-  IGuestForm,
-  IGuest,
+  CreateSpectator,
+  DeleteSpectator,
+  GetSpectators,
+  ISpectator,
+  ISpectatorForm,
 } from './api';
 import { styles } from './styles';
-import GuestItem from '../../components/GuestItem';
 
-export default function Guest() {
+export default function Spectator() {
   const { user } = useUser();
   const { contract } = useContract();
 
-  const [guests, setGuests] = useState<Array<IGuest>>();
+  const [spectators, setSpectators] = useState<Array<ISpectator>>();
 
-  const LoadGuests = useCallback(async () => {
-    await GetGuests(contract!.id).then((response) => {
-      setGuests(response.data);
+  const LoadSpectators = useCallback(async () => {
+    await GetSpectators(contract!.id, user!.id).then((response) => {
+      setSpectators(response.data);
     });
-    // let guestMock = [
-    //   {
-    //     User: {
-    //       id: '1',
-    //       name: 'Joãozinho',
-    //     },
-    //   },
-    //   {
-    //     User: {
-    //       id: '2',
-    //       name: 'Pedro da Silva Sauro',
-    //     },
-    //   },
-    //   {
-    //     User: {
-    //       id: '3',
-    //       name: 'Robert de Niro Cleison',
-    //     },
-    //   },
-    // ];
-    // setGuests(guestMock);
-
   }, [contract]);
 
-  const handleSubmit = (async (values: IGuestForm) => {
-    await CreateGuest(values);
+  const handleSubmit = (async (values: ISpectatorForm) => {
+    await CreateSpectator(values);
   });
 
-  const guestFormik = useFormik<IGuestForm>({
+  const spectatorFormik = useFormik<ISpectatorForm>({
     initialValues: {
       email: '',
       trip: contract!.id,
+      spectated: user!.id,
     },
     validationSchema: Yup.object({
       email: Yup.string().required('Insira um email!')
@@ -70,38 +50,40 @@ export default function Guest() {
   });
 
   useEffect(() => {
-    LoadGuests();
-  }, [LoadGuests]);
+    LoadSpectators();
+  }, [LoadSpectators]);
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={guests}
+        data={spectators}
         renderItem={({item}) => (
           <GuestItem
-            key={item.User.id}
-            name={item.User.name}
+            key={item.spectator.id}
+            name={item.spectator.name}
             icon={'user'}
-            onPressDelete={() => console.log('OK Pressed')}
-            email={item.User.email}
+            email={item.spectator.email}
             phone={''}
+            onPressDelete={
+              () => DeleteSpectator(contract!.id, user!.id, item.spectator.id)
+            }
           />
         )}
-        keyExtractor={({User}: IGuest) => User.id }
+        keyExtractor={({spectator}: ISpectator) => spectator.id }
       />
       {user!.id === contract!.user && (
         <>
-          <Text style={styles.title}>Adicionar participante</Text>
+          <Text style={styles.title}>Adicionar espectador</Text>
           <CustomTextInput
             title='Email'
             fieldName='email'
-            formikHelpers={guestFormik}
+            formikHelpers={spectatorFormik}
             width='80%'
             mode='outlined'
           />
           <CustomButton
             title='Salvar'
-            onPress={guestFormik.submitForm}
+            onPress={spectatorFormik.submitForm}
           />
         </>
       )}

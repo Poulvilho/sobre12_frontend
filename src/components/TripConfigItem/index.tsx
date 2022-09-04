@@ -26,9 +26,7 @@ const TripConfigItem = (({
           <View 
             style={styles.icon}
           >
-            <FontAwesome5 
-              // Por que a categoria do custo começa em zero 
-              // e da viagem em 1?
+            <FontAwesome5
               name={icon}
               size={15} 
               style={styles.iconImage} 

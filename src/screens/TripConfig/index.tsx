@@ -21,15 +21,20 @@ export default function TripConfig() {
         onPress={() => { navigate('Guest') }}
       />
       <TripConfigItem
+        icon={'eye'}
+        title={'Espectadores'}
+        onPress={() => { navigate('Spectator') }}
+      />
+      <TripConfigItem
         icon={'list'}
         title={'Orçamentos'}
         onPress={() => { navigate('Budget') }}
       />
-      <TripConfigItem
+      {/* <TripConfigItem
         icon={'chart-bar'}
         title={'Relatórios'}
         onPress={() => {}}
-      />
+      /> */}
       <TripConfigItem
         icon={'people-arrows'}
         title={'Dívidas'}

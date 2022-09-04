@@ -10,7 +10,7 @@ interface IGuestItem {
   name: string;
   email: string;
   phone: string;
-  onPress:() => void;
+  onPressDelete:() => void;
 }
 
 const GuestItem = (({
@@ -18,7 +18,7 @@ const GuestItem = (({
   name,
   email,
   phone,
-  onPress,
+  onPressDelete,
 } : IGuestItem) => {
 
   const [showInfo, setshowFirst] = useState(false);
@@ -37,7 +37,7 @@ const GuestItem = (({
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        { text: 'Confirmar', onPress: () => console.log('OK Pressed') },
+        { text: 'Confirmar', onPress: onPressDelete },
       ],
     );
   }
