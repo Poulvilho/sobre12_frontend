@@ -32,10 +32,10 @@ export default function BudgetForm({route}: Props) {
   const [subcategories, setSubcategories] = useState<Array<ISubcategory>>();
 
   const LoadSubcategories = useCallback(async () => {
-    await GetSubcategory(contract.id).then((response) => {
+    await GetSubcategory(contract!.id).then((response) => {
       setSubcategories(response.data);
     });
-  }, [contract.id]);
+  }, [contract!.id]);
 
   const handleSubmit = (async (values: IBudgetForm) => {
     if(!budget)
@@ -52,7 +52,7 @@ export default function BudgetForm({route}: Props) {
   const budgetFormik = useFormik<IBudgetForm>({
     initialValues: {
       description: budget?.description || '',
-      value: budget?.value || 0.0,
+      value: budget?.value.toString() || '',
       category: budget?.category || '6',
       dtbudget: budget? new Date(budget.dtbudget):new Date(),
       trip: contract!.id,

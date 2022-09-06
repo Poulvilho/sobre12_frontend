@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 import FormatUtils from '../../utils/FormatUtils';

@@ -15,7 +15,6 @@ interface IBudgetComponent {
 const BudgetComponent = (({
   budget,
   spent,
-  // onPress = (() => {}),
 } : IBudgetComponent) => {
   const [showInfo, setshowInfo] = useState(false);
   const { navigate } = useNavigation();
@@ -36,8 +35,8 @@ const BudgetComponent = (({
             <FontAwesome5
               name={FormatUtils.getIcon(budget.category)}
               size={30}
-              style={{color: '#f2f2f2',
-                margin: 7}}/>
+              style={{color: '#f2f2f2', margin: 7}}
+            />
             <Text style={styles.budgetText}>
               {budget.description}
             </Text>
@@ -54,7 +53,8 @@ const BudgetComponent = (({
           >
             <Text
               style={styles.PrimaryText}
-            >Orçamento
+            >
+              Orçamento
             </Text>
             <Text>{FormatUtils.currencyBRL(budget.value)}</Text>
           </View>
@@ -62,7 +62,8 @@ const BudgetComponent = (({
             <View style={styles.spent}>
               <Text
                 style={styles.PrimaryText}
-              >Gasto
+              >
+                Gasto
               </Text>
               <Text>{FormatUtils.currencyBRL(spent)}</Text>
             </View>

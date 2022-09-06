@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 
 interface ICustomButtom {

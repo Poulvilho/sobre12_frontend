@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 
 import { useContract } from '../../contexts/contract';
 
@@ -8,6 +8,7 @@ import CustomModal from '../../components/CustomModal';
 import CustomButton from '../../components/CustomButton';
 
 import { GetGuests, IGuest, IGuestUser } from '../Guest/api';
+import GuestInCostItem from '../../components/GuestInCostItem';
 
 interface IAddParticipant {
   participants: Array<IGuestUser>;
@@ -29,6 +30,21 @@ const AddParticipant = ({
     await GetGuests(contract!.id).then((response) => {
       setGuests(response.data);
     });
+    // const guestMock = [
+    //   {
+    //     User: {
+    //       id: '1',
+    //       name: 'Joaozinho',
+    //     },
+    //   },
+    //   {
+    //     User: {
+    //       id: '2',
+    //       name: 'Cleiton Rasta',
+    //     },
+    //   },
+    // ]
+    // setGuests(guestMock)
   }, [contract]);
 
   const handleOk = () => {
@@ -37,9 +53,10 @@ const AddParticipant = ({
   };
 
   const handleClickParticipant = useCallback((guest: IGuestUser) => {
+    const guestindex = guestsSelected.indexOf(guest);
     setGuestsSelected((oldSelecteds) => {
-      if (oldSelecteds.includes(guest))
-        oldSelecteds = oldSelecteds.filter(element => element !== guest);
+      if (guestindex != -1)
+        oldSelecteds.splice(guestindex,1);
       else
         oldSelecteds.push(guest);
       return oldSelecteds;
@@ -47,13 +64,15 @@ const AddParticipant = ({
   }, [guestsSelected]);
 
   const renderGuest = useCallback((guest: IGuestUser) => {
-    const color = guestsSelected.includes(guest) ? 'blue' : 'gray';
+    const isParticipant = guestsSelected.includes(guest);
     return (
-      <Button
+      <GuestInCostItem
         key={guest.id}
-        title={guest.name}
-        onPress={() => handleClickParticipant(guest)}
-        color={color}
+        guest={guest}
+        onPress={() => 
+          handleClickParticipant(guest)
+        }
+        isParticipant={isParticipant}
       />
     );
   }, [handleClickParticipant]);
@@ -68,10 +87,15 @@ const AddParticipant = ({
         <>
           <FlatList
             data={guests}
-            renderItem={({item}) => renderGuest(item.User)}
+            renderItem={({item}) =>
+              renderGuest(item.User)
+            }
             keyExtractor={({User}: IGuest) => User.id }
           />
-          <Button title='Finalizar' onPress={handleOk} />
+          <CustomButton
+            title='Finalizar'
+            onPress={handleOk}
+          />
         </>
       </CustomModal>
       <CustomButton

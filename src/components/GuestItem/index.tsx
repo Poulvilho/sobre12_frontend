@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 import { styles } from './styles';
@@ -10,7 +10,6 @@ interface IGuestItem {
   name: string;
   email: string;
   phone: string;
-  onPress:() => void;
 }
 
 const GuestItem = (({
@@ -18,7 +17,6 @@ const GuestItem = (({
   name,
   email,
   phone,
-  onPress,
 } : IGuestItem) => {
 
   const [showInfo, setshowFirst] = useState(false);
@@ -54,8 +52,6 @@ const GuestItem = (({
               style={styles.icon}
             >
               <FontAwesome5 
-              // Por que a categoria do custo começa em zero 
-              // e da viagem em 1?
                 name={icon}
                 size={15} 
                 style={styles.iconImage} 
@@ -73,8 +69,6 @@ const GuestItem = (({
             style={styles.excludeButton}
             onPress={removeGuest}>
             <FontAwesome5 
-              // Por que a categoria do custo começa em zero 
-              // e da viagem em 1?
               name={'trash-alt'}
               size={15} 
               style={styles.excludeIcon} 

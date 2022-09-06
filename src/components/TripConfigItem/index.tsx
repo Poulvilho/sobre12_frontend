@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 import { styles } from './styles';
@@ -26,9 +26,7 @@ const TripConfigItem = (({
           <View 
             style={styles.icon}
           >
-            <FontAwesome5 
-              // Por que a categoria do custo começa em zero 
-              // e da viagem em 1?
+            <FontAwesome5
               name={icon}
               size={15} 
               style={styles.iconImage} 
