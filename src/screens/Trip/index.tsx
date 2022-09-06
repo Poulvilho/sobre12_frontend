@@ -28,14 +28,51 @@ export default function Trip() {
   const [initDate, setInitDate] = useState<Date>(new Date());
   const [untilDate, setUntilDate] = useState<Date>(new Date(contract!.dtend));
   
-  const [cost, setCost] = useState<Array<ICost>>(null!);
+  const [cost, setCost] = useState<Array<ICost>>([]);
   const [filteredCost, setFilteredCost] = useState<Array<ICost>>();
-  const [budget, setBudget] = useState<Array<IBudget>>(null!);
+  const [budget, setBudget] = useState<Array<IBudget>>([]);
   const [filteredBudget, setFilteredBudget] = 
   useState<Array<IBudget>>();
   const [showBudget, setshowBudget] = useState(true);
 
-  const LoadCosts = (async () => {
+  // const CostMock = [
+  //   {
+  //     description: 'Almoço de domingo',
+  //     value: 200,
+  //     category: '1',
+  //     dtcost: new Date(),
+  //     trip: 'string',
+  //     user: 'string',
+  //     participants: ['1'],
+  //     id: '1',
+  //   },
+  //   {
+  //     description: 'Gasosa da semana',
+  //     value: 500,
+  //     category: '5',
+  //     dtcost: new Date(),
+  //     trip: '1',
+  //     user: '1',
+  //     participants: ['1'],
+  //     id: '2',
+  //   },
+  // ];
+  // setCost(CostMock);
+  // cost?.sort((a,b)=>{
+  //   let dateA = new Date(a.dtcost);
+  //   let dateB = new Date(b.dtcost);
+  //   if(dateA > dateB){
+  //     return -1;
+  //   }
+  //   else if(dateA < dateB){
+  //     return 1;
+  //   }
+  //   else{
+  //     return 0
+  //   }
+  // })
+
+  const LoadBudgets = (async () => {
     await GetCosts(contract!.id, user!.id).then((response) => {
       response.data.sort((a,b)=>{
         let dateA = new Date(a.dtcost);
@@ -51,48 +88,8 @@ export default function Trip() {
         }
       })
       setCost(response.data);
+      setFilteredCost(cost)
     });
-
-    // const CostMock = [
-    //   {
-    //     description: 'Almoço de domingo',
-    //     value: 200,
-    //     category: '1',
-    //     dtcost: new Date(),
-    //     trip: 'string',
-    //     user: 'string',
-    //     participants: ['1'],
-    //     id: '1',
-    //   },
-    //   {
-    //     description: 'Gasosa da semana',
-    //     value: 500,
-    //     category: '5',
-    //     dtcost: new Date(),
-    //     trip: '1',
-    //     user: '1',
-    //     participants: ['1'],
-    //     id: '2',
-    //   },
-    // ];
-    // setCost(CostMock);
-    // cost?.sort((a,b)=>{
-    //   let dateA = new Date(a.dtcost);
-    //   let dateB = new Date(b.dtcost);
-    //   if(dateA > dateB){
-    //     return -1;
-    //   }
-    //   else if(dateA < dateB){
-    //     return 1;
-    //   }
-    //   else{
-    //     return 0
-    //   }
-    // })
-    setFilteredCost(cost)
-  })
-
-  const LoadBudgets = (async () => {
     await GetBudgets(contract!.id).then((response) => {
       response.data.sort((a,b)=>{
         let dateA = new Date(a.dtbudget);
@@ -156,19 +153,28 @@ export default function Trip() {
     }
   }
 
-  function getBudgetCosts(category:string){
+  const getBudgetCosts = (category: string) =>{
     let value = 0;
-    for(let costItem of cost){
+    cost?.forEach((costItem)=>{
       if(costItem.category === category){
         value+=costItem.value
       }
-    }
+    })
+    return value;
+  }
+
+  const getBudgetValues = (category: string) =>{
+    let value = 0;
+    budget?.forEach((budgetItem)=>{
+      if(budgetItem.category === category){
+        value+=budgetItem.value
+      }
+    })
     return value;
   }
   
   useEffect(() => {
     LoadBudgets();
-    LoadCosts();
   }, [useIsFocused()]);
 
   useEffect(() => {
@@ -225,7 +231,7 @@ export default function Trip() {
               key={item.id}
               budget={item}
               spent={item.category
-                ? 100//getBudgetCosts(item.category)
+                ? getBudgetCosts(item.category)
                 : 0}
               onPress={() => {}}
             />

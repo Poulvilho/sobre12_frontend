@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 
 import { categories } from '../../constants/Categories';
@@ -19,6 +19,7 @@ import AddParticipant from '../AddParticipantButton';
 import { IGuestUser } from '../Guest/api';
 import { CreateCost, ICostForm } from './api';
 import { styles } from './styles';
+import { GetSubcategory, ISubcategory } from '../Subcategory/api';
 
 export default function CostForm() {
   const { navigate } = useNavigation();
@@ -26,6 +27,13 @@ export default function CostForm() {
   const { user } = useUser();
 
   const [participants, setParticipants] = useState<Array<IGuestUser>>([])
+  const [subcategories, setSubcategories] = useState<Array<ISubcategory>>();
+
+  const LoadSubcategories = useCallback(async () => {
+    await GetSubcategory(contract!.id).then((response) => {
+      setSubcategories(response.data);
+    });
+  }, [contract!.id]);
 
   const handleSubmit = useCallback(async (values: ICostForm) => {
     values.participants = participants.map(participant => participant.id);
@@ -38,7 +46,7 @@ export default function CostForm() {
   const costFormik = useFormik<ICostForm>({
     initialValues: {
       description: '',
-      value: 0.0,
+      value: '',
       category: '6',
       dtcost: new Date(),
       participants: [],
@@ -52,6 +60,10 @@ export default function CostForm() {
     }),
     onSubmit: handleSubmit,
   });
+
+  useEffect(() => {
+    LoadSubcategories();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -79,6 +91,9 @@ export default function CostForm() {
       >
         {categories.map((item) => (
           <CustomItem key={item.value} label={item.label} value={item.value} />
+        ))}
+        {subcategories?.map((item) => (
+          <CustomItem key={item.id} label={item.description} value={item.id} />
         ))}
       </CustomDropdown>
       <CustomDateTimePicker
