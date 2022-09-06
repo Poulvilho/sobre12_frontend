@@ -31,6 +31,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       Subcategory: 'subcategory',
       Guest: 'guest',
       Debt: 'debt',
+      Spectator: 'spectator',
     },
   },
 };

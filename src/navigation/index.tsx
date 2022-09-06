@@ -34,6 +34,7 @@ import CostForm from '../screens/CostForm';
 import Subcategory from '../screens/Subcategory';
 import Guest from '../screens/Guest';
 import Debt from '../screens/Debt';
+import Spectator from '../screens/Spectator';
   
 import {
   RootStackParamList,
@@ -94,6 +95,8 @@ function RootNavigator() {
         options={{ title: 'Participantes' }} />
       <Stack.Screen name="Debt" component={Debt}
         options={{ title: 'Dívidas' }} />
+      <Stack.Screen name="Spectator" component={Spectator}
+        options={{ title: 'Espectadores' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen}
         options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>

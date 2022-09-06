@@ -9,6 +9,7 @@ export interface IGuestForm {
 export interface IGuestUser {
   id: string;
   name: string;
+  email: string;
 }
 
 export interface IGuest {
