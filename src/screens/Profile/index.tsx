@@ -12,16 +12,17 @@ import { IEditUser, UpdateProfile } from './api';
 import { styles } from './styles';
 
 export default function Profile() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
 
   const handleSubmit = ((values: IEditUser) => {
-    UpdateProfile(user!.id, values).then((response) => {
-      console.log(response.data);
+    UpdateProfile(values).then((response) => {
+      setUser(response.data);
     });
   });
 
   const userFormik = useFormik<IEditUser>({
     initialValues: {
+      id: user!.id,
       email: user!.email,
       name: user!.name,
       oldPassword: '',

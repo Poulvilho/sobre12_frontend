@@ -48,7 +48,7 @@ export default function TripConfig() {
       <TripConfigItem
         icon={'cog'}
         title={'Editar dados da viagem'}
-        onPress={() => { navigate('TripForm',{trip:contract!}) }}
+        onPress={() => { navigate('TripForm', { trip: contract! }) }}
       />
     </View>
   );

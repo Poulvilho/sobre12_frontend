@@ -10,13 +10,16 @@ export default {
     tabIconSelected: tintColorLight,
     primaryColor: '#42A4E8',
     secondaryColor: '#D9D9D9',
-    secondaryButton: '#FFFFFF',
+    secondaryButton: tintColorDark,
   },
   dark: {
-    text: tintColorLight,
-    background: '#000',
-    tint: tintColorDark,
+    text: '#000',
+    background: '#f2f2f2',/*'#353535'*/
+    tint: tintColorLight,
     tabIconDefault: '#ccc',
-    tabIconSelected: tintColorDark,
+    tabIconSelected: tintColorLight,
+    primaryColor: '#42A4E8',
+    secondaryColor: '#D9D9D9',
+    secondaryButton: tintColorDark,
   },
 };

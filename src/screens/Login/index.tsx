@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useUser } from '../../contexts/user';
 
@@ -9,7 +10,7 @@ import { Text, View } from '../../components/Themed';
 import BoxContainer from '../../components/BoxContainer';
 import CustomTextInput from '../../components/CustomTextInput';
 
-import { ILogin, LoginRequest } from './api';
+import { GetUser, ILogin, LoginRequest } from './api';
 import { styles } from './styles';
 import CustomButton from '../../components/CustomButton';
 
@@ -24,6 +25,7 @@ export default function Login() {
     await LoginRequest(values)
       .then((response) => {
         setUser(response.data);
+        storeUserData(response.data.id);
         navigate('Home');
       })
       .catch(() => setFailure(true));
@@ -50,6 +52,33 @@ export default function Login() {
       password: Yup.string().required('Insira uma senha!'),
     }),
     onSubmit: handleSubmit,
+  });
+
+  const storeUserData = (async (userId: string) => {
+    try {
+      await AsyncStorage.setItem('@user_id', userId)
+    } catch (e) {
+      // saving error
+    }
+  });
+
+  const getUserData = (async () => {
+    try {
+      const userId = await AsyncStorage.getItem('@user_id');
+      if(userId !== null) {
+        await GetUser(userId).then((response) => {
+          setUser(response.data);
+        });
+        return true;
+      }
+    } catch(e) { 
+      return false;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    getUserData();
   });
 
   return (

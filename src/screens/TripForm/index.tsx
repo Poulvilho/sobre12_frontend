@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
-import React from 'react';
+import React, { useCallback } from 'react';
 import * as Yup from 'yup';
 
 import { useUser } from '../../contexts/user';
@@ -9,29 +9,40 @@ import CustomDateTimePicker from '../../components/CustomDatePicker';
 import CustomTextInput from '../../components/CustomTextInput';
 import { Text, View } from '../../components/Themed';
 
-import { CreateTrip, ITripForm } from './api';
+import { CreateTrip, DeleteTrip, EditTrip, ITripForm } from './api';
 import { styles } from './styles';
 import CustomButton from '../../components/CustomButton';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
+import { useContract } from '../../contexts/contract';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'TripForm'>;
 
-
-export default function TripForm({route}: Props) {
+export default function TripForm({ route }: Props) {
   const { navigate } = useNavigation();
   const { user } = useUser()
-  const {trip} = route.params || {};
+  const { setContract } = useContract();
+  const { trip } = route.params;
 
-
-  const handleSubmit = (async (values: ITripForm) => {
-    await CreateTrip(values).then(() => {
+  const handleDeleteTrip = useCallback(async () => {
+    await DeleteTrip(trip!.id).then(() => {
       navigate('Home');
     });
+  }, [trip]);
+
+  const handleSubmit = (async (values: ITripForm) => {
+    values.id == ''
+      ? await CreateTrip(values).then(() => {
+        navigate('Home');
+      })
+      : await EditTrip(values).then((response) => {
+        setContract(response.data);
+      });
   });
 
   const tripFormik = useFormik<ITripForm>({
     initialValues: {
+      id: trip?.id || '',
       name: trip?.name || '',
       description: trip?.description || '',
       dtstart: trip? new Date(trip.dtstart):new Date(),
@@ -81,9 +92,14 @@ export default function TripForm({route}: Props) {
         />
       </View>
       <CustomButton
-        title='Criar viagem'
+        title={!trip ? 'Criar viagem' : 'Editar viagem'}
         onPress={tripFormik.submitForm}
       />
+      {trip && (
+        <CustomButton
+          title='Deletar viagem'
+          onPress={handleDeleteTrip} />
+      )}
     </View>
   );
 }

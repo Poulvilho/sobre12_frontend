@@ -12,4 +12,9 @@ const LoginRequest = ((user: ILogin): Promise<AxiosResponse<IUser>> => {
   return response;
 });
 
-export { LoginRequest }
+const GetUser = ((userId: string): Promise<AxiosResponse<IUser>> => {
+  const response = sobre12Api.get<IUser>(`/user/${userId}`);
+  return response;
+});
+
+export { LoginRequest, GetUser }
