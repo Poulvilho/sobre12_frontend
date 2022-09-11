@@ -35,6 +35,7 @@ import Subcategory from '../screens/Subcategory';
 import Guest from '../screens/Guest';
 import Debt from '../screens/Debt';
 import Spectator from '../screens/Spectator';
+import DebtForm from '../screens/DebtForm';
   
 import {
   RootStackParamList,
@@ -97,6 +98,8 @@ function RootNavigator() {
         options={{ title: 'Dívidas' }} />
       <Stack.Screen name="Spectator" component={Spectator}
         options={{ title: 'Espectadores' }} />
+      <Stack.Screen name="DebtForm" component={DebtForm}
+        options={{ title: 'Editar dívida' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen}
         options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>

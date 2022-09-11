@@ -16,9 +16,9 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
 import { useContract } from '../../contexts/contract';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'TripForm'>;
+type TripProps = NativeStackScreenProps<RootStackParamList, 'TripForm'>;
 
-export default function TripForm({ route }: Props) {
+export default function TripForm({ route }: TripProps) {
   const { navigate } = useNavigation();
   const { user } = useUser()
   const { setContract } = useContract();

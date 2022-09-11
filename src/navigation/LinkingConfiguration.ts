@@ -32,6 +32,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       Guest: 'guest',
       Debt: 'debt',
       Spectator: 'spectator',
+      DebtForm: 'debtForm',
     },
   },
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import { useIsFocused } from '@react-navigation/core';
+import { useIsFocused, useNavigation } from '@react-navigation/core';
 
 import { useUser } from '../../contexts/user';
 import { useContract } from '../../contexts/contract';
@@ -15,6 +15,7 @@ import TopTabComponent from '../../components/TopTabComponent';
 export default function Debt() {
   const { user } = useUser();
   const { contract } = useContract();
+  const { navigate } = useNavigation()
 
   const [myDebts, setMyDebts] = useState<Array<IDebt>>();
   const [myCredits, setCredits] = useState<Array<IDebt>>();
@@ -22,7 +23,6 @@ export default function Debt() {
 
   const LoadDebts = (async () => {
     await GetMyDebts(user!.id, contract!.id).then((response) => {
-      console.log(response.data);
       setMyDebts(response.data);
     });
     await GetMyCredits(user!.id, contract!.id).then((response) => {
@@ -68,7 +68,6 @@ export default function Debt() {
     }
   }
 
-
   useEffect(() => {
     LoadDebts();
   }, [useIsFocused()]);
@@ -105,7 +104,7 @@ export default function Debt() {
             key={item.cost}
             debt={item}
             mine={false}
-            onPress={() => {}}
+            onPress={() => { navigate('TripForm', { trip: contract! }) }}
           />
         )}
         keyExtractor={({cost}: IDebt) => cost }
