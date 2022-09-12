@@ -1,6 +1,7 @@
-import { useIsFocused, useNavigation } from '@react-navigation/core';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useIsFocused, useNavigation } from '@react-navigation/core';
 import { FlatList, TouchableOpacity } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 import { IContract, useContract } from '../../contexts/contract';
 import { useUser } from '../../contexts/user';
@@ -8,11 +9,10 @@ import { useUser } from '../../contexts/user';
 import CustomButton from '../../components/CustomButton'
 import FloatCreateButton from '../../components/FloatCreateButton';
 import { Text, View } from '../../components/Themed';
+import TripSelector from '../../components/TripSelector';
 
 import { GetTrips } from './api';
 import { styles } from './styles';
-import TripSelector from '../../components/TripSelector';
-import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function Login() {
   const { navigate } = useNavigation();
@@ -33,31 +33,21 @@ export default function Login() {
 
   const LoadTrips = useCallback(async () => {
     await GetTrips(user!.id).then((response) => {
-      setTrips(response.data);
-    }).catch ((err) => {
-      console.log(err);
-    });
-    // let tripMock = [
-    //   {
-    //     id: '1',
-    //     name: 'Viagem Top',
-    //     description: 'Rumo a Curitiba',
-    //     dtstart: new Date(),
-    //     dtend: new Date(),
-    //     user: '1',
-    //   },
-    //   {
-    //     id: '2',
-    //     name: 'Viagenzinha um pouco maior',
-    //     description: 'Com uma descrição generica mas ok',
-    //     dtstart: new Date(),
-    //     dtend: new Date(),
-    //     user: '1',
-    //   },
-    // ];
-    // setTrips(tripMock);
-
-  }, []);
+      setTrips(response.data.map((trip) => {
+        if (!trip.spectators && !trip.guests) {
+          trip.guest = trip.user;
+          trip.role = 0;
+        } else if (!trip.spectators) {
+          trip.guest = trip.guests![0].user;
+          trip.role = trip.guests![0].role;
+        } else {
+          trip.guest = trip.guests![0].user;
+          trip.role = 2;
+        }
+        return trip;
+      }));
+    }).catch ();
+  }, [user]);
 
   useEffect(() => {
     LoadTrips();

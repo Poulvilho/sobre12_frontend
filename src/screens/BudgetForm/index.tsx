@@ -109,10 +109,12 @@ export default function BudgetForm({route}: Props) {
         error={Boolean(budgetFormik.errors.dtbudget)}
         width='80%'
       />
-      <CustomButton
-        title={budget? 'Salvar alterações':'Criar orçamento'}
-        onPress={budgetFormik.submitForm}
-      />
+      {contract!.role === 0 &&
+        <CustomButton
+          title={budget? 'Salvar alterações' : 'Criar orçamento'}
+          onPress={budgetFormik.submitForm}
+        />
+      }
     </View>
   );
 }

@@ -7,6 +7,8 @@ export interface IContract {
   dtstart: Date,
   dtend: Date,
   user: string,
+  guest: string,
+  role: number;
 }
 
 export interface IContractContext {

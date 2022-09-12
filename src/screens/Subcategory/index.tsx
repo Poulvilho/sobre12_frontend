@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { useContract } from '../../contexts/contract';
-import { useUser } from '../../contexts/user';
 
 import { categories } from '../../constants/Categories';
 
@@ -22,7 +21,6 @@ import {
 import { styles } from './styles';
 
 export default function Subcategory() {
-  const { user } = useUser();
   const { contract } = useContract();
 
   const [subcategories, setSubcategories] = useState<Array<ISubcategory>>();
@@ -67,7 +65,7 @@ export default function Subcategory() {
         )}
         keyExtractor={({id}: ISubcategory) => id }
       />
-      {user!.id === contract!.user && (
+      {contract!.role === 0 && (
         <>
           <Text style={styles.title}>Adicionar subcategoria</Text>
           <CustomTextInput

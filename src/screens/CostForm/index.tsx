@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 
 import { categories } from '../../constants/Categories';
 
-import { useUser } from '../../contexts/user';
 import { useContract } from '../../contexts/contract';
 
 import { Text, View } from '../../components/Themed';
@@ -17,14 +16,14 @@ import CustomTextInput from '../../components/CustomTextInput';
 import AddParticipant from '../AddParticipantButton';
 
 import { IGuestUser } from '../Guest/api';
+import { GetSubcategory, ISubcategory } from '../Subcategory/api';
+
 import { CreateCost, ICostForm } from './api';
 import { styles } from './styles';
-import { GetSubcategory, ISubcategory } from '../Subcategory/api';
 
 export default function CostForm() {
   const { navigate } = useNavigation();
   const { contract } = useContract();
-  const { user } = useUser();
 
   const [participants, setParticipants] = useState<Array<IGuestUser>>([])
   const [subcategories, setSubcategories] = useState<Array<ISubcategory>>();
@@ -51,7 +50,7 @@ export default function CostForm() {
       dtcost: new Date(),
       participants: [],
       trip: contract!.id,
-      user: user!.id,
+      user: contract!.guest,
     },
     validationSchema: Yup.object({
       description: Yup.string().required('Insira um nome!'),

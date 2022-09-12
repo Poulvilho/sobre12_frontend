@@ -47,7 +47,7 @@ export default function TripForm({ route }: TripProps) {
       description: trip?.description || '',
       dtstart: trip? new Date(trip.dtstart):new Date(),
       dtend: trip? new Date(trip.dtend):new Date(),
-      user: user!.id,
+      user: trip?.user || user!.id,
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Insira um nome!'),

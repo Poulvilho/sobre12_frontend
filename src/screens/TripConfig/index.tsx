@@ -42,14 +42,16 @@ export default function TripConfig() {
       />
       <TripConfigItem
         icon={'shapes'}
-        title={'Gerenciar categorias'}
+        title={'Categorias dos custos'}
         onPress={() => { navigate('Subcategory') }}
       />
-      <TripConfigItem
-        icon={'cog'}
-        title={'Editar dados da viagem'}
-        onPress={() => { navigate('TripForm', { trip: contract! }) }}
-      />
+      {contract!.role === 0 &&
+        <TripConfigItem
+          icon={'cog'}
+          title={'Editar dados da viagem'}
+          onPress={() => { navigate('TripForm', { trip: contract! }) }}
+        />
+      }
     </View>
   );
 }
