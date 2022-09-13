@@ -29,6 +29,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       BudgetForm: 'budgetForm',
       CostForm: 'costForm',
       Subcategory: 'subcategory',
+      SubcategoryForm: 'subcategoryForm',
       Guest: 'guest',
       Debt: 'debt',
       Spectator: 'spectator',

@@ -8,11 +8,12 @@ import { useUser } from '../../contexts/user';
 
 import CustomButton from '../../components/CustomButton'
 import FloatCreateButton from '../../components/FloatCreateButton';
-import { Text, View } from '../../components/Themed';
+import { View } from '../../components/Themed';
 import TripSelector from '../../components/TripSelector';
 
 import { GetTrips } from './api';
 import { styles } from './styles';
+import TopTabComponent from '../../components/TopTabComponent';
 
 export default function Login() {
   const { navigate } = useNavigation();
@@ -20,6 +21,7 @@ export default function Login() {
   const { setContract } = useContract();
 
   const [trips, setTrips] = useState<Array<IContract>>(Array(0));
+  const [tab, setTab] = useState<Boolean>(true);
 
   const handleLogout = (() => {
     setUser(null);
@@ -72,23 +74,43 @@ export default function Login() {
           />
         </TouchableOpacity>
       </View>
-      <View style={styles.row}>
-        <Text style={{ fontSize: 20 }}>Lista de viagens</Text>
-      </View>
-      <FlatList
-        style={styles.trip}
-        data={trips}
-        renderItem={({item}) => (
-          <TripSelector
-            key={item.id}
-            name={item.name}
-            dtstart={item.dtstart}
-            dtend={item.dtend}
-            onPress={() => handleChooseTrip(item)}
-          />
-        )}
-        keyExtractor={({id}: IContract) => id }
+      <TopTabComponent
+        firstOption='Minhas viagens'
+        firstFunction={() => setTab(true)}
+        secondOption='Viagens como espectador'
+        secondFunction={() => setTab(false)}
       />
+      {tab ? (
+        <FlatList
+          style={styles.trip}
+          data={trips.filter((trip) => trip.role < 2)}
+          renderItem={({item}) => (
+            <TripSelector
+              key={item.id}
+              name={item.name}
+              dtstart={item.dtstart}
+              dtend={item.dtend}
+              onPress={() => handleChooseTrip(item)}
+            />
+          )}
+          keyExtractor={({id}: IContract) => id }
+        />
+      ) : (
+        <FlatList
+          style={styles.trip}
+          data={trips.filter((trip) => trip.role === 2)}
+          renderItem={({item}) => (
+            <TripSelector
+              key={item.id}
+              name={item.name}
+              dtstart={item.dtstart}
+              dtend={item.dtend}
+              onPress={() => handleChooseTrip(item)}
+            />
+          )}
+          keyExtractor={({id}: IContract) => id }
+        />
+      )}
       <FloatCreateButton 
         title='Criar nova viagem' 
         form={'TripForm'} />

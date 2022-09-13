@@ -1,11 +1,6 @@
 import { AxiosResponse } from 'axios';
 import sobre12Api from '../../services/api';
-
-export interface ISubcategoryForm {
-  description: string;
-  category: string;
-  trip: string;
-}
+import { ISubcategoryForm } from '../SubcategoryForm/api';
 
 export interface ISubcategory extends ISubcategoryForm {
   id: string;
@@ -20,13 +15,4 @@ const GetSubcategory = ((
   return response;
 });
 
-const CreateSubcategory = ((
-  subcategory: ISubcategoryForm,
-): Promise<AxiosResponse<ISubcategory>> => {
-  const response = sobre12Api.post<ISubcategory>(
-    '/subcategory/create', subcategory,
-  );
-  return response;
-});
-
-export { GetSubcategory, CreateSubcategory };
+export { GetSubcategory };

@@ -1,28 +1,28 @@
+import React, { useCallback } from 'react';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
-import React, { useCallback } from 'react';
 import * as Yup from 'yup';
 
 import { useUser } from '../../contexts/user';
+import { useContract } from '../../contexts/contract';
 
+import { RootStackParamList } from '../../navigation/types';
+import CustomButton from '../../components/CustomButton';
 import CustomDateTimePicker from '../../components/CustomDatePicker';
 import CustomTextInput from '../../components/CustomTextInput';
 import { Text, View } from '../../components/Themed';
 
 import { CreateTrip, DeleteTrip, EditTrip, ITripForm } from './api';
 import { styles } from './styles';
-import CustomButton from '../../components/CustomButton';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../navigation/types';
-import { useContract } from '../../contexts/contract';
 
 type TripProps = NativeStackScreenProps<RootStackParamList, 'TripForm'>;
 
 export default function TripForm({ route }: TripProps) {
   const { navigate } = useNavigation();
   const { user } = useUser()
-  const { setContract } = useContract();
-  const { trip } = route.params;
+  const { contract, setContract } = useContract();
+  const trip = route.params?.trip;
 
   const handleDeleteTrip = useCallback(async () => {
     await DeleteTrip(trip!.id).then(() => {
@@ -35,8 +35,17 @@ export default function TripForm({ route }: TripProps) {
       ? await CreateTrip(values).then(() => {
         navigate('Home');
       })
-      : await EditTrip(values).then((response) => {
-        setContract(response.data);
+      : await EditTrip(values).then(() => {
+        setContract({
+          id: values.id,
+          name: values.name,
+          description: values.description,
+          dtstart: values.dtstart,
+          dtend: values.dtend,
+          user: values.user,
+          guest: contract!.guest,
+          role: contract!.role,
+        });
       });
   });
 

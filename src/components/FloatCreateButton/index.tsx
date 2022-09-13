@@ -1,11 +1,12 @@
 import React from 'react'
 import { useNavigation } from '@react-navigation/core';
+import { RootStackParamList } from '../../navigation/types';
 import { Button, View } from 'react-native';
 
 import { styles } from './styles';
 
 interface IFloatCreateButton {
-  form: string;
+  form: keyof RootStackParamList;
   title?: string;
 }
 

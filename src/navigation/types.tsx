@@ -11,6 +11,7 @@ import {
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { IBudget } from '../screens/BudgetForm/api';
 import { IDebt } from '../screens/Debt/api';
+import { ISubcategory } from '../screens/Subcategory/api';
 import { ITripForm } from '../screens/TripForm/api';
  
  declare global {
@@ -26,14 +27,15 @@ export type RootStackParamList = {
    Register: undefined;
    Profile: undefined;
    Home: undefined;
-   TripForm: { trip: ITripForm | undefined };
+   TripForm: { trip: ITripForm } | undefined;
    TripNavigator: NavigatorScreenParams<TripTabParamList> | undefined;
    NotFound: undefined;
    Budget: undefined;
-   BudgetCosts: {budget: IBudget};
-   BudgetForm: {budget: IBudget} | undefined;
+   BudgetCosts: { budget: IBudget };
+   BudgetForm: { budget: IBudget } | undefined;
    CostForm: undefined;
    Subcategory: undefined;
+   SubcategoryForm: { subcategory : ISubcategory } | undefined;
    Guest: undefined;
    Debt: undefined;
    Spectator: undefined;
