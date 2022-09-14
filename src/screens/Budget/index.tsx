@@ -12,7 +12,7 @@ import { IBudget } from '../BudgetForm/api';
 
 import { GetBudgets } from './api';
 import { styles } from './styles';
-import BudgetComponent from '../../components/BudgetComponent';
+import BudgetItem from '../../components/BudgetItem';
 
 export default function Budget() {
   const { user } = useUser();
@@ -55,10 +55,9 @@ export default function Budget() {
         style={styles.list}
         data={budget}
         renderItem={({item}) => (
-          <BudgetComponent
+          <BudgetItem
             key={item.id}
             budget={item}
-            onPress={() => {}}
           />
         )}
         keyExtractor={({id}: IBudget) => id }

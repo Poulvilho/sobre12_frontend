@@ -20,6 +20,7 @@ import {
   ISubcategoryForm,
 } from './api';
 import { styles } from './styles';
+import SubcategoryItem from '../../components/SubcategoryItem';
 
 export default function Subcategory() {
   const { user } = useUser();
@@ -29,7 +30,18 @@ export default function Subcategory() {
 
   const LoadSubcategories = useCallback(async () => {
     await GetSubcategory(contract!.id).then((response) => {
-      setSubcategories(response.data);
+      let subcategorySorted = response.data.sort((a,b)=>{
+        let categorySort = parseInt(a.category) - parseInt(b.category)
+        if(categorySort != 0)
+          return categorySort;
+        else{
+          if(a.description < b.description)
+            return -1
+          else
+            return 1
+        }
+      })
+      setSubcategories(subcategorySorted);
     });
   }, [contract]);
 
@@ -59,9 +71,9 @@ export default function Subcategory() {
       <FlatList
         data={subcategories}
         renderItem={({item}) => (
-          <CustomButton
+          <SubcategoryItem
             key={item.id}
-            title={item.description}
+            subcategory={item}
             onPress={() => {}}
           />
         )}

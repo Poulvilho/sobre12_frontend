@@ -75,10 +75,17 @@ export default function Debt() {
   return (
     <View style={styles.container}>
       <TopTabComponent
-        firstOption='Minhas dívidas'
-        firstFunction={showFirstFunction}
-        secondOption='Meus créditos'
-        secondFunction={showSecondFunction}
+        tabs={
+          [
+            {
+              title: 'Minhas dívidas',
+              function: showFirstFunction,
+            },
+            {
+              title: 'Meus créditos',
+              function: showSecondFunction,
+            },
+          ]}
       />
       {
         showFirst &&
@@ -104,7 +111,6 @@ export default function Debt() {
             key={item.cost}
             debt={item}
             mine={false}
-            onPress={() => { navigate('TripForm', { trip: contract! }) }}
           />
         )}
         keyExtractor={({cost}: IDebt) => cost }

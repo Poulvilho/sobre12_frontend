@@ -9,7 +9,6 @@ import CostItem from '../../components/CostItem';
 // import CustomButton from '../../components/CustomButton';
 import CustomDateTimePicker from '../../components/CustomDatePicker';
 import FloatCreateButton from '../../components/FloatCreateButton';
-import BudgetComponent from '../../components/BudgetComponent';
 import TopTabComponent from '../../components/TopTabComponent';
 import { Text, View } from '../../components/Themed';
 
@@ -19,58 +18,26 @@ import { IBudget } from '../BudgetForm/api';
 
 import { GetCosts } from './api';
 import { styles } from './styles';
+import { categories } from '../../constants/Categories';
+import BudgetCategoryComponent from '../../components/BudgetCategoryComponent';
+import { ILOV } from '../../components/CustomDropdown';
+import BudgetItem from '../../components/BudgetItem';
 
 
 export default function Trip() {
   const { contract } = useContract();
   const { user } = useUser();
 
-  const [initDate, setInitDate] = useState<Date>(new Date());
+  const [initDate, setInitDate] = useState<Date>(new Date(contract!.dtstart));
   const [untilDate, setUntilDate] = useState<Date>(new Date(contract!.dtend));
   
   const [cost, setCost] = useState<Array<ICost>>([]);
   const [filteredCost, setFilteredCost] = useState<Array<ICost>>();
   const [budget, setBudget] = useState<Array<IBudget>>([]);
   const [filteredBudget, setFilteredBudget] = 
-  useState<Array<IBudget>>();
-  const [showBudget, setshowBudget] = useState(true);
-
-  // const CostMock = [
-  //   {
-  //     description: 'Almoço de domingo',
-  //     value: 200,
-  //     category: '1',
-  //     dtcost: new Date(),
-  //     trip: 'string',
-  //     user: 'string',
-  //     participants: ['1'],
-  //     id: '1',
-  //   },
-  //   {
-  //     description: 'Gasosa da semana',
-  //     value: 500,
-  //     category: '5',
-  //     dtcost: new Date(),
-  //     trip: '1',
-  //     user: '1',
-  //     participants: ['1'],
-  //     id: '2',
-  //   },
-  // ];
-  // setCost(CostMock);
-  // cost?.sort((a,b)=>{
-  //   let dateA = new Date(a.dtcost);
-  //   let dateB = new Date(b.dtcost);
-  //   if(dateA > dateB){
-  //     return -1;
-  //   }
-  //   else if(dateA < dateB){
-  //     return 1;
-  //   }
-  //   else{
-  //     return 0
-  //   }
-  // })
+  useState<Array<IBudget>>([]);
+  const [showTab, setshowTab] = useState(0);
+  const [budgetedCategories, setBudgetedCategories] = useState<ILOV[]>([]);
 
   const LoadBudgets = (async () => {
     await GetCosts(contract!.id, user!.id).then((response) => {
@@ -105,57 +72,13 @@ export default function Trip() {
         }
       })
       setBudget(response.data);
-      setFilteredBudget(response.data)
+      setFilteredBudget(response.data);
     });
-    // const budgetMock = [
-    //   {
-    //     id:'1',
-    //     description: 'Alimentação',
-    //     value: 500,
-    //     category: '1',
-    //     dtbudget: new Date(),
-    //     trip: '1',
-    //   },
-    //   {
-    //     id:'2',
-    //     description: 'Transporte',
-    //     value: 700,
-    //     category: '5',
-    //     dtbudget: new Date(),
-    //     trip: '1',
-    //   },
-    // ];
-    // setBudget(budgetMock)
-    // budget?.sort((a,b)=>{
-    //   let dateA = new Date(a.dtbudget);
-    //   let dateB = new Date(b.dtbudget);
-    //   if(dateA > dateB){
-    //     return -1;
-    //   }
-    //   else if(dateA < dateB){
-    //     return 1;
-    //   }
-    //   else{
-    //     return 0
-    //   }
-    // })
-    // setFilteredBudget(budget);
   });
-
-  function showBudgetList(){
-    if(!showBudget)
-      setshowBudget(true);
-  }
-  
-  function showCostList(){
-    if(showBudget){
-      setshowBudget(false);
-    }
-  }
 
   const getBudgetCosts = (category: string) =>{
     let value = 0;
-    cost?.forEach((costItem)=>{
+    filteredCost?.forEach((costItem)=>{
       if(costItem.category === category){
         value+=costItem.value
       }
@@ -163,9 +86,9 @@ export default function Trip() {
     return value;
   }
 
-  const getBudgetValues = (category: string) =>{
+  const getBudgetValue = (category: string) =>{
     let value = 0;
-    budget?.forEach((budgetItem)=>{
+    filteredBudget?.forEach((budgetItem)=>{
       if(budgetItem.category === category){
         value+=budgetItem.value
       }
@@ -194,16 +117,34 @@ export default function Trip() {
       return budgetDate >= formatedInitDate &&
              budgetDate <= formatedUntilDate
     }));
+    if(filteredBudget.length > 0){
+      let budgetedCategoriesValues = 
+        filteredBudget!.map((budget)=> {return budget.category});
+      budgetedCategoriesValues = budgetedCategoriesValues.filter((a,b)=>{ 
+        return budgetedCategoriesValues.indexOf(a) === b})
+      setBudgetedCategories(categories.filter((category)=>{ 
+        return budgetedCategoriesValues.includes(parseInt(category.value))}))
+    }
 
   }, [initDate,untilDate,budget]);
 
   return (
     <View style={styles.container}>
       <TopTabComponent
-        firstOption='Orçamentos'
-        firstFunction={showBudgetList}
-        secondOption='Custos'
-        secondFunction={showCostList}
+        tabs={[
+          {
+            title: 'Resumo',
+            function: ()=>setshowTab(0),
+          },
+          {
+            title: 'Custos',
+            function: ()=>setshowTab(1),
+          },
+          {
+            title: 'Orçamentos',
+            function: ()=>setshowTab(2),
+          },
+        ]}
       />
       <View style={styles.datePicker}>
         <Text style={styles.title}>De:</Text>
@@ -222,42 +163,59 @@ export default function Trip() {
           width='30%'
         />
       </View>
-      { showBudget && filteredBudget &&
-        <FlatList
-          style={styles.list}
-          data={filteredBudget}
-          renderItem={({item}) => (
-            <BudgetComponent
-              key={item.id}
-              budget={item}
-              spent={item.category
-                ? getBudgetCosts(item.category)
-                : 0}
-              onPress={() => {}}
-            />
-          )}
-          keyExtractor={({id}: IBudget) => id }
-        />
+      { showTab == 0 && filteredBudget &&
+        <>
+          <FlatList
+            style={styles.list}
+            data={budgetedCategories}
+            renderItem={({item}) => (
+              <BudgetCategoryComponent
+                key={item.value}
+                category={item}
+                budgeted={getBudgetValue(parseInt(item.value))}
+                spent={getBudgetCosts(parseInt(item.value))}
+                startDate={initDate}
+                endDate={untilDate}
+              />
+            )}
+            keyExtractor={({value}: ILOV) => value }
+          />
+          <FloatCreateButton title='Adicionar custo' form='CostForm' />
+        </>
       }
-      { !showBudget &&
-        <FlatList
-          style={styles.list}
-          data={filteredCost}
-          renderItem={({item}) => (
-            <CostItem
-              key={item.id}
-              cost={item}
-              onPress={() => {}}
-            />
-          )}
-          keyExtractor={({id}: ICost) => id }
-        />
+      { showTab == 1  &&
+        <>
+          <FlatList
+            style={styles.list}
+            data={filteredCost}
+            renderItem={({item}) => (
+              <CostItem
+                key={item.id}
+                cost={item}
+                onPress={() => {}}
+              />
+            )}
+            keyExtractor={({id}: ICost) => id }
+          />
+          <FloatCreateButton title='Adicionar custo' form='CostForm' />
+        </>
+
       }
-      { showBudget && 
-        <FloatCreateButton title='Adicionar orçamento' form='BudgetForm' />
-      }
-      { !showBudget && 
-        <FloatCreateButton title='Adicionar custo' form='CostForm' />
+      { showTab == 2  &&
+        <>
+          <FlatList
+            style={styles.list}
+            data={filteredBudget}
+            renderItem={({item}) => (
+              <BudgetItem
+                key={item.id}
+                budget={item}
+              />
+            )}
+            keyExtractor={({id}: IBudget) => id }
+          />
+          <FloatCreateButton title='Adicionar orçamento' form='BudgetForm' />
+        </>
       }
     </View>
   );
