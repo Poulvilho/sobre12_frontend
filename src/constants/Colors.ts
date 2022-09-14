@@ -11,6 +11,8 @@ export default {
     primaryColor: '#42A4E8',
     secondaryColor: '#D9D9D9',
     secondaryButton: tintColorDark,
+    expectatorOne: '#9370db',
+    expectatorTwo: '#9966cc',
   },
   dark: {
     text: '#000',

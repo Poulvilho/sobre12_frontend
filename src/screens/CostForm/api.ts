@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import { IUser } from '../../contexts/user';
 import sobre12Api from '../../services/api';
 
 export interface ICostForm {
@@ -13,6 +14,7 @@ export interface ICostForm {
 
 export interface ICost extends ICostForm {
   id: string;
+  User: IUser;
 }
 
 const CreateCost = ((
