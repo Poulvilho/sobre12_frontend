@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
     // backgroundColor: Colors.light.secondaryColor,
     backgroundColor: Colors.light.secondaryColor,
     width: '92%',
-    height: 70,
+    height: 'auto',
     borderTopColor: Colors.light.primaryColor,
     borderTopWidth: 2,
     borderBottomEndRadius: 10,

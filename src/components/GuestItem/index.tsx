@@ -88,14 +88,14 @@ const GuestItem = (({
           />
           <Text>Email: {email}</Text>
         </View>
-        <View style={styles.info}>
+        {/* <View style={styles.info}>
           <FontAwesome5 
             name={'phone'}
             size={15} 
             style={styles.infoIcon}
           />
           <Text>Telefone: {phone}</Text>
-        </View>
+        </View> */}
       </View>
       }
     </>
