@@ -1,8 +1,8 @@
 import React from 'react'
 import { useNavigation } from '@react-navigation/core';
-import { Button, View } from 'react-native';
 
 import { styles } from './styles';
+import CustomButton from '../CustomButton';
 
 interface IFloatCreateButton {
   form: string;
@@ -15,12 +15,11 @@ const FloatCreateButton = ({
 }: IFloatCreateButton) => {
   const { navigate } = useNavigation();
   return (
-    <View style={ styles.create }>
-      <Button
-        title={title}
-        onPress={() => navigate(form)}
-      />
-    </View>
+    <CustomButton
+      title={title}
+      onPress={() => navigate(form)}
+      style={styles.create}
+    />
   )
 }
 

@@ -7,22 +7,25 @@ import FormatUtils from '../../utils/FormatUtils';
 
 import { styles } from './styles';
 import { IDebt } from '../../screens/Debt/api';
+import { EditDebt } from './api';
 
 interface IDebtShow {
     debt: IDebt,
     mine: boolean
-    onPress: () => void;
 }
 
 const DebtItem = (({
   debt,
   mine,
-  // onPress = (() => {}),
 } : IDebtShow) => {
   const [showInfo, setshowInfo] = useState(false);
   function showInfoFunction(){
     setshowInfo(!showInfo);
   }
+
+  const handleConfirmPayment = (async () => {
+    await EditDebt(debt).then(() => {});
+  });
 
   function ConfirmPayment(){
     Alert.alert(
@@ -34,7 +37,7 @@ const DebtItem = (({
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        { text: 'Confirmar', onPress: () => console.log('OK Pressed') },
+        { text: 'Confirmar', onPress: handleConfirmPayment },
       ],
     );
   }
@@ -71,9 +74,8 @@ const DebtItem = (({
               <Text
                 style={styles.PrimaryText}  
               >
-                {debt.User.name}
+                {mine? debt.Cost.User.name : debt.User?.name}
               </Text>
-              <Text>{debt.settled? 'Pago': 'Pendente'}</Text>
             </View>
             <View 
               style={styles.info}>
