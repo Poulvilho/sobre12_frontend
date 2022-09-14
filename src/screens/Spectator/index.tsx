@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { useContract } from '../../contexts/contract';
-import { useUser } from '../../contexts/user';
 
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
@@ -21,13 +20,12 @@ import {
 import { styles } from './styles';
 
 export default function Spectator() {
-  const { user } = useUser();
   const { contract } = useContract();
 
   const [spectators, setSpectators] = useState<Array<ISpectator>>();
 
   const LoadSpectators = useCallback(async () => {
-    await GetSpectators(contract!.id, user!.id).then((response) => {
+    await GetSpectators(contract!.id, contract!.guest).then((response) => {
       setSpectators(response.data);
     });
   }, [contract]);
@@ -40,7 +38,7 @@ export default function Spectator() {
     initialValues: {
       email: '',
       trip: contract!.id,
-      spectated: user!.id,
+      spectated: contract!.guest,
     },
     validationSchema: Yup.object({
       email: Yup.string().required('Insira um email!')
@@ -64,14 +62,14 @@ export default function Spectator() {
             icon={'user'}
             email={item.spectator.email}
             phone={''}
-            onPressDelete={
-              () => DeleteSpectator(contract!.id, user!.id, item.spectator.id)
+            onPressDelete={() =>
+              DeleteSpectator(contract!.id, contract!.guest, item.spectator.id)
             }
           />
         )}
         keyExtractor={({spectator}: ISpectator) => spectator.id }
       />
-      {user!.id === contract!.user && (
+      {contract!.role < 2 && (
         <>
           <Text style={styles.title}>Adicionar espectador</Text>
           <CustomTextInput

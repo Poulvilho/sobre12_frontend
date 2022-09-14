@@ -14,6 +14,7 @@ export interface IGuestUser {
 
 export interface IGuest {
   User: IGuestUser
+  role: number;
 }
 
 const GetGuests = ((

@@ -1,29 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 import { useContract } from '../../contexts/contract';
-import { useUser } from '../../contexts/user';
-
-import { categories } from '../../constants/Categories';
 
 import CustomButton from '../../components/CustomButton';
-import CustomDropdown, { CustomItem } from '../../components/CustomDropdown';
-import CustomTextInput from '../../components/CustomTextInput';
-import { Text, View } from '../../components/Themed';
+import FloatCreateButton from '../../components/FloatCreateButton';
+import { View } from '../../components/Themed';
 
 import {
-  CreateSubcategory,
   GetSubcategory,
   ISubcategory,
-  ISubcategoryForm,
 } from './api';
 import { styles } from './styles';
 import SubcategoryItem from '../../components/SubcategoryItem';
 
 export default function Subcategory() {
-  const { user } = useUser();
+  const { navigate } = useNavigation();
   const { contract } = useContract();
 
   const [subcategories, setSubcategories] = useState<Array<ISubcategory>>();
@@ -45,26 +38,9 @@ export default function Subcategory() {
     });
   }, [contract]);
 
-  const handleSubmit = (async (values: ISubcategoryForm) => {
-    await CreateSubcategory(values);
-  });
-
-  const subcategoryFormik = useFormik<ISubcategoryForm>({
-    initialValues: {
-      description: '',
-      category: '6',
-      trip: contract!.id,
-    },
-    validationSchema: Yup.object({
-      description: Yup.string().required('Insira um nome!'),
-      category: Yup.number().required().min(1).max(4),
-    }),
-    onSubmit: handleSubmit,
-  });
-
   useEffect(() => {
     LoadSubcategories();
-  }, [LoadSubcategories]);
+  }, [useIsFocused]);
 
   return (
     <View style={styles.container}>
@@ -74,40 +50,16 @@ export default function Subcategory() {
           <SubcategoryItem
             key={item.id}
             subcategory={item}
-            onPress={() => {}}
+            onPress={() => navigate('SubcategoryForm', { subcategory: item })}
           />
         )}
         keyExtractor={({id}: ISubcategory) => id }
       />
-      {user!.id === contract!.user && (
-        <>
-          <Text style={styles.title}>Adicionar subcategoria</Text>
-          <CustomTextInput
-            title='Descrição'
-            fieldName='description'
-            formikHelpers={subcategoryFormik}
-            width='80%'
-            mode='outlined'
-          />
-          <CustomDropdown
-            title='Categoria'
-            formikHelpers={subcategoryFormik}
-            fieldName='category'
-            width='80%'
-          >
-            {categories.map((item) => (
-              <CustomItem
-                key={item.value}
-                label={item.label}
-                value={item.value}
-              />
-            ))}
-          </CustomDropdown>
-          <CustomButton
-            title='Salvar'
-            onPress={subcategoryFormik.submitForm}
-          />
-        </>
+      {contract!.role === 0 && (
+        <FloatCreateButton
+          title='Adicionar Subcategoria'
+          form={'SubcategoryForm'}
+        />
       )}
     </View>
   );

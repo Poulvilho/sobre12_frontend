@@ -4,10 +4,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { useContract } from '../../contexts/contract';
-import { useUser } from '../../contexts/user';
 
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
+import GuestItem from '../../components/GuestItem';
 import { Text, View } from '../../components/Themed';
 
 import {
@@ -17,10 +17,8 @@ import {
   IGuest,
 } from './api';
 import { styles } from './styles';
-import GuestItem from '../../components/GuestItem';
 
 export default function Guest() {
-  const { user } = useUser();
   const { contract } = useContract();
 
   const [guests, setGuests] = useState<Array<IGuest>>();
@@ -29,28 +27,6 @@ export default function Guest() {
     await GetGuests(contract!.id).then((response) => {
       setGuests(response.data);
     });
-    // let guestMock = [
-    //   {
-    //     User: {
-    //       id: '1',
-    //       name: 'Joãozinho',
-    //     },
-    //   },
-    //   {
-    //     User: {
-    //       id: '2',
-    //       name: 'Pedro da Silva Sauro',
-    //     },
-    //   },
-    //   {
-    //     User: {
-    //       id: '3',
-    //       name: 'Robert de Niro Cleison',
-    //     },
-    //   },
-    // ];
-    // setGuests(guestMock);
-
   }, [contract]);
 
   const handleSubmit = (async (values: IGuestForm) => {
@@ -89,7 +65,7 @@ export default function Guest() {
         )}
         keyExtractor={({User}: IGuest) => User.id }
       />
-      {user!.id === contract!.user && (
+      {contract!.role === 0 && (
         <>
           <Text style={styles.title}>Adicionar participante</Text>
           <CustomTextInput

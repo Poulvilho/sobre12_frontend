@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 
 import { useContract } from '../../contexts/contract';
-import { useUser } from '../../contexts/user';
 
 import CostItem from '../../components/CostItem';
 // import CustomButton from '../../components/CustomButton';
@@ -26,7 +25,6 @@ import BudgetItem from '../../components/BudgetItem';
 
 export default function Trip() {
   const { contract } = useContract();
-  const { user } = useUser();
 
   const [initDate, setInitDate] = useState<Date>(new Date(contract!.dtstart));
   const [untilDate, setUntilDate] = useState<Date>(new Date(contract!.dtend));
@@ -40,7 +38,7 @@ export default function Trip() {
   const [budgetedCategories, setBudgetedCategories] = useState<ILOV[]>([]);
 
   const LoadBudgets = (async () => {
-    await GetCosts(contract!.id, user!.id).then((response) => {
+    await GetCosts(contract!.id, contract!.guest).then((response) => {
       response.data.sort((a,b)=>{
         let dateA = new Date(a.dtcost);
         let dateB = new Date(b.dtcost);
@@ -180,7 +178,9 @@ export default function Trip() {
             )}
             keyExtractor={({value}: ILOV) => value }
           />
-          <FloatCreateButton title='Adicionar custo' form='CostForm' />
+          { contract!.role < 2 && 
+            <FloatCreateButton title='Adicionar custo' form='CostForm' />
+          }
         </>
       }
       { showTab == 1  &&
@@ -197,7 +197,9 @@ export default function Trip() {
             )}
             keyExtractor={({id}: ICost) => id }
           />
-          <FloatCreateButton title='Adicionar custo' form='CostForm' />
+          { contract!.role < 2 && 
+            <FloatCreateButton title='Adicionar custo' form='CostForm' />
+          }
         </>
 
       }
@@ -214,7 +216,9 @@ export default function Trip() {
             )}
             keyExtractor={({id}: IBudget) => id }
           />
-          <FloatCreateButton title='Adicionar orçamento' form='BudgetForm' />
+          { contract!.role === 0 && 
+            <FloatCreateButton title='Adicionar orçamento' form='BudgetForm' />
+          }
         </>
       }
     </View>

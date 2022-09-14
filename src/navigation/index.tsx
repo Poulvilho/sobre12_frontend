@@ -32,6 +32,7 @@ import BudgetCosts from '../screens/BudgetCosts';
 import BudgetForm from '../screens/BudgetForm';
 import CostForm from '../screens/CostForm';
 import Subcategory from '../screens/Subcategory';
+import SubcategoryForm from '../screens/SubcategoryForm';
 import Guest from '../screens/Guest';
 import Debt from '../screens/Debt';
 import Spectator from '../screens/Spectator';
@@ -94,6 +95,8 @@ function RootNavigator() {
       <Stack.Screen name="CostForm" component={CostForm}
         options={{ title: 'Novo custo' }} />
       <Stack.Screen name="Subcategory" component={Subcategory}
+        options={{ title: 'Subcategorias' }} />
+      <Stack.Screen name="SubcategoryForm" component={SubcategoryForm}
         options={{ title: 'Subcategorias' }} />
       <Stack.Screen name="Guest" component={Guest}
         options={{ title: 'Participantes' }} />
