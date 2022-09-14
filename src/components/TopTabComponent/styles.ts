@@ -9,22 +9,25 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     marginBottom: 16,
   },
-  selected:{
-    // backgroundColor: Colors.light.primaryColor,
-    padding: 8,
-    width: '50%',
+  tab:{
+    paddingVertical: 16,
     alignItems: 'center',
-    borderBottomColor: Colors.light.primaryColor,
+    justifyContent: 'center',
+    borderLeftWidth: 0.1,
+    borderRightWidth: 0.1,
+    elevation: 7,
+  },
+  selected:{
     borderBottomWidth: 2,
+    borderBottomColor: Colors.light.primaryColor,
+    elevation: 0,
+
   },
   selectedText:{
     color: Colors.light.primaryColor,
   },
   notSelected:{
     backgroundColor: Colors.light.secondaryColor,
-    padding: 8,
-    width: '50%',
-    alignItems: 'center',
   },
   notSelectedText:{
     color: Colors.light.text,

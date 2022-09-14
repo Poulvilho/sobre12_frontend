@@ -9,6 +9,7 @@ import {
   NavigatorScreenParams,
 } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ILOV } from '../components/CustomDropdown';
 import { IBudget } from '../screens/BudgetForm/api';
 import { IDebt } from '../screens/Debt/api';
 import { ITripForm } from '../screens/TripForm/api';
@@ -29,7 +30,8 @@ export type RootStackParamList = {
    TripForm: { trip: ITripForm | undefined };
    TripNavigator: NavigatorScreenParams<TripTabParamList> | undefined;
    NotFound: undefined;
-   Budget: undefined;
+   Budget: {category: ILOV, startDate: Date, endDate: Date | undefined};
+   CategoryCosts: {category: ILOV, startDate: Date, endDate: Date};
    BudgetCosts: {budget: IBudget};
    BudgetForm: {budget: IBudget} | undefined;
    CostForm: undefined;

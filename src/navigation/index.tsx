@@ -42,6 +42,7 @@ import {
   TripTabParamList,
 } from './types';
 import LinkingConfiguration from './LinkingConfiguration';
+import CategoryCosts from '../screens/CategoryCosts';
   
 export default function Navigation(
   { colorScheme }: { colorScheme: ColorSchemeName },
@@ -84,6 +85,8 @@ function RootNavigator() {
         options={{ title: 'Nova viagem' }} />
       <Stack.Screen name="Budget" component={Budget}
         options={{ title: 'Orçamentos' }} />
+      <Stack.Screen name="CategoryCosts" component={CategoryCosts}
+        options={{ title: 'Custos da categoria' }} />
       <Stack.Screen name="BudgetCosts" component={BudgetCosts}
         options={{ title: 'Custos do orçamento' }} />
       <Stack.Screen name="BudgetForm" component={BudgetForm}

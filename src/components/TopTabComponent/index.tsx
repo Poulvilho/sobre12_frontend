@@ -1,58 +1,60 @@
 import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, FlatList, useWindowDimensions } from 'react-native';
 
 import { Text, View } from '../Themed';
 
 import { styles } from './styles';
 
+interface tabItem{
+  title: string;
+  function: ()=>void,
+}
+
+
 interface ITopTabComponent {
-  firstOption: string;
-  firstFunction: ()=> void;
-  secondOption: string;
-  secondFunction: ()=> void;
+  tabs: tabItem[];
 }
 
 export default function TopTabComponent({
-  firstOption,
-  firstFunction,
-  secondOption,
-  secondFunction,
+  tabs,
 }: ITopTabComponent) {
 
-  const [focusFirst, setfocusFirst] = useState(true);
+  const [focus, setFocus] = useState(0);
 
-  function focusFirstFunction(){
-    if(!focusFirst){
-      setfocusFirst(true);
-      firstFunction();
-    }
+  function focusTab( tabIndex: number){
+    setFocus(tabIndex);
+    tabs[tabIndex].function();
   }
 
-  function focusSecondFunction(){
-    if(focusFirst){
-      setfocusFirst(false);
-      secondFunction();
-    }
-  }
+  const { width } = useWindowDimensions();
 
   return (
     <View style={styles.header}>
-      <TouchableOpacity 
-        onPress={focusFirstFunction}
-        style={focusFirst? styles.selected: styles.notSelected}
-      >
-        <Text 
-          style={focusFirst? styles.selectedText: styles.notSelectedText}
-        >{firstOption}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity 
-        onPress={focusSecondFunction}
-        style={!focusFirst? styles.selected: styles.notSelected}
-      >
-        <Text 
-          style={!focusFirst? styles.selectedText: styles.notSelectedText}
-        >{secondOption}</Text>
-      </TouchableOpacity>
+      <FlatList
+        style={{
+          // width: 100,
+        }}
+        data={tabs}
+        horizontal
+        keyExtractor={(item) => item.title }
+        renderItem={(item) => (
+          <TouchableOpacity 
+            onPress={()=>focusTab(item.index)}
+            style={[
+              styles.tab,
+              item.index === focus
+                ? styles.selected
+                : styles.notSelected,
+              {width: width/tabs.length}]}
+          >
+            <Text 
+              style={item.index === focus
+                ? styles.selectedText
+                : styles.notSelectedText}
+            >{item.item.title}</Text>
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 }
