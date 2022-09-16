@@ -61,7 +61,7 @@ export default function CostForm({ route }: CostProps) {
     initialValues: {
       description: cost?.description || '',
       value: cost?.value.toString() || '',
-      category: cost?.category || '6',
+      category: cost?.category.toString() || '6',
       dtcost: cost? new Date(cost.dtcost) : new Date(),
       participants: cost?.participants || [],
       trip: cost?.trip || contract!.id,
@@ -70,7 +70,6 @@ export default function CostForm({ route }: CostProps) {
     validationSchema: Yup.object({
       description: Yup.string().required('Insira um nome!'),
       value: Yup.number().required('Insira um valor!'),
-      category: Yup.string().required('Insira um nome!'),
     }),
     onSubmit: handleSubmit,
   });
@@ -81,7 +80,9 @@ export default function CostForm({ route }: CostProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Adicionar custo</Text>
+      <Text style={styles.title}>
+        {cost ? 'Alterar custo' : 'Adicionar custo'}
+      </Text>
       <CustomTextInput
         title='Descrição'
         fieldName='description'

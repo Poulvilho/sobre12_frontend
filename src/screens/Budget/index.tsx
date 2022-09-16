@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Text } from 'react-native';
 import { useIsFocused } from '@react-navigation/core';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../navigation/types';
 
 import { useContract } from '../../contexts/contract';
 
@@ -13,14 +15,24 @@ import { GetBudgets } from './api';
 import { styles } from './styles';
 import BudgetItem from '../../components/BudgetItem';
 
-export default function Budget() {
+type BudgetProps = NativeStackScreenProps<RootStackParamList, 'Budget'>;
+
+export default function Budget({ route }: BudgetProps) {
   const { contract } = useContract();
+  const params = route.params;
 
   const [budget, setBudget] = useState<Array<IBudget>>();
 
   const LoadBudgets = (async () => {
     await GetBudgets(contract!.id).then((response) => {
-      setBudget(response.data);
+      if (params)
+        setBudget(response.data.filter((budget: IBudget) => {
+          return budget.category.toString() === params.category.value
+              && new Date(budget.dtbudget) >= params.startDate
+              && new Date(budget.dtbudget) <= params.endDate
+        }));
+      else
+        setBudget(response.data);
     });
   });
 
@@ -30,6 +42,9 @@ export default function Budget() {
 
   return (
     <View style={styles.container}>
+      {params && (
+        <Text style={styles.title}>Orçamentos de {params.category.label}</Text>
+      )}
       <FlatList
         style={styles.list}
         data={budget}

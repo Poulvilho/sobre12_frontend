@@ -9,4 +9,8 @@ export const styles = StyleSheet.create({
   list: {
     width: '90%',
   },
+  title: {
+    fontSize: 16,
+    margin: 24,
+  },
 });

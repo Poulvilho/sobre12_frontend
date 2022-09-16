@@ -1,5 +1,5 @@
 import { useIsFocused } from '@react-navigation/core';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList } from 'react-native';
 
 import { categories } from '../../constants/Categories';
@@ -35,8 +35,22 @@ export default function Trip() {
   const [showTab, setshowTab] = useState<number>(0);
   const [budgetedCategories, setBudgetedCategories] =
     useState<Array<ILOV>>([]);
+  
+  const formatedInitDate = useMemo(() => {
+    return new Date (
+      initDate.getFullYear(), initDate.getMonth(), initDate.getDate(),
+      0, 0, 0, 0,
+    );
+  }, [initDate]);
 
-  const LoadBudgets = (async () => {
+  const formatedUntilDate = useMemo(() => {
+    return new Date (
+      untilDate.getFullYear(), untilDate.getMonth(), untilDate.getDate(),
+      23, 59, 59, 599,
+    );
+  }, [untilDate]);
+
+  const LoadData = (async () => {
     await GetCosts(contract!.id, contract!.guest).then((response) => {
       response.data.sort((a,b)=>{
         let dateA = new Date(a.dtcost);
@@ -75,7 +89,7 @@ export default function Trip() {
         value += costItem.value;
     });
     return value;
-  }
+  };
 
   const getBudgetValue = (category: string) => {
     let value = 0;
@@ -84,28 +98,9 @@ export default function Trip() {
         value += budgetItem.value;
     });
     return value;
-  }
-  
-  useEffect(() => {
-    LoadBudgets();
-  }, [useIsFocused()]);
+  };
 
   useEffect(() => {
-    const formatedInitDate = new Date (
-      initDate.getFullYear(),initDate.getMonth(),initDate.getDate(),0,0,0,
-    );
-    const formatedUntilDate = new Date (
-      untilDate.getFullYear(),untilDate.getMonth(),untilDate.getDate(),23,59,59,
-    );
-    setFilteredCost(cost?.filter((cost) => {
-      let costDate = new Date(cost.dtcost)
-      return costDate >= formatedInitDate && costDate <= formatedUntilDate;
-    }));
-    setFilteredBudget(budget?.filter((budget)=>{
-      let budgetDate = new Date(budget.dtbudget)
-      return budgetDate >= formatedInitDate
-          && budgetDate <= formatedUntilDate;
-    }));
     if(filteredBudget.length > 0){
       let budgetedCategoriesValues = filteredBudget!.map((budget) => {
         return budget.category;
@@ -117,7 +112,23 @@ export default function Trip() {
         return budgetedCategoriesValues.includes(parseInt(category.value));
       }));
     }
-  }, [initDate,untilDate,budget]);
+  }, [filteredBudget]);
+
+  useEffect(() => {
+    setFilteredCost(cost?.filter((cost) => {
+      let costDate = new Date(cost.dtcost)
+      return costDate >= formatedInitDate && costDate <= formatedUntilDate;
+    }));
+    setFilteredBudget(budget?.filter((budget)=>{
+      let budgetDate = new Date(budget.dtbudget)
+      return budgetDate >= formatedInitDate
+          && budgetDate <= formatedUntilDate;
+    }));
+  }, [formatedInitDate, formatedUntilDate, cost, budget]);
+  
+  useEffect(() => {
+    LoadData();
+  }, [useIsFocused()]);
 
   return (
     <View style={styles.container}>
@@ -161,8 +172,8 @@ export default function Trip() {
                 category={item}
                 budgeted={getBudgetValue(parseInt(item.value))}
                 spent={getBudgetCosts(parseInt(item.value))}
-                startDate={initDate}
-                endDate={untilDate}
+                startDate={formatedInitDate}
+                endDate={formatedUntilDate}
               />
             )}
             keyExtractor={({value}: ILOV) => value }

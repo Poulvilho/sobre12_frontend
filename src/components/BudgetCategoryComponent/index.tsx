@@ -20,7 +20,6 @@ const BudgetCategoryComponent = (({
   startDate,
   endDate,
   spent = 0,
-  // onPress = (() => {}),
 } : IBudgetCategoryComponent) => {
   const [showInfo, setshowInfo] = useState(false);
   const { navigate } = useNavigation();
@@ -48,22 +47,12 @@ const BudgetCategoryComponent = (({
               {category.label}
             </Text>
           </View>
-          <View 
-            style={styles.budget}
-          >
-            <Text
-              style={styles.PrimaryText}
-            >
-              Previsto
-            </Text>
+          <View style={styles.budget}>
+            <Text style={styles.PrimaryText}>Previsto</Text>
             <Text>{FormatUtils.currencyBRL(budgeted)}</Text>
           </View>
           <View style={styles.spent}>
-            <Text
-              style={styles.PrimaryText}
-            >
-              Gasto
-            </Text>
+            <Text style={styles.PrimaryText}>Gasto</Text>
             <Text style={
               budgeted > spent
                 ? null
@@ -78,9 +67,9 @@ const BudgetCategoryComponent = (({
       <View style={styles.infoContainer}>
         <TouchableOpacity 
           style={styles.info}
-          onPress={() => { navigate('Budget', {
-            category: category, startDate: startDate, endDate: endDate,
-          }) }}
+          onPress={() => navigate('Budget', {
+            category, startDate, endDate,
+          })}
         >
           <FontAwesome5 
             name={'list'}
@@ -91,9 +80,9 @@ const BudgetCategoryComponent = (({
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.info}
-          onPress={() => { navigate('CategoryCosts', {
-            category: category, startDate: startDate, endDate: endDate,
-          }); }}
+          onPress={() => navigate('CategoryCosts', {
+            category, startDate, endDate,
+          })}
         >
           <FontAwesome5 
             name={'money-bill-wave'}

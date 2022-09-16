@@ -17,14 +17,13 @@ import { styles } from './styles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
 
-
 type Props = NativeStackScreenProps<RootStackParamList, 'CategoryCosts'>;
 
 export default function CategoryCosts({route}: Props) {
   const { contract } = useContract();
   const { user } = useUser();
 
-  const {category,startDate,endDate} = route.params || {};
+  const { category, startDate, endDate } = route.params;
 
   const [initDate, setInitDate] = useState<Date>(new Date(startDate));
   const [untilDate, setUntilDate] = useState<Date>(new Date(endDate));
@@ -35,7 +34,7 @@ export default function CategoryCosts({route}: Props) {
   const LoadCosts = (async () => {
     await GetCosts(contract!.id, user!.id).then((response) => {
       setCost(response.data.filter((cost: ICost)=>
-        cost.category === category?.value,
+        cost.category.toString() === category?.value,
       ));
     });
 
@@ -62,12 +61,11 @@ export default function CategoryCosts({route}: Props) {
 
   useEffect(() => {
     setFilteredCost(cost?.filter((cost)=>{  
-      return cost.dtcost.toISOString() >= initDate.toISOString() && 
-             cost.dtcost.toISOString() <= untilDate.toISOString()
+      return new Date(cost.dtcost).toISOString() >= initDate.toISOString() && 
+      new Date(cost.dtcost).toISOString() <= untilDate.toISOString()
     }));
 
-  }, [initDate,untilDate,cost]);
-
+  }, [initDate, untilDate, cost]);
 
   return (
     <View style={styles.container}>
@@ -96,7 +94,6 @@ export default function CategoryCosts({route}: Props) {
           <CostItem
             key={item.id}
             cost={item}
-            onPress={() => {}}
           />
         )}
         keyExtractor={({id}: ICost) => id }
