@@ -4,8 +4,8 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 import { useContract } from '../../contexts/contract';
 
-import CustomButton from '../../components/CustomButton';
 import FloatCreateButton from '../../components/FloatCreateButton';
+import SubcategoryItem from '../../components/SubcategoryItem';
 import { View } from '../../components/Themed';
 
 import {
@@ -13,7 +13,6 @@ import {
   ISubcategory,
 } from './api';
 import { styles } from './styles';
-import SubcategoryItem from '../../components/SubcategoryItem';
 
 export default function Subcategory() {
   const { navigate } = useNavigation();
@@ -23,17 +22,17 @@ export default function Subcategory() {
 
   const LoadSubcategories = useCallback(async () => {
     await GetSubcategory(contract!.id).then((response) => {
-      let subcategorySorted = response.data.sort((a,b)=>{
-        let categorySort = parseInt(a.category) - parseInt(b.category)
-        if(categorySort != 0)
+      const subcategorySorted = response.data.sort((a,b) => {
+        const categorySort = parseInt(a.category) - parseInt(b.category)
+        if(categorySort != 0) {
           return categorySort;
-        else{
-          if(a.description < b.description)
-            return -1
+        } else {
+          if (a.description < b.description)
+            return -1;
           else
-            return 1
+            return 1;
         }
-      })
+      });
       setSubcategories(subcategorySorted);
     });
   }, [contract]);

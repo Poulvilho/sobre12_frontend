@@ -83,7 +83,7 @@ function RootNavigator() {
       <Stack.Screen name="TripNavigator" component={TripTabNavigator}
         options={{ title: 'Viagem' }} />
       <Stack.Screen name="TripForm" component={TripForm}
-        options={{ title: 'Nova viagem' }} />
+        options={{ title: 'Viagem' }} />
       <Stack.Screen name="Budget" component={Budget}
         options={{ title: 'Orçamentos' }} />
       <Stack.Screen name="CategoryCosts" component={CategoryCosts}
@@ -91,9 +91,9 @@ function RootNavigator() {
       <Stack.Screen name="BudgetCosts" component={BudgetCosts}
         options={{ title: 'Custos do orçamento' }} />
       <Stack.Screen name="BudgetForm" component={BudgetForm}
-        options={{ title: 'Novo orçamento' }} />
+        options={{ title: 'Orçamentos' }} />
       <Stack.Screen name="CostForm" component={CostForm}
-        options={{ title: 'Novo custo' }} />
+        options={{ title: 'Custo' }} />
       <Stack.Screen name="Subcategory" component={Subcategory}
         options={{ title: 'Subcategorias' }} />
       <Stack.Screen name="SubcategoryForm" component={SubcategoryForm}

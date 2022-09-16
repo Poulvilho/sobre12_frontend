@@ -107,7 +107,9 @@ export default function TripForm({ route }: TripProps) {
       {trip && (
         <CustomButton
           title='Deletar viagem'
-          onPress={handleDeleteTrip} />
+          onPress={handleDeleteTrip}
+          isSecondary
+        />
       )}
     </View>
   );

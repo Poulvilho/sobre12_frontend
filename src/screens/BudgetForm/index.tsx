@@ -17,17 +17,16 @@ import { Text, View } from '../../components/Themed';
 
 import { GetSubcategory, ISubcategory } from '../Subcategory/api';
 
-import { CreateBudget, IBudgetForm } from './api';
+import { CreateBudget, DeleteBudget, IBudgetForm, UpdateBudget } from './api';
 import { styles } from './styles';
 import { RootStackParamList } from '../../navigation/types';
-
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BudgetForm'>;
 
 export default function BudgetForm({route}: Props) {
   const { navigate } = useNavigation();
   const { contract } = useContract();
-  const {budget} = route.params || {};
+  const budget = route.params?.budget;
   
   const [subcategories, setSubcategories] = useState<Array<ISubcategory>>();
 
@@ -37,16 +36,21 @@ export default function BudgetForm({route}: Props) {
     });
   }, [contract!.id]);
 
+  const handleDeleteBudget = (async () => {
+    await DeleteBudget(budget!.id).then(() => {
+      navigate('Budget');
+    })
+  })
+
   const handleSubmit = (async (values: IBudgetForm) => {
     if(!budget)
       await CreateBudget(values).then(() => {
         navigate('Budget');
       });
-    else{
-      // await UpdateBudget(values).then(() => {
-      //   navigate('Budget');
-      // });
-    }
+    else
+      await UpdateBudget(budget.id, values).then(() => {
+        navigate('Budget');
+      });
   });
 
   const budgetFormik = useFormik<IBudgetForm>({
@@ -54,7 +58,7 @@ export default function BudgetForm({route}: Props) {
       description: budget?.description || '',
       value: budget?.value.toString() || '',
       category: budget?.category || '6',
-      dtbudget: budget? new Date(budget.dtbudget):new Date(),
+      dtbudget: budget? new Date(budget.dtbudget) : new Date(2022, 9, 23),
       trip: contract!.id,
     },
     validationSchema: Yup.object({
@@ -109,11 +113,20 @@ export default function BudgetForm({route}: Props) {
         error={Boolean(budgetFormik.errors.dtbudget)}
         width='80%'
       />
-      {contract!.role === 0 &&
-        <CustomButton
-          title={budget? 'Salvar alterações' : 'Criar orçamento'}
-          onPress={budgetFormik.submitForm}
-        />
+      {contract!.role === 0 && 
+        <>
+          <CustomButton
+            title={budget? 'Salvar alterações' : 'Criar orçamento'}
+            onPress={budgetFormik.submitForm}
+          />
+          {budget && 
+            <CustomButton
+              title={'Deletar orçamento'}
+              onPress={handleDeleteBudget}
+              isSecondary
+            />
+          }
+        </>
       }
     </View>
   );

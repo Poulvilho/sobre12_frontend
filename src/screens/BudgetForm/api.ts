@@ -20,4 +20,17 @@ const CreateBudget = ((
   return response;
 });
 
-export { CreateBudget };
+const UpdateBudget = ((
+  budgetId: string,
+  budget: IBudgetForm,
+): Promise<AxiosResponse<IBudget>> => {
+  const response = sobre12Api.put<IBudget>(`/budget/${budgetId}`, budget);
+  return response;
+});
+
+const DeleteBudget = ((budgetId: string): Promise<AxiosResponse<IBudget>> => {
+  const response = sobre12Api.delete<IBudget>(`/budget/${budgetId}`);
+  return response;
+})
+
+export { CreateBudget, UpdateBudget, DeleteBudget };

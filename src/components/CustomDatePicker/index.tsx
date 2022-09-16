@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {format} from 'date-fns';
-import { styles } from './styles';
 import { FontAwesome5 } from '@expo/vector-icons';
+import {format} from 'date-fns';
+
+import { styles } from './styles';
 
 type PickerModes = 'date' | 'datetime' | 'time' | undefined;
 
@@ -27,7 +28,8 @@ const CustomDateTimePicker = ({
   width = '80%',
   maximumDate,
 }: ICustomDateTimePickerProps) => {
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] =
+    useState<boolean>(false);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -43,16 +45,15 @@ const CustomDateTimePicker = ({
   };
 
   return (
-    <View
-      style={{ width, borderColor: error ? 'red' : 'black', borderRadius: 1 }}
-    >
+    <View style={{
+      width, borderColor: error ? 'red' : 'black', borderRadius: 1,
+    }}>
       {title && <Text style={{alignSelf: 'flex-start'}}>{title}</Text>}
       <TouchableOpacity
         onPress={showDatePicker}
         style={styles.button}
       >
-        <Text
-          style={styles.text}>
+        <Text style={styles.text}>
           {format(
             date,
             mode === 'datetime'
@@ -68,8 +69,8 @@ const CustomDateTimePicker = ({
           style={styles.icon} 
         />
       </TouchableOpacity>
-      {maximumDate
-        ? <DateTimePickerModal
+      {maximumDate ? (
+        <DateTimePickerModal
           date={date}
           isVisible={isDatePickerVisible}
           mode={mode}
@@ -77,15 +78,15 @@ const CustomDateTimePicker = ({
           onCancel={hideDatePicker}
           maximumDate = {maximumDate}
         />
-        : <DateTimePickerModal
+      ) : (
+        <DateTimePickerModal
           date={date}
           isVisible={isDatePickerVisible}
           mode={mode}
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
-      }
-      
+      )}
     </View>
   );
 };

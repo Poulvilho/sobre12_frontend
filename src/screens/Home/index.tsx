@@ -75,10 +75,11 @@ export default function Login() {
         </TouchableOpacity>
       </View>
       <TopTabComponent
-        firstOption='Minhas viagens'
-        firstFunction={() => setTab(true)}
-        secondOption='Viagens como espectador'
-        secondFunction={() => setTab(false)}
+        tabs={[{
+          title:'Minhas viagens', function: () => setTab(true),
+        }, {
+          title: 'Viagens como espectador', function: () => setTab(false),
+        }]}
       />
       {tab ? (
         <FlatList

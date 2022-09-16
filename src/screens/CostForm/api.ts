@@ -24,4 +24,17 @@ const CreateCost = ((
   return response;
 });
 
-export { CreateCost };
+const UpdateCost = ((
+  costId: string,
+  cost: ICostForm,
+): Promise<AxiosResponse<ICost>> => {
+  const response = sobre12Api.put<ICost>(`/cost/${costId}`, cost);
+  return response;
+});
+
+const DeleteCost = ((costId: string): Promise<AxiosResponse<ICost>> => {
+  const response = sobre12Api.delete<ICost>(`/cost/${costId}`);
+  return response;
+});
+
+export { CreateCost, UpdateCost, DeleteCost };

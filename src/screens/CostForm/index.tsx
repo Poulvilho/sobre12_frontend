@@ -2,6 +2,8 @@ import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
 import React, { useCallback, useEffect, useState } from 'react';
 import * as Yup from 'yup';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../navigation/types';
 
 import { categories } from '../../constants/Categories';
 
@@ -18,14 +20,17 @@ import AddParticipant from '../AddParticipantButton';
 import { IGuestUser } from '../Guest/api';
 import { GetSubcategory, ISubcategory } from '../Subcategory/api';
 
-import { CreateCost, ICostForm } from './api';
+import { CreateCost, DeleteCost, ICostForm, UpdateCost } from './api';
 import { styles } from './styles';
 
-export default function CostForm() {
+type CostProps = NativeStackScreenProps<RootStackParamList, 'CostForm'>;
+
+export default function CostForm({ route }: CostProps) {
   const { navigate } = useNavigation();
   const { contract } = useContract();
+  const cost = route.params?.cost;
 
-  const [participants, setParticipants] = useState<Array<IGuestUser>>([])
+  const [participants, setParticipants] = useState<Array<IGuestUser>>([]);
   const [subcategories, setSubcategories] = useState<Array<ISubcategory>>();
 
   const LoadSubcategories = useCallback(async () => {
@@ -34,23 +39,33 @@ export default function CostForm() {
     });
   }, [contract!.id]);
 
+  const handleDeleteCost = (async () => {
+    await DeleteCost(cost!.id).then(() => {
+      navigate('TripNavigator');
+    })
+  })
+
   const handleSubmit = useCallback(async (values: ICostForm) => {
     values.participants = participants.map(participant => participant.id);
-
-    await CreateCost(values).then(() => {
-      navigate('TripNavigator');
-    });
+    if(!cost)
+      await CreateCost(values).then(() => {
+        navigate('TripNavigator');
+      });
+    else
+      await UpdateCost(cost.id, values).then(() => {
+        navigate('TripNavigator');
+      });
   }, [participants]);
 
   const costFormik = useFormik<ICostForm>({
     initialValues: {
-      description: '',
-      value: '',
-      category: '6',
-      dtcost: new Date(),
-      participants: [],
-      trip: contract!.id,
-      user: contract!.guest,
+      description: cost?.description || '',
+      value: cost?.value.toString() || '',
+      category: cost?.category || '6',
+      dtcost: cost? new Date(cost.dtcost) : new Date(),
+      participants: cost?.participants || [],
+      trip: cost?.trip || contract!.id,
+      user: cost?.user || contract!.guest,
     },
     validationSchema: Yup.object({
       description: Yup.string().required('Insira um nome!'),
@@ -107,14 +122,25 @@ export default function CostForm() {
           <Text key={participant.id}>{participant.name}</Text>
         ))
       )}
-      <AddParticipant
-        participants={participants}
-        setParticipants={setParticipants}
-      />
-      <CustomButton
-        title='Salvar'
-        onPress={costFormik.submitForm}
-      />
+      {contract!.role < 2 && 
+        <>
+          <AddParticipant
+            participants={participants}
+            setParticipants={setParticipants}
+          />
+          <CustomButton
+            title={cost ? 'Salvar alterações' : 'Criar custo'}
+            onPress={costFormik.submitForm}
+          />
+          {cost && 
+            <CustomButton
+              title={'Deletar custo'}
+              onPress={handleDeleteCost}
+              isSecondary
+            />
+          }
+        </>
+      }
     </View>
   );
 }

@@ -2,25 +2,27 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/core';
 
 import FormatUtils from '../../utils/FormatUtils';
 
-import { styles } from './styles';
 import { ICost } from '../../screens/CostForm/api';
 
+import { styles } from './styles';
+
 interface ICostShow {
-    cost: ICost
-    onPress: () => void;
+    cost: ICost;
 }
 
 const CostItem = (({
   cost,
-  onPress = (() => {}),
-} : ICostShow) => {
+}: ICostShow) => {
+  const { navigate } = useNavigation();
+
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={onPress}
+      onPress={() => navigate('CostForm', { cost })}
     >
       <View style={styles.content}>
         <View style={styles.image}>
