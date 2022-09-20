@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/core';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
 
 import { IContract, useContract } from '../../contexts/contract';
 import { useUser } from '../../contexts/user';
@@ -9,11 +10,11 @@ import { useUser } from '../../contexts/user';
 import CustomButton from '../../components/CustomButton'
 import FloatCreateButton from '../../components/FloatCreateButton';
 import { View } from '../../components/Themed';
+import TopTabComponent from '../../components/TopTabComponent';
 import TripSelector from '../../components/TripSelector';
 
 import { GetTrips } from './api';
 import { styles } from './styles';
-import TopTabComponent from '../../components/TopTabComponent';
 
 export default function Login() {
   const { navigate } = useNavigation();
@@ -57,6 +58,7 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
+      <StatusBar />
       <View style={styles.title}>
         <CustomButton
           style={styles.user}
@@ -107,6 +109,7 @@ export default function Login() {
               dtstart={item.dtstart}
               dtend={item.dtend}
               onPress={() => handleChooseTrip(item)}
+              guest={item.guest}
             />
           )}
           keyExtractor={({id}: IContract) => id }

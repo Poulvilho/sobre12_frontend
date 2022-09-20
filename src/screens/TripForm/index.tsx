@@ -91,7 +91,7 @@ export default function TripForm({ route }: TripProps) {
           error={Boolean(tripFormik.errors.dtstart)}
           width='40%'
         />
-        <Text>à     </Text>
+        <Text>à</Text>
         <CustomDateTimePicker
           date={tripFormik.values.dtend}
           setDate={(newDate) => tripFormik.setFieldValue('dtend', newDate)}

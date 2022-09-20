@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 
 import { useContract } from '../../contexts/contract';
-import { useUser } from '../../contexts/user';
 
 import CostItem from '../../components/CostItem';
 import CustomDateTimePicker from '../../components/CustomDatePicker';
@@ -21,7 +20,6 @@ type Props = NativeStackScreenProps<RootStackParamList, 'CategoryCosts'>;
 
 export default function CategoryCosts({route}: Props) {
   const { contract } = useContract();
-  const { user } = useUser();
 
   const { category, startDate, endDate } = route.params;
 
@@ -32,25 +30,22 @@ export default function CategoryCosts({route}: Props) {
   const [filteredCost, setFilteredCost] = useState<Array<ICost>>();
 
   const LoadCosts = (async () => {
-    await GetCosts(contract!.id, user!.id).then((response) => {
+    await GetCosts(contract!.id, contract!.guest).then((response) => {
       setCost(response.data.filter((cost: ICost)=>
         cost.category.toString() === category?.value,
       ));
     });
 
-    cost?.sort((a,b)=>{
+    cost?.sort((a, b) => {
       let dateA = new Date(a.dtcost);
       let dateB = new Date(b.dtcost);
-      if(dateA > dateB){
+      if(dateA > dateB)
         return -1;
-      }
-      else if(dateA < dateB){
+      else if(dateA < dateB)
         return 1;
-      }
-      else{
-        return 0
-      }
-    })
+      else
+        return 0;
+    });
 
     setFilteredCost(cost)
   })

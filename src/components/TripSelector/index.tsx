@@ -1,15 +1,17 @@
 import { FontAwesome5 } from '@expo/vector-icons';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import Colors from '../../constants/Colors';
+import { GetUser } from '../../screens/Login/api';
 import FormatUtils from '../../utils/FormatUtils';
 import { styles } from './styles';
 
 interface ITripSelector {
-    name: string;
-    dtstart: Date;
-    dtend: Date;
-    onPress: () => void;
+  name: string;
+  dtstart: Date;
+  dtend: Date;
+  onPress: () => void;
+  guest?: string;
 }
 
 const TripSelector = (({
@@ -17,7 +19,19 @@ const TripSelector = (({
   dtstart = new Date(),
   dtend = new Date(),
   onPress = (() => {}),
+  guest = undefined,
 } : ITripSelector) => {
+  const [guestName, setGuestName] = useState<String>('')
+  const LoadGuestName = (async () => {
+    await GetUser(guest!).then((response) => {
+      setGuestName(response.data.name);
+    });
+  });
+
+  useEffect(() => {
+    if (guest)
+      LoadGuestName();
+  }, []);
   return (
     <TouchableOpacity
       style={styles.container}
@@ -53,6 +67,9 @@ const TripSelector = (({
             +' a '
             + FormatUtils.dateBR(dtend.toString())}
           </Text>
+          {guestName !== '' && (
+            <Text>Participante: {guestName}</Text>
+          )}
         </View>
       </View>  
     </TouchableOpacity>

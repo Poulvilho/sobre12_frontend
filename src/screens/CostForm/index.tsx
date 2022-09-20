@@ -111,13 +111,15 @@ export default function CostForm({ route }: CostProps) {
           <CustomItem key={item.id} label={item.description} value={item.id} />
         ))}
       </CustomDropdown>
-      <CustomDateTimePicker
-        date={costFormik.values.dtcost}
-        setDate={(newDate) => costFormik.setFieldValue('dtcost', newDate)}
-        mode={'date'}
-        error={Boolean(costFormik.errors.dtcost)}
-        width='80%'
-      />
+      <View style={{ zIndex: 100}}>
+        <CustomDateTimePicker
+          date={costFormik.values.dtcost}
+          setDate={(newDate) => costFormik.setFieldValue('dtcost', newDate)}
+          mode={'date'}
+          error={Boolean(costFormik.errors.dtcost)}
+          width='80%'
+        />
+      </View>
       {participants.length > 0 && (
         participants.map((participant) => (
           <Text key={participant.id}>{participant.name}</Text>

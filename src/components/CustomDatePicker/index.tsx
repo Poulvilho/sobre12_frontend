@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import DatePicker from 'react-date-picker';
 import { FontAwesome5 } from '@expo/vector-icons';
 import {format} from 'date-fns';
 
@@ -46,46 +47,57 @@ const CustomDateTimePicker = ({
 
   return (
     <View style={{
-      width, borderColor: error ? 'red' : 'black', borderRadius: 1,
+      borderColor: error ? 'red' : 'black', borderRadius: 1,
     }}>
       {title && <Text style={{alignSelf: 'flex-start'}}>{title}</Text>}
-      <TouchableOpacity
-        onPress={showDatePicker}
-        style={styles.button}
-      >
-        <Text style={styles.text}>
-          {format(
-            date,
-            mode === 'datetime'
-              ? 'dd/MM/yyyy HH:mm'
-              : mode === 'date'
-                ? 'dd/MM/yyyy'
-                : 'HH:mm',
+      {Platform.OS === 'web' ? (
+        <DatePicker
+          value={date}
+          onChange={(date: Date) => setDate(date)}
+          format='dd/MM/yyyy'
+          clearIcon={null}
+        />
+      ): (
+        <>
+          <TouchableOpacity
+            onPress={showDatePicker}
+            style={styles.button}
+          >
+            <Text style={styles.text}>
+              {format(
+                date,
+                mode === 'datetime'
+                  ? 'dd/MM/yyyy HH:mm'
+                  : mode === 'date'
+                    ? 'dd/MM/yyyy'
+                    : 'HH:mm',
+              )}
+            </Text>
+            <FontAwesome5 
+              name={'calendar-alt'}
+              size={15} 
+              style={styles.icon} 
+            />
+          </TouchableOpacity>
+          {maximumDate ? (
+            <DateTimePickerModal
+              date={date}
+              isVisible={isDatePickerVisible}
+              mode={mode}
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+              maximumDate = {maximumDate}
+            />
+          ) : (
+            <DateTimePickerModal
+              date={date}
+              isVisible={isDatePickerVisible}
+              mode={mode}
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+            />
           )}
-        </Text>
-        <FontAwesome5 
-          name={'calendar-alt'}
-          size={15} 
-          style={styles.icon} 
-        />
-      </TouchableOpacity>
-      {maximumDate ? (
-        <DateTimePickerModal
-          date={date}
-          isVisible={isDatePickerVisible}
-          mode={mode}
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-          maximumDate = {maximumDate}
-        />
-      ) : (
-        <DateTimePickerModal
-          date={date}
-          isVisible={isDatePickerVisible}
-          mode={mode}
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-        />
+        </>
       )}
     </View>
   );

@@ -58,13 +58,13 @@ export default function BudgetForm({route}: Props) {
       description: budget?.description || '',
       value: budget?.value.toString() || '',
       category: budget?.category || '6',
-      dtbudget: budget? new Date(budget.dtbudget) : new Date(2022, 9, 23),
+      dtbudget: budget? new Date(budget.dtbudget) : new Date(),
       trip: contract!.id,
     },
     validationSchema: Yup.object({
       description: Yup.string().required('Insira um nome!'),
       value: Yup.number().required('Insira um valor!'),
-      category: Yup.number().required('Escolha uma categoria').min(1).max(4),
+      category: Yup.number().required('Escolha uma categoria'),
     }),
     onSubmit: handleSubmit,
   });
@@ -106,13 +106,15 @@ export default function BudgetForm({route}: Props) {
           <CustomItem key={item.id} label={item.description} value={item.id} />
         ))}
       </CustomDropdown>
-      <CustomDateTimePicker
-        date={budgetFormik.values.dtbudget}
-        setDate={(newDate) => budgetFormik.setFieldValue('dtbudget', newDate)}
-        mode={'date'}
-        error={Boolean(budgetFormik.errors.dtbudget)}
-        width='80%'
-      />
+      <View style={{ zIndex: 100 }}>
+        <CustomDateTimePicker
+          date={budgetFormik.values.dtbudget}
+          setDate={(newDate) => budgetFormik.setFieldValue('dtbudget', newDate)}
+          mode={'date'}
+          error={Boolean(budgetFormik.errors.dtbudget)}
+          width='80%'
+        />
+      </View>
       {contract!.role === 0 && 
         <>
           <CustomButton

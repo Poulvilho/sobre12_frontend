@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
   datePicker:{
     flexDirection: 'row',
     alignItems: 'center',
+    zIndex: 100,
   },
   title: {
     fontSize: 16,

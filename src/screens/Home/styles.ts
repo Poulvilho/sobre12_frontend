@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
 
 export const styles = StyleSheet.create({
@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     backgroundColor: Colors.light.background,
+    marginTop: Platform.OS === 'android' ? '7%' : 0,
   },
   row: {
     margin: 10,
