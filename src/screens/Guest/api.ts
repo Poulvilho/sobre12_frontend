@@ -35,4 +35,12 @@ const CreateGuest = ((
   return response;
 });
 
-export { GetGuests, CreateGuest };
+const DeleteGuest = ((
+  tripId: string,
+  guestId: string,
+): Promise<AxiosResponse<IGuest>> => {
+  const response = sobre12Api.delete<IGuest>(`/guest/${tripId}/${guestId}`);
+  return response;
+});
+
+export { GetGuests, CreateGuest, DeleteGuest };

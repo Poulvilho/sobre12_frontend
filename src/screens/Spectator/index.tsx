@@ -16,8 +16,10 @@ import {
   GetSpectators,
   ISpectator,
   ISpectatorForm,
+  ISpectatorUser,
 } from './api';
 import { styles } from './styles';
+import { useIsFocused } from '@react-navigation/core';
 
 export default function Spectator() {
   const { contract } = useContract();
@@ -30,8 +32,14 @@ export default function Spectator() {
     });
   }, [contract]);
 
+  const handleDelete = (async (spectator: ISpectatorUser) => {
+    await DeleteSpectator(contract!.id, contract!.guest, spectator.id)
+      .then(() => LoadSpectators());
+  })
+
   const handleSubmit = (async (values: ISpectatorForm) => {
     await CreateSpectator(values);
+    LoadSpectators();
   });
 
   const spectatorFormik = useFormik<ISpectatorForm>({
@@ -49,7 +57,7 @@ export default function Spectator() {
 
   useEffect(() => {
     LoadSpectators();
-  }, [LoadSpectators]);
+  }, [useIsFocused()]);
 
   return (
     <View style={styles.container}>
@@ -62,9 +70,7 @@ export default function Spectator() {
             icon={'user'}
             email={item.spectator.email}
             phone={''}
-            onPressDelete={() =>
-              DeleteSpectator(contract!.id, contract!.guest, item.spectator.id)
-            }
+            onPressDelete={() => handleDelete(item.spectator)}
           />
         )}
         keyExtractor={({spectator}: ISpectator) => spectator.id }

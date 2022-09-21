@@ -17,6 +17,7 @@ const GuestItem = (({
   icon,
   name,
   email,
+  phone,
   onPressDelete,
 } : IGuestItem) => {
 

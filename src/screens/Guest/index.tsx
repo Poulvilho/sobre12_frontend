@@ -15,6 +15,8 @@ import {
   GetGuests,
   IGuestForm,
   IGuest,
+  DeleteGuest,
+  IGuestUser,
 } from './api';
 import { styles } from './styles';
 
@@ -29,8 +31,14 @@ export default function Guest() {
     });
   }, [contract]);
 
+  const handleDelete = (async (guest: IGuestUser) => {
+    await DeleteGuest(contract!.id, guest.id);
+    LoadGuests();
+  });
+
   const handleSubmit = (async (values: IGuestForm) => {
     await CreateGuest(values);
+    LoadGuests();
   });
 
   const guestFormik = useFormik<IGuestForm>({
@@ -58,7 +66,7 @@ export default function Guest() {
             key={item.User.id}
             name={item.User.name}
             icon={'user'}
-            onPressDelete={() => console.log('OK Pressed')}
+            onPressDelete={() => handleDelete(item.User)}
             email={item.User.email}
             phone={''}
           />
