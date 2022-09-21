@@ -12,6 +12,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 
 import { IRegister, RegisterRequest } from './api';
 import { styles } from './styles';
+import CustomButton from '../../components/CustomButton';
 
 export default function Register() {
   const { navigate } = useNavigation();
@@ -49,7 +50,7 @@ export default function Register() {
 
   return (
     <View style={styles.container}>
-      <Button
+      <CustomButton
         title='Já possuo login'
         onPress={() => navigate('Login')}
       />
@@ -85,7 +86,7 @@ export default function Register() {
           </View>
           <View style={styles.row}>
             <CustomTextInput
-              title='Senha'
+              title='Confirme sua senha'
               fieldName='passwordConfirm'
               formikHelpers={userFormik}
               width='80%'
@@ -93,7 +94,7 @@ export default function Register() {
               secureTextEntry={true}
             />
           </View>
-          <Button
+          <CustomButton
             title='Criar usuário'
             onPress={userFormik.submitForm}
           />

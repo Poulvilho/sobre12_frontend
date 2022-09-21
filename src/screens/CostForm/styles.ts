@@ -13,4 +13,16 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  datepicker: {
+    marginTop: 12,
+  },
+  save:{
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 0,
+    borderRadius:0,
+    position: 'absolute',
+    top: '75%',
+  },
 });
