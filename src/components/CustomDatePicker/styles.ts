@@ -3,7 +3,6 @@ import Colors from '../../constants/Colors';
 
 export const styles = StyleSheet.create({
   button: {
-    flex: 1,
     backgroundColor: Colors.light.primaryColor,
     padding: 10,
     borderRadius: 12,
