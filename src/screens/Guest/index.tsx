@@ -32,8 +32,10 @@ export default function Guest() {
   }, [contract]);
 
   const handleDelete = (async (guest: IGuestUser) => {
-    await DeleteGuest(contract!.id, guest.id);
-    LoadGuests();
+    if (contract!.role === 0) {
+      await DeleteGuest(contract!.id, guest.id);
+      LoadGuests();
+    }
   });
 
   const handleSubmit = (async (values: IGuestForm) => {

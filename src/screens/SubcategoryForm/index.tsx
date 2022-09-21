@@ -79,14 +79,18 @@ export default function SubcategoryForm({ route }: SubcategoryProps) {
           />
         ))}
       </CustomDropdown>
-      <CustomButton
-        title='Salvar'
-        onPress={subcategoryFormik.submitForm}
-      />
-      {subcategory && (
-        <CustomButton
-          title='Deletar viagem'
-          onPress={handleDeleteSubcategory} />
+      {contract!.role === 0 && (
+        <>
+          <CustomButton
+            title='Salvar'
+            onPress={subcategoryFormik.submitForm}
+          />
+          {subcategory && (
+            <CustomButton
+              title='Deletar viagem'
+              onPress={handleDeleteSubcategory} />
+          )}
+        </>
       )}
     </View>
   );
