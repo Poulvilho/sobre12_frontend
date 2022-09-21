@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 // import DatePicker from 'react-date-picker';
 import { FontAwesome5 } from '@expo/vector-icons';
 import {format} from 'date-fns';
+
+import { View, Text } from '../../components/Themed';
 
 import { styles } from './styles';
 

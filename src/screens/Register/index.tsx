@@ -1,6 +1,5 @@
 import  React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
-import { Button } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -8,11 +7,11 @@ import { useUser } from '../../contexts/user';
 
 import { Text, View } from '../../components/Themed';
 import BoxContainer from '../../components/BoxContainer';
+import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 
 import { IRegister, RegisterRequest } from './api';
 import { styles } from './styles';
-import CustomButton from '../../components/CustomButton';
 
 export default function Register() {
   const { navigate } = useNavigation();

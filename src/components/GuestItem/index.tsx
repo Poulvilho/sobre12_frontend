@@ -17,7 +17,6 @@ const GuestItem = (({
   icon,
   name,
   email,
-  phone,
   onPressDelete,
 } : IGuestItem) => {
 
@@ -27,20 +26,19 @@ const GuestItem = (({
     setshowFirst(!showInfo);
   }
 
-  function removeGuest(){
+  const removeGuest = (() => {
     Alert.alert(
       'Confirmação de remoção',
-      'Deseja remover este participante?',
-      [
-        {
-          text: 'Cancelar',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        { text: 'Confirmar', onPress: onPressDelete },
-      ],
+      'Deseja remover este usuário?',
+      [{
+        text: 'Cancelar',
+        style: 'cancel',
+      }, {
+        text: 'Confirmar',
+        onPress: onPressDelete,
+      }],
     );
-  }
+  });
 
   return (
     <>
