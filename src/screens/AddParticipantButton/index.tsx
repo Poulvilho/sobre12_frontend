@@ -28,23 +28,10 @@ const AddParticipant = ({
 
   const LoadGuests = useCallback(async () => {
     await GetGuests(contract!.id).then((response) => {
-      setGuests(response.data);
+      setGuests(response.data.filter((guest) => 
+        guest.User.id !== contract!.guest,
+      ));
     });
-    // const guestMock = [
-    //   {
-    //     User: {
-    //       id: '1',
-    //       name: 'Joaozinho',
-    //     },
-    //   },
-    //   {
-    //     User: {
-    //       id: '2',
-    //       name: 'Cleiton Rasta',
-    //     },
-    //   },
-    // ]
-    // setGuests(guestMock)
   }, [contract]);
 
   const handleOk = () => {
