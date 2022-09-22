@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/core';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { useFormik } from 'formik';
@@ -23,8 +22,7 @@ import { RootStackParamList } from '../../navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BudgetForm'>;
 
-export default function BudgetForm({route}: Props) {
-  const { navigate } = useNavigation();
+export default function BudgetForm({ route, navigation }: Props) {
   const { contract } = useContract();
   const budget = route.params?.budget;
   
@@ -38,18 +36,18 @@ export default function BudgetForm({route}: Props) {
 
   const handleDeleteBudget = (async () => {
     await DeleteBudget(budget!.id).then(() => {
-      navigate('Budget');
+      navigation.goBack();
     })
   })
 
   const handleSubmit = (async (values: IBudgetForm) => {
     if(!budget)
       await CreateBudget(values).then(() => {
-        navigate('Budget');
+        navigation.goBack();
       });
     else
       await UpdateBudget(budget.id, values).then(() => {
-        navigate('Budget');
+        navigation.goBack();
       });
   });
 

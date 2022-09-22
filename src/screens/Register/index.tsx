@@ -1,9 +1,9 @@
 import  React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
-import { useUser } from '../../contexts/user';
+import { RootStackParamList } from '../../navigation/types';
 
 import { Text, View } from '../../components/Themed';
 import BoxContainer from '../../components/BoxContainer';
@@ -12,19 +12,30 @@ import CustomTextInput from '../../components/CustomTextInput';
 
 import { IRegister, RegisterRequest } from './api';
 import { styles } from './styles';
+import { Alert } from 'react-native';
 
-export default function Register() {
+type RegisterProps = NativeStackScreenProps<RootStackParamList, 'Register'>;
+
+export default function Register({ navigation }: RegisterProps) {
   const { navigate } = useNavigation();
-  const { setUser } = useUser();
 
   const [failure, setFailure] = useState<boolean>(false);
 
   const handleSubmit = (async (values: IRegister) => {
     setFailure(false);
     await RegisterRequest(values)
-      .then((response) => {
-        setUser(response.data);
-        navigate('Home');
+      .then(() => {
+        Alert.alert(
+          'Valide a conta',
+          'no email informado.',
+          [{
+            text: 'Cancelar',
+            style: 'cancel',
+          }, {
+            text: 'Confirmar',
+            onPress: () => navigation.goBack(),
+          }],
+        );
       })
       .catch(() => setFailure(true));
   });

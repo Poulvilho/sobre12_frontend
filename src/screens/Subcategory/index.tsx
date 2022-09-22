@@ -39,7 +39,7 @@ export default function Subcategory() {
 
   useEffect(() => {
     LoadSubcategories();
-  }, [useIsFocused]);
+  }, [useIsFocused()]);
 
   return (
     <View style={styles.container}>

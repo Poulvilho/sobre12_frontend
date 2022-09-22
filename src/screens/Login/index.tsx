@@ -68,7 +68,7 @@ export default function Login() {
 
   useEffect(() => {
     getUserData();
-  }, [useIsFocused]);
+  }, [useIsFocused()]);
 
   return (
     <View style={styles.container}>

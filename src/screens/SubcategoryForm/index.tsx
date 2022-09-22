@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -25,14 +24,15 @@ import { styles } from './styles';
 type SubcategoryProps =
     NativeStackScreenProps<RootStackParamList, 'SubcategoryForm'>;
 
-export default function SubcategoryForm({ route }: SubcategoryProps) {
-  const { navigate } = useNavigation();
+export default function SubcategoryForm({
+  route, navigation,
+}: SubcategoryProps) {
   const { contract } = useContract();
   const subcategory = route.params?.subcategory;
 
   const handleDeleteSubcategory = useCallback(async () => {
     await DeleteSubcategory(subcategory!.id).then(() => {
-      navigate('Home');
+      navigation.goBack();
     });
   }, [subcategory]);
 
@@ -40,6 +40,7 @@ export default function SubcategoryForm({ route }: SubcategoryProps) {
     !subcategory
       ? await CreateSubcategory(values)
       : await EditSubcategory(subcategory.id, values);
+    navigation.goBack();
   });
 
   const subcategoryFormik = useFormik<ISubcategoryForm>({

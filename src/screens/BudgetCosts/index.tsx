@@ -97,7 +97,6 @@ export default function Trip({route}: Props) {
           <CostItem
             key={item.id}
             cost={item}
-            onPress={() => {}}
           />
         )}
         keyExtractor={({id}: ICost) => id }

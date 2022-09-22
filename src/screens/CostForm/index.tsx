@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
 import React, { useCallback, useEffect, useState } from 'react';
 import * as Yup from 'yup';
@@ -25,8 +24,7 @@ import { styles } from './styles';
 
 type CostProps = NativeStackScreenProps<RootStackParamList, 'CostForm'>;
 
-export default function CostForm({ route }: CostProps) {
-  const { navigate } = useNavigation();
+export default function CostForm({ route, navigation }: CostProps) {
   const { contract } = useContract();
   const cost = route.params?.cost;
 
@@ -41,7 +39,7 @@ export default function CostForm({ route }: CostProps) {
 
   const handleDeleteCost = (async () => {
     await DeleteCost(cost!.id).then(() => {
-      navigate('TripNavigator');
+      navigation.goBack();
     })
   })
 
@@ -49,11 +47,11 @@ export default function CostForm({ route }: CostProps) {
     values.participants = participants.map(participant => participant.id);
     if(!cost)
       await CreateCost(values).then(() => {
-        navigate('TripNavigator');
+        navigation.goBack();
       });
     else
       await UpdateCost(cost.id, values).then(() => {
-        navigate('TripNavigator');
+        navigation.goBack();
       });
   }, [participants]);
 

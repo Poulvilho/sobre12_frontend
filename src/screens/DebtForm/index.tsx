@@ -1,7 +1,6 @@
 import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
-import { useNavigation } from '@react-navigation/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -15,13 +14,12 @@ import { styles } from './styles';
 
 type DebtProps = NativeStackScreenProps<RootStackParamList, 'DebtForm'>;
 
-export default function DebtForm({ route }: DebtProps) {
-  const { navigate } = useNavigation();
+export default function DebtForm({ route, navigation }: DebtProps) {
   const { debt } = route.params;
 
   const handleSubmit = (async (values: IDebtForm) => {
     await EditDebt(values).then(() => {
-      navigate('Debt');
+      navigation.goBack();
     });
   });
 

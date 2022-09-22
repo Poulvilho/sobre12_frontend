@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/core';
 import { FlatList } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -57,7 +58,7 @@ export default function Guest() {
 
   useEffect(() => {
     LoadGuests();
-  }, [LoadGuests]);
+  }, [useIsFocused()]);
 
   return (
     <View style={styles.container}>
@@ -68,7 +69,9 @@ export default function Guest() {
             key={item.User.id}
             name={item.User.name}
             icon={'user'}
-            onPressDelete={() => handleDelete(item.User)}
+            onPressDelete={
+              () => contract!.role === 0 ? handleDelete(item.User) : null
+            }
             email={item.User.email}
             phone={''}
           />

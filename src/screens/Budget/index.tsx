@@ -49,10 +49,7 @@ export default function Budget({ route }: BudgetProps) {
         style={styles.list}
         data={budget}
         renderItem={({item}) => (
-          <BudgetItem
-            key={item.id}
-            budget={item}
-          />
+          <BudgetItem key={item.id} budget={item} />
         )}
         keyExtractor={({id}: IBudget) => id }
       />
