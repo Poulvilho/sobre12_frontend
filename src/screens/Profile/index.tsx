@@ -1,12 +1,12 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import { Button } from 'react-native';
 import * as Yup from 'yup';
 
 import { useUser } from '../../contexts/user';
 
-import { View } from '../../components/Themed';
+import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
+import { View } from '../../components/Themed';
 
 import { IEditUser, UpdateProfile } from './api';
 import { styles } from './styles';
@@ -14,15 +14,17 @@ import { styles } from './styles';
 export default function Profile() {
   const { user, setUser } = useUser();
 
-  const handleSubmit = ((values: IEditUser) => {
-    UpdateProfile(values).then((response) => {
-      setUser(response.data);
+  const handleSubmit = (async (values: IEditUser) => {
+    await UpdateProfile(user!.id, values).then(() => {
+      setUser((user) => {
+        user!.name = values.name;
+        return user;
+      });
     });
   });
 
   const userFormik = useFormik<IEditUser>({
     initialValues: {
-      id: user!.id,
       email: user!.email,
       name: user!.name,
       oldPassword: '',
@@ -31,7 +33,7 @@ export default function Profile() {
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Insira um nome!'),
-      oldpassword: Yup.string().required('Insira sua senha atual'),
+      oldPassword: Yup.string().required('Insira sua senha atual'),
       password: Yup.string(),
       passwordConfirm: Yup.string()
         .equals([Yup.ref('password')], 'Senhas diferentes'),
@@ -90,7 +92,7 @@ export default function Profile() {
           secureTextEntry={true}
         />
       </View>
-      <Button
+      <CustomButton
         title='Salvar'
         onPress={userFormik.submitForm}
       />

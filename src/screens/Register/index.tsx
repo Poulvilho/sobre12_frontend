@@ -108,9 +108,7 @@ export default function Register({ navigation }: RegisterProps) {
             title='Criar usuário'
             onPress={userFormik.submitForm}
           />
-          <View
-            style={styles.separator}
-          />
+          <View style={styles.separator} />
           {failure && (
             <Text style={{ color:'red' }}>Email já cadastrado!</Text>
           )}

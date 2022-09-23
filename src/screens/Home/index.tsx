@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/core';
-import { FlatList, TouchableOpacity } from 'react-native';
+import { AsyncStorage, FlatList, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 
@@ -24,9 +24,18 @@ export default function Login() {
   const [trips, setTrips] = useState<Array<IContract>>(Array(0));
   const [tab, setTab] = useState<Boolean>(true);
 
+  const clearUserData = (async () => {
+    try {
+      await AsyncStorage.removeItem('@user_id');
+    } catch (e) {
+      // saving error
+    }
+  });
+
   const handleLogout = (() => {
     setUser(null);
-    navigate('Login')
+    clearUserData();
+    navigate('Login');
   });
 
   const handleChooseTrip = ((trip: IContract) => {

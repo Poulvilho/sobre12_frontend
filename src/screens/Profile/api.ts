@@ -6,17 +6,14 @@ import sobre12Api from '../../services/api';
 import { IRegister } from '../Register/api';
 
 export interface IEditUser extends IRegister {
-  id: string;
   oldPassword: string;
 }
 
-const UpdateProfile = (async (
+const UpdateProfile = ((
+  userId: string,
   user: IEditUser,
 ): Promise<AxiosResponse<IUser>>  => {
-  const response = await sobre12Api.put<IUser>(
-    `/user/${user.id}`,
-    user,
-  );
+  const response = sobre12Api.put<IUser>(`/user/${userId}`, user);
   return response;
 });
 
