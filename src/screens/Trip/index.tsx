@@ -29,7 +29,7 @@ export default function Trip() {
   const [untilDate, setUntilDate] = useState<Date>(new Date(contract!.dtend));
   
   const [cost, setCost] = useState<Array<ICost>>([]);
-  const [filteredCost, setFilteredCost] = useState<Array<ICost>>();
+  const [filteredCost, setFilteredCost] = useState<Array<ICost>>([]);
   const [budget, setBudget] = useState<Array<IBudget>>([]);
   const [filteredBudget, setFilteredBudget] =  useState<Array<IBudget>>([]);
   const [showTab, setshowTab] = useState<number>(0);
@@ -101,18 +101,25 @@ export default function Trip() {
   };
 
   useEffect(() => {
-    if(filteredBudget.length > 0){
+    if(filteredBudget.length > 0 || filteredCost.length > 0){
       let budgetedCategoriesValues = filteredBudget!.map((budget) => {
         return budget.category;
       });
       budgetedCategoriesValues = budgetedCategoriesValues.filter((a,b) => { 
         return budgetedCategoriesValues.indexOf(a) === b;
       });
+      let costCategoriesValues = filteredCost!.map((cost) => {
+        return cost.category;
+      });
+      costCategoriesValues = costCategoriesValues.filter((a,b) => { 
+        return costCategoriesValues.indexOf(a) === b;
+      });
       setBudgetedCategories(categories.filter((category) => { 
-        return budgetedCategoriesValues.includes(parseInt(category.value));
+        return budgetedCategoriesValues.includes(parseInt(category.value)) ||
+        costCategoriesValues.includes(parseInt(category.value));
       }));
     }
-  }, [filteredBudget]);
+  }, [filteredBudget,filteredCost]);
 
   useEffect(() => {
     setFilteredCost(cost?.filter((cost) => {

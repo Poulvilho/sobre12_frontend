@@ -20,12 +20,13 @@ const DebtItem = (({
   mine,
 } : IDebtShow) => {
   const [showInfo, setshowInfo] = useState(false);
+  const [settled, setSettled] = useState(debt.settled);
   function showInfoFunction(){
     setshowInfo(!showInfo);
   }
 
   const handleConfirmPayment = (async () => {
-    await EditDebt(debt).then(() => {});
+    await EditDebt(debt).then(() => {setSettled(true)});
   });
 
   function ConfirmPayment() {
@@ -46,7 +47,7 @@ const DebtItem = (({
   return (
     <>
       <TouchableOpacity
-        style={debt.settled? styles.containerSettled: styles.container}
+        style={settled? styles.containerSettled: styles.container}
         onPress={showInfoFunction}
       >
         <View style={styles.content}>
@@ -74,7 +75,7 @@ const DebtItem = (({
           </View>
         </View>  
       </TouchableOpacity>
-      { showInfo && !debt.settled && !mine && (
+      { showInfo && !settled && !mine && (
         <View style={styles.infoContainer}>
           <TouchableOpacity style={styles.info} onPress={ConfirmPayment}>
             <FontAwesome5 
